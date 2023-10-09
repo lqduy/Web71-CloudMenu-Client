@@ -4,7 +4,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   return (
-    <div className='text-base'>
+    <div className='bg-[#eee] text-base'>
       <Routes>
         {routes.map(route => {
           const Page = route.component;

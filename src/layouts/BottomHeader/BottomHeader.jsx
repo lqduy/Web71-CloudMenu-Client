@@ -4,7 +4,8 @@ import {
   BarsOutlined,
   BookOutlined,
   FileDoneOutlined,
-  LineChartOutlined
+  LineChartOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
 import Container from '~/components/Container';
 
