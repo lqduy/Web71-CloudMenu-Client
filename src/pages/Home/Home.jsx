@@ -1,8 +1,13 @@
+import Container from '~/components/Container';
+import PageLayout from '~/layouts/PageLayout';
+
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <PageLayout>
+      <Container>
+        <h1>Home</h1>
+      </Container>
+    </PageLayout>
   );
 };
 
