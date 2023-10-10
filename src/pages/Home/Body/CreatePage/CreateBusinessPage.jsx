@@ -1,6 +1,22 @@
 import { useState } from 'react';
-import { Row, Col, Button, Modal, Form, Input, Select } from 'antd';
+import { Row, Col, Button, Modal, Form, Input, InputNumber, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+
+const initialValues = {
+  brandName: '',
+  businessType: 'restaurant',
+  isVegetarian: false,
+  hasAlcoholic: false,
+  orderWays: ['direct'],
+  address: '',
+  province: '',
+  district: '',
+  ward: '',
+  phoneNumber: '',
+  email: ''
+};
+
+const MODAL_WIDTH = 680;
 
 const CreateBusinessPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,6 +27,7 @@ const CreateBusinessPage = () => {
   };
 
   const handleCancel = () => {
+    form.resetFields();
     setIsModalOpen(false);
   };
 
@@ -36,39 +53,46 @@ const CreateBusinessPage = () => {
       <Modal
         title='TẠO TRANG KINH DOANH'
         open={isModalOpen}
-        okText='Tạo'
-        cancelText='Hủy'
         onOk={() => form.submit()}
         onCancel={handleCancel}
         maskClosable={false}
-        width={600}
+        width={MODAL_WIDTH}
+        footer={[
+          <Button key='cancel' onClick={handleCancel}>
+            Hủy
+          </Button>,
+          <Button key='reset' onClick={() => form.resetFields()}>
+            Điền lại
+          </Button>,
+          <Button key='create' type='primary' onClick={() => form.submit()}>
+            Xác nhận
+          </Button>
+        ]}
       >
         <Form
           form={form}
-          name='basic'
+          name='businessPageData'
+          initialValues={initialValues}
           layout='vertical'
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
+          className='mt-8'
         >
           <Row gutter={16}>
             <Col span={16}>
               <Form.Item
                 label='Tên gian hàng'
-                name='username'
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                name='brandName'
+                rules={[{ required: true, message: 'Please input the brand name!' }]}
               >
                 <Input />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item
-                label='Loại hình'
-                name='type'
-                rules={[{ required: true, message: 'Please input your username!' }]}
-              >
-                <Select defaultValue={'restaurant'}>
+              <Form.Item label='Loại hình' name='businessType'>
+                <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
-                  <Select.Option value='restaurant1'>Quán ăn</Select.Option>
+                  <Select.Option value='eatery'>Quán ăn</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -76,36 +100,24 @@ const CreateBusinessPage = () => {
 
           <Row gutter={16}>
             <Col span={8}>
-              <Form.Item
-                label='Mặn/Chay'
-                name='isVagan'
-                rules={[{ required: true, message: 'Please input your username!' }]}
-              >
-                <Select defaultValue={false}>
+              <Form.Item label='Mặn/chay' name='isVegetarian'>
+                <Select>
                   <Select.Option value={false}>Mặn</Select.Option>
                   <Select.Option value={true}>Chay</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item
-                label='Thức uống cồn'
-                name='hasBeer'
-                rules={[{ required: true, message: 'Please input your username!' }]}
-              >
-                <Select defaultValue={false}>
+              <Form.Item label='Thức uống cồn' name='hasAlcoholic'>
+                <Select>
                   <Select.Option value={true}>Có</Select.Option>
                   <Select.Option value={false}>Không</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item
-                label='Phục vụ'
-                name='order'
-                rules={[{ required: true, message: 'Please input your username!' }]}
-              >
-                <Select mode='multiple' defaultValue={'direct'}>
+              <Form.Item label='Phục vụ' name='orderWays'>
+                <Select mode='multiple'>
                   <Select.Option value={'direct'}>Tại chỗ</Select.Option>
                   <Select.Option value={'ship'}>Ship</Select.Option>
                 </Select>
@@ -117,7 +129,6 @@ const CreateBusinessPage = () => {
             label='Địa chỉ'
             name='address'
             rules={[{ required: true, message: 'Please input your password!' }]}
-            className='mb-2'
           >
             <Input />
           </Form.Item>
@@ -127,7 +138,7 @@ const CreateBusinessPage = () => {
               <Form.Item
                 label='Tỉnh/Thành phố'
                 name='province'
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                rules={[{ required: true, message: 'Please select province or city!' }]}
               >
                 <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
@@ -140,7 +151,7 @@ const CreateBusinessPage = () => {
               <Form.Item
                 label='Huyện/Quận'
                 name='district'
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                rules={[{ required: true, message: 'Please select district!' }]}
               >
                 <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
@@ -152,8 +163,8 @@ const CreateBusinessPage = () => {
             <Col span={8}>
               <Form.Item
                 label='Xã/Phường'
-                name='type'
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                name='ward'
+                rules={[{ required: true, message: 'Please select ward!' }]}
               >
                 <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
@@ -164,14 +175,26 @@ const CreateBusinessPage = () => {
             </Col>
           </Row>
 
-          <Form.Item
-            label='Điện thoại'
-            name='phoneNumber'
-            rules={[{ required: true, message: 'Please input your password!' }]}
-            className='mb-2'
-          >
-            <Input />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                label='Điện thoại'
+                name='phoneNumber'
+                rules={[{ required: true, message: 'Please input phone number!' }]}
+              >
+                <InputNumber controls={false} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label='Email'
+                name='email'
+                rules={[{ type: 'email', message: 'Please input correct email!' }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     </>
