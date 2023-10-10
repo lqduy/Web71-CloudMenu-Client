@@ -1,19 +1,18 @@
 import { Row, Col, Form, Input, InputNumber, Select } from 'antd';
+import Dish from '~/utils/data/dish';
 
 const initialValues = {
   name: '',
-  group: 1,
-  area: 1,
+  group: 'chinh',
+  origin: 'vn',
   type: null,
   preOrder: false,
+  sku: '',
   unit: 'Phần',
   price: null
 };
 
-const DishOverviewForm = ({ form }) => {
-  const onFinish = values => {
-    console.log('Success:', values);
-  };
+const DishOverviewForm = ({ form, onFinish }) => {
 
   return (
     <Form
@@ -40,11 +39,11 @@ const DishOverviewForm = ({ form }) => {
             rules={[{ required: true, message: 'Vui lòng chọn phân loại!' }]}
           >
             <Select>
-              <Select.Option value={1}>Món chính</Select.Option>
-              <Select.Option value={2}>Khai vị, điểm tâm</Select.Option>
-              <Select.Option value={3}>Tráng miệng, ăn vặt</Select.Option>
-              <Select.Option value={4}>Kem, nước uống</Select.Option>
-              <Select.Option value={5}>Món chay</Select.Option>
+              {Dish.group.map(group => (
+                <Select.Option key={group.value} value={group.value}>
+                  {group.title}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>
@@ -54,16 +53,15 @@ const DishOverviewForm = ({ form }) => {
         <Col span={8}>
           <Form.Item
             label='Xuất xứ'
-            name='area'
+            name='origin'
             rules={[{ required: true, message: 'Vui lòng chọn phân loại!' }]}
           >
             <Select>
-              <Select.Option value={1}>Việt Nam</Select.Option>
-              <Select.Option value={2}>Á Đông</Select.Option>
-              <Select.Option value={3}>Phương Tây</Select.Option>
-              <Select.Option value={4}>Sáng tạo</Select.Option>
-              <Select.Option value={5}>Khác</Select.Option>
-              <Select.Option value={6}>Không xác định</Select.Option>
+              {Dish.origin.map(origin => (
+                <Select.Option key={origin.value} value={origin.value}>
+                  {origin.title}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>
@@ -74,18 +72,11 @@ const DishOverviewForm = ({ form }) => {
             rules={[{ required: true, message: 'Vui lòng chọn phân loại!' }]}
           >
             <Select>
-              <Select.Option value={1}>Kho</Select.Option>
-              <Select.Option value={2}>Xào</Select.Option>
-              <Select.Option value={3}>Chiên</Select.Option>
-              <Select.Option value={4}>Hấp</Select.Option>
-              <Select.Option value={5}>Luộc</Select.Option>
-              <Select.Option value={6}>Nướng</Select.Option>
-              <Select.Option value={7}>Gỏi, trộn</Select.Option>
-              <Select.Option value={8}>Tươi sống</Select.Option>
-              <Select.Option value={9}>Khô</Select.Option>
-              <Select.Option value={10}>Bánh</Select.Option>
-              <Select.Option value={11}>Món nước</Select.Option>
-              <Select.Option value={12}>Khác</Select.Option>
+              {Dish.type.map(type => (
+                <Select.Option key={type.value} value={type.value}>
+                  {type.title}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>
@@ -102,6 +93,15 @@ const DishOverviewForm = ({ form }) => {
       <Row gutter={16}>
         <Col span={8}>
           <Form.Item
+            label='Mã SKU'
+            name='sku'
+            rules={[{ required: true, message: 'Vui lòng nhập đơn vị!' }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item
             label='Đơn vị'
             name='unit'
             rules={[{ required: true, message: 'Vui lòng nhập đơn vị!' }]}
@@ -109,7 +109,7 @@ const DishOverviewForm = ({ form }) => {
             <Input placeholder='Phần' />
           </Form.Item>
         </Col>
-        <Col span={16}>
+        <Col span={8}>
           <Form.Item
             label='Đơn giá'
             name='price'

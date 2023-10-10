@@ -1,85 +1,73 @@
-import { Space, Table, Tag } from 'antd';
-const columns = [
-  {
-    title: 'Mã',
-    dataIndex: 'id',
-    key: 'id',
-    render: text => <a>{text}</a>
-  },
-  {
-    title: 'Hình ảnh',
-    dataIndex: 'image',
-    key: 'image',
-    render: image => <img src={image} />
-  },
-  {
-    title: 'Tên món',
-    dataIndex: 'name',
-    key: 'name'
-  },
-  {
-    title: 'Nhóm',
-    dataIndex: 'group',
-    key: 'group'
-  },
-  {
-    title: 'Đơn vị',
-    dataIndex: 'unit',
-    key: 'unit'
-  },
-  {
-    title: 'Đơn Giá',
-    key: 'price',
-    dataIndex: 'price',
-    render: (_, { tags }) => (
-      <>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    )
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size='middle'>
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    )
-  }
-];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer']
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser']
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher']
-  }
-];
-const DishesTable = () => <Table columns={columns} dataSource={data} />;
+import { useState } from 'react';
+import { Space, Table, Button } from 'antd';
+import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import dishMockup from '~/utils/mockup/dishes';
+import CreateDish from '~/components/CreateDish';
+
+const DishesTable = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingDish, setEditingDish] = useState(null);
+
+  const handleClickEdit = data => {
+    setIsModalOpen(true);
+    setEditingDish(data);
+  };
+
+  const columns = [
+    {
+      title: 'SKU',
+      dataIndex: '_id',
+      key: '_id',
+      render: text => <p className='mb-0'>{text}</p>
+    },
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'image',
+      key: 'image',
+      render: image => <img src={image} className='h-32' />
+    },
+    {
+      title: 'Tên món',
+      dataIndex: 'name',
+      key: 'name'
+    },
+    {
+      title: 'Loại',
+      dataIndex: 'type',
+      key: 'type'
+    },
+    {
+      title: 'Đơn Giá',
+      key: 'price',
+      dataIndex: 'price',
+      render: (price, record) => (
+        <p className='mb-0'>
+          {price}/{record.unit}
+        </p>
+      )
+    },
+    {
+      title: 'Tùy chọn',
+      key: 'setting',
+      render: (_, data) => (
+        <Space>
+          <Button type='text' icon={<EyeOutlined />} />
+          <Button type='text' icon={<EditOutlined />} onClick={() => handleClickEdit(data)} />
+          <Button type='text' danger icon={<DeleteOutlined />} />
+        </Space>
+      )
+    }
+  ];
+
+  return (
+    <>
+      <Table columns={columns} dataSource={dishMockup} />
+      <CreateDish
+        isModalOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        editing={editingDish}
+      />
+    </>
+  );
+};
 export default DishesTable;
