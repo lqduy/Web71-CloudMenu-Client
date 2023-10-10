@@ -18,7 +18,7 @@ const initialValues = {
 
 const MODAL_WIDTH = 680;
 
-const CreateBusinessPage = () => {
+const CreatePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
 
@@ -33,10 +33,6 @@ const CreateBusinessPage = () => {
 
   const onFinish = values => {
     console.log('Success:', values);
-  };
-
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
   };
 
   return (
@@ -75,15 +71,14 @@ const CreateBusinessPage = () => {
           initialValues={initialValues}
           layout='vertical'
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           className='mt-8'
         >
           <Row gutter={16}>
             <Col span={16}>
               <Form.Item
-                label='Tên gian hàng'
+                label='Tên kinh doanh'
                 name='brandName'
-                rules={[{ required: true, message: 'Please input the brand name!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập tên cơ sở kinh doanh!' }]}
               >
                 <Input />
               </Form.Item>
@@ -93,6 +88,7 @@ const CreateBusinessPage = () => {
                 <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
                   <Select.Option value='eatery'>Quán ăn</Select.Option>
+                  <Select.Option value='canteen'>Căng tin</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -128,7 +124,7 @@ const CreateBusinessPage = () => {
           <Form.Item
             label='Địa chỉ'
             name='address'
-            rules={[{ required: true, message: 'Please input your password!' }]}
+            rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
           >
             <Input />
           </Form.Item>
@@ -138,7 +134,7 @@ const CreateBusinessPage = () => {
               <Form.Item
                 label='Tỉnh/Thành phố'
                 name='province'
-                rules={[{ required: true, message: 'Please select province or city!' }]}
+                rules={[{ required: true, message: 'Vui lòng chọn tỉnh thành!' }]}
               >
                 <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
@@ -151,7 +147,7 @@ const CreateBusinessPage = () => {
               <Form.Item
                 label='Huyện/Quận'
                 name='district'
-                rules={[{ required: true, message: 'Please select district!' }]}
+                rules={[{ required: true, message: 'Vui lòng chọn huyện quận!' }]}
               >
                 <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
@@ -164,7 +160,7 @@ const CreateBusinessPage = () => {
               <Form.Item
                 label='Xã/Phường'
                 name='ward'
-                rules={[{ required: true, message: 'Please select ward!' }]}
+                rules={[{ required: true, message: 'Vui lòng chọn xã phường!' }]}
               >
                 <Select>
                   <Select.Option value='restaurant'>Nhà hàng</Select.Option>
@@ -180,7 +176,7 @@ const CreateBusinessPage = () => {
               <Form.Item
                 label='Điện thoại'
                 name='phoneNumber'
-                rules={[{ required: true, message: 'Please input phone number!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
               >
                 <InputNumber controls={false} style={{ width: '100%' }} />
               </Form.Item>
@@ -189,7 +185,7 @@ const CreateBusinessPage = () => {
               <Form.Item
                 label='Email'
                 name='email'
-                rules={[{ type: 'email', message: 'Please input correct email!' }]}
+                rules={[{ type: 'email', message: 'Vui lòng nhập chính xác địa chỉ email!' }]}
               >
                 <Input />
               </Form.Item>
@@ -201,4 +197,4 @@ const CreateBusinessPage = () => {
   );
 };
 
-export default CreateBusinessPage;
+export default CreatePage;

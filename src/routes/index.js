@@ -1,5 +1,6 @@
 import Authen from '~/pages/Authen';
 import Home from '~/pages/Home';
+import Dishes from '~/pages/Dishes';
 
 export const PATH = {
   LOGIN: '/login',
@@ -15,7 +16,8 @@ const publicRoutes = [
 
 const privateRoutes = [
   { path: '/u/:userId', component: Home },
-  { path: '/p/:pageId/dashboard', component: Home }
+  { path: '/p/:pageId/dashboard', component: Home },
+  { path: '/p/:pageId/dishes', component: Dishes }
 ];
 
 const privateRoutesMapping = privateRoutes.map(route => ({ ...route, isPrivated: true }));

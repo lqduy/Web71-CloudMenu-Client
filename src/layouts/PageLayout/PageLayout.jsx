@@ -1,3 +1,4 @@
+import Container from '~/components/Container';
 import BottomHeader from '../BottomHeader';
 import TopHeader from '../TopHeader';
 
@@ -6,7 +7,7 @@ const PageLayout = ({ children }) => {
     <>
       <TopHeader />
       <BottomHeader />
-      {children}
+      <Container>{children}</Container>
     </>
   );
 };

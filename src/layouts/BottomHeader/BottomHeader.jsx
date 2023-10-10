@@ -4,8 +4,7 @@ import {
   BarsOutlined,
   BookOutlined,
   FileDoneOutlined,
-  LineChartOutlined,
-  PlusOutlined
+  LineChartOutlined
 } from '@ant-design/icons';
 import Container from '~/components/Container';
 
@@ -15,19 +14,19 @@ const BottomHeader = () => {
       <Container>
         <div className='flex justify-between items-center h-11'>
           <Space wrap>
-            <Button type='text' icon={<HomeOutlined />} href='#' style={{ color: 'white' }}>
+            <Button type='text' icon={<HomeOutlined />} style={{ color: 'white' }}>
               Bảng tin
             </Button>
-            <Button type='text' icon={<BarsOutlined />} href='#' style={{ color: 'white' }}>
+            <Button type='text' icon={<BarsOutlined />} style={{ color: 'white' }}>
               Món ăn
             </Button>
-            <Button type='text' icon={<BookOutlined />} href='#' style={{ color: 'white' }}>
+            <Button type='text' icon={<BookOutlined />} style={{ color: 'white' }}>
               Thực đơn
             </Button>
-            <Button type='text' icon={<FileDoneOutlined />} href='#' style={{ color: 'white' }}>
+            <Button type='text' icon={<FileDoneOutlined />} style={{ color: 'white' }}>
               Gọi món
             </Button>
-            <Button type='text' icon={<LineChartOutlined />} href='#' style={{ color: 'white' }}>
+            <Button type='text' icon={<LineChartOutlined />} style={{ color: 'white' }}>
               Thống kê
             </Button>
           </Space>
