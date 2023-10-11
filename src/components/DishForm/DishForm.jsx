@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Tabs, Button, Modal, Form } from 'antd';
-import DishOverviewForm from './CreateDishForms/DishOverviewForm';
-import DescriptionForm from './CreateDishForms/DescriptionForm';
+import { Tabs, Button, Modal, Form, message } from 'antd';
+import DishOverviewForm from './FormParts/DishOverviewForm';
+import DescriptionForm from './FormParts/DescriptionForm';
+import DishesAPI from '~/services/dishAPI';
 
-const CreateDish = ({ isModalOpen, closeModal, editingDish, resetEditing }) => {
+const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload }) => {
   const [descriptionValue, setDescriptionValue] = useState('');
   const [form] = Form.useForm();
 
@@ -40,10 +41,31 @@ const CreateDish = ({ isModalOpen, closeModal, editingDish, resetEditing }) => {
     setDescriptionValue('');
   };
 
-  const onFinish = values => {
-    console.log(descriptionValue);
-    const inputValue = { ...values, description: descriptionValue };
-    console.log(inputValue);
+  const onFinish = async values => {
+    const dishData = { ...values, description: descriptionValue };
+    if (!editingDish) {
+      try {
+        await DishesAPI.create(dishData);
+        message.success('Tạo món thành công');
+        handleResetForm();
+        closeModal();
+        toReload();
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      }
+    } else {
+      try {
+        await DishesAPI.update(editingDish._id, dishData);
+        message.success('Cập nhật thành công');
+        handleResetForm();
+        closeModal();
+        toReload();
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      }
+    }
   };
 
   const items = [
@@ -85,16 +107,10 @@ const CreateDish = ({ isModalOpen, closeModal, editingDish, resetEditing }) => {
           </Button>
         ]}
       >
-        <Tabs
-          defaultActiveKey='1'
-          items={items}
-          onChange={key => {
-            console.log(key);
-          }}
-        />
+        <Tabs defaultActiveKey='1' items={items} />
       </Modal>
     </>
   );
 };
 
-export default CreateDish;
+export default DishForm;

@@ -1,16 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PageLayout from '~/layouts/PageLayout';
 import { Row, Col } from 'antd';
 import DishesTopBar from './DishesTopBar';
 import DishesTable from './DishesTable';
 import DishesAsideBar from './DishesAsideBar';
-import CreateDish from '~/components/CreateDish';
-import dishMockup from '~/utils/mockup/dishes';
+import DishForm from '~/components/DishForm';
+import DishesAPI from '~/services/dishAPI';
 
 const Dishes = () => {
-  const [dishesData, setDishesData] = useState(dishMockup);
+  const [dishesData, setDishesData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDish, setEditingDish] = useState(null);
+  const [reload, setReload] = useState(null);
+
+  const toReload = () => {
+    setReload(Math.random());
+  };
+
+  useEffect(() => {
+    fetchAllDishes();
+  }, [reload]);
+
+  const fetchAllDishes = async () => {
+    try {
+      const dishes = await DishesAPI.getAll();
+      const rawData = dishes.data.data;
+      const sortedData = rawData.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+      setDishesData(sortedData);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
 
   const handleSetEdit = data => {
     if (!data) {
@@ -31,16 +52,17 @@ const Dishes = () => {
             </Col>
             <Col span={19} className='flex flex-col gap-4'>
               <DishesTopBar onOpenModal={() => setIsModalOpen(true)} />
-              <DishesTable data={dishesData} onSetEdit={handleSetEdit} />
+              <DishesTable data={dishesData} onSetEdit={handleSetEdit} toReload={toReload} />
             </Col>
           </Row>
         </div>
       </PageLayout>
-      <CreateDish
+      <DishForm
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
         editingDish={editingDish}
         resetEditing={() => handleSetEdit(null)}
+        toReload={toReload}
       />
     </>
   );

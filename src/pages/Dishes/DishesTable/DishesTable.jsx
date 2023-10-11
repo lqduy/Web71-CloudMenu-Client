@@ -1,16 +1,24 @@
 import { Space, Table, Button, Popconfirm, message } from 'antd';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import DishesAPI from '~/services/dishAPI';
 
-const DishesTable = ({ data, onSetEdit }) => {
-  const handleDeleteDish = (_id, name) => {
-    message.success(`Món "${name}" đã được xóa`);
+const DishesTable = ({ data, onSetEdit, toReload }) => {
+  const handleDeleteDish = async (id, name) => {
+    try {
+      await DishesAPI.deleteById(id);
+      message.success(`Món "${name}" đã được xóa`);
+      toReload();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
   };
 
   const columns = [
     {
       title: 'SKU',
-      dataIndex: '_id',
-      key: '_id',
+      dataIndex: 'sku',
+      key: 'sku',
       render: text => <p className='mb-0'>{text}</p>
     },
     {
@@ -53,7 +61,7 @@ const DishesTable = ({ data, onSetEdit }) => {
             onConfirm={() => handleDeleteDish(data._id, data.name)}
             okText='Xóa'
             cancelText='Đóng'
-            okButtonProps={{ ['danger']: true }}
+            okButtonProps={{ danger: true }}
           >
             <Button type='text' danger icon={<DeleteOutlined />} />
           </Popconfirm>
@@ -64,7 +72,7 @@ const DishesTable = ({ data, onSetEdit }) => {
 
   return (
     <>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} rowKey={dish => dish._id} />
     </>
   );
 };
