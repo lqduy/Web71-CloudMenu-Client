@@ -1,6 +1,8 @@
 import { Space, Table, Button, Popconfirm, message } from 'antd';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import DishesAPI from '~/services/dishAPI';
+import Dish from '~/utils/data/dish';
+import DishDefaultImage from '~/assets/layouts/dish-default.png';
 
 const DishesTable = ({ data, onSetEdit, toReload }) => {
   const handleDeleteDish = async (id, name) => {
@@ -23,9 +25,15 @@ const DishesTable = ({ data, onSetEdit, toReload }) => {
     },
     {
       title: 'Hình ảnh',
-      dataIndex: 'image',
-      key: 'image',
-      render: image => <img src={image} className='h-32' />
+      dataIndex: 'images',
+      key: 'images',
+      render: images => {
+        let imageSrc = DishDefaultImage;
+        if (images) {
+          imageSrc = images[0].url;
+        }
+        return <img src={imageSrc} className='h-32' />;
+      }
     },
     {
       title: 'Tên món',
@@ -35,30 +43,37 @@ const DishesTable = ({ data, onSetEdit, toReload }) => {
     {
       title: 'Loại',
       dataIndex: 'type',
-      key: 'type'
+      key: 'type',
+      render: type => {
+        const typeData = Dish.type.find(item => item.value === type);
+        return typeData.title;
+      }
     },
     {
       title: 'Đơn Giá',
       key: 'price',
       dataIndex: 'price',
-      render: (price, record) => (
-        <p className='mb-0'>
-          {price}/{record.unit}
-        </p>
-      )
+      render: (price, dish) => {
+        const formattedPrice = price.toLocaleString('vi-VN');
+        return (
+          <p className='mb-0'>
+            {formattedPrice}/{dish.unit}
+          </p>
+        );
+      }
     },
     {
       title: 'Tùy chọn',
       key: 'setting',
-      render: (_, data) => (
+      render: (_, dish) => (
         <Space>
           <Button type='text' icon={<EyeOutlined />} />
-          <Button type='text' icon={<EditOutlined />} onClick={() => onSetEdit(data)} />
+          <Button type='text' icon={<EditOutlined />} onClick={() => onSetEdit(dish)} />
           <Popconfirm
             placement='topRight'
             title='Xóa món ăn'
             description='Bạn chắc chắn muốn xóa món ăn này?'
-            onConfirm={() => handleDeleteDish(data._id, data.name)}
+            onConfirm={() => handleDeleteDish(dish._id, dish.name)}
             okText='Xóa'
             cancelText='Đóng'
             okButtonProps={{ danger: true }}

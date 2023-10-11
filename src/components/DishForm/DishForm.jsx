@@ -1,11 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Tabs, Button, Modal, Form, message } from 'antd';
 import DishOverviewForm from './FormParts/DishOverviewForm';
-import DescriptionForm from './FormParts/DescriptionForm';
+import DishDescriptionForm from './FormParts/DishDescriptionForm';
 import DishesAPI from '~/services/dishAPI';
+import DishImageForm from './FormParts/DishImageForm';
+import DishDefault from '~/assets/layouts/dish-default.png';
+
+const initalImageList = [
+  {
+    uid: '-1',
+    name: 'image.png',
+    status: 'done',
+    url: DishDefault
+  }
+];
 
 const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload }) => {
   const [descriptionValue, setDescriptionValue] = useState('');
+  const [imageList, setImageList] = useState(initalImageList);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -39,10 +51,11 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
   const handleResetForm = () => {
     form.resetFields();
     setDescriptionValue('');
+    setImageList(initalImageList);
   };
 
   const onFinish = async values => {
-    const dishData = { ...values, description: descriptionValue };
+    const dishData = { ...values, description: descriptionValue, images: imageList };
     if (!editingDish) {
       try {
         await DishesAPI.create(dishData);
@@ -77,12 +90,17 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
     {
       key: '2',
       label: 'Hình ảnh',
-      children: 'Content of Tab Pane 3'
+      children: (
+        <DishImageForm
+          fileList={imageList}
+          handleChange={({ fileList: newFileList }) => setImageList(newFileList)}
+        />
+      )
     },
     {
       key: '3',
       label: 'Mô tả chi tiết',
-      children: <DescriptionForm value={descriptionValue} handleChange={setDescriptionValue} />
+      children: <DishDescriptionForm value={descriptionValue} handleChange={setDescriptionValue} />
     }
   ];
 
