@@ -1,16 +1,9 @@
-import { useState } from 'react';
-import { Space, Table, Button } from 'antd';
+import { Space, Table, Button, Popconfirm, message } from 'antd';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import dishMockup from '~/utils/mockup/dishes';
-import CreateDish from '~/components/CreateDish';
 
-const DishesTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingDish, setEditingDish] = useState(null);
-
-  const handleClickEdit = data => {
-    setIsModalOpen(true);
-    setEditingDish(data);
+const DishesTable = ({ data, onSetEdit }) => {
+  const handleDeleteDish = (_id, name) => {
+    message.success(`Món "${name}" đã được xóa`);
   };
 
   const columns = [
@@ -52,8 +45,18 @@ const DishesTable = () => {
       render: (_, data) => (
         <Space>
           <Button type='text' icon={<EyeOutlined />} />
-          <Button type='text' icon={<EditOutlined />} onClick={() => handleClickEdit(data)} />
-          <Button type='text' danger icon={<DeleteOutlined />} />
+          <Button type='text' icon={<EditOutlined />} onClick={() => onSetEdit(data)} />
+          <Popconfirm
+            placement='topRight'
+            title='Xóa món ăn'
+            description='Bạn chắc chắn muốn xóa món ăn này?'
+            onConfirm={() => handleDeleteDish(data._id, data.name)}
+            okText='Xóa'
+            cancelText='Đóng'
+            okButtonProps={{ ['danger']: true }}
+          >
+            <Button type='text' danger icon={<DeleteOutlined />} />
+          </Popconfirm>
         </Space>
       )
     }
@@ -61,12 +64,7 @@ const DishesTable = () => {
 
   return (
     <>
-      <Table columns={columns} dataSource={dishMockup} />
-      <CreateDish
-        isModalOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-        editing={editingDish}
-      />
+      <Table columns={columns} dataSource={data} />
     </>
   );
 };

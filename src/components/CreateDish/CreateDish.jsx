@@ -3,30 +3,36 @@ import { Tabs, Button, Modal, Form } from 'antd';
 import DishOverviewForm from './CreateDishForms/DishOverviewForm';
 import DescriptionForm from './CreateDishForms/DescriptionForm';
 
-const CreateDish = ({ isModalOpen, closeModal, editing }) => {
+const CreateDish = ({ isModalOpen, closeModal, editingDish, resetEditing }) => {
   const [descriptionValue, setDescriptionValue] = useState('');
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (!editing) return;
-    const description = editing.description;
-    setDescriptionValue(description);
-    form.setFieldsValue({
-      name: editing.name,
-      group: editing.group,
-      origin: editing.origin,
-      type: editing.type,
-      preOrder: editing.preOrder,
-      sku: editing.sku,
-      unit: editing.unit,
-      price: editing.price
-    });
+    const fieldData = () => {
+      if (!editingDish) return;
+      const description = editingDish.description;
+      setDescriptionValue(description);
+      form.setFieldsValue({
+        name: editingDish.name,
+        group: editingDish.group,
+        origin: editingDish.origin,
+        type: editingDish.type,
+        preOrder: editingDish.preOrder,
+        sku: editingDish.sku,
+        unit: editingDish.unit,
+        price: editingDish.price
+      });
+    };
+    fieldData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editing]);
+  }, [editingDish]);
 
   const handleCancel = () => {
     form.resetFields();
     closeModal();
+    if (editingDish) {
+      resetEditing();
+    }
   };
 
   const handleResetForm = () => {
@@ -44,7 +50,7 @@ const CreateDish = ({ isModalOpen, closeModal, editing }) => {
     {
       key: '1',
       label: 'Thông tin',
-      children: <DishOverviewForm form={form} onFinish={onFinish} editing={editing} />
+      children: <DishOverviewForm form={form} onFinish={onFinish} />
     },
     {
       key: '2',
@@ -75,7 +81,7 @@ const CreateDish = ({ isModalOpen, closeModal, editing }) => {
             Điền lại
           </Button>,
           <Button key='create' type='primary' onClick={() => form.submit()}>
-            {editing ? 'Cập nhật' : 'Tạo mới'}
+            {editingDish ? 'Cập nhật' : 'Tạo mới'}
           </Button>
         ]}
       >
