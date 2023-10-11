@@ -12,6 +12,7 @@ const Dishes = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDish, setEditingDish] = useState(null);
   const [reload, setReload] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toReload = () => {
     setReload(Math.random());
@@ -22,6 +23,7 @@ const Dishes = () => {
   }, [reload]);
 
   const fetchAllDishes = async () => {
+    setIsLoading(true);
     try {
       const dishes = await DishesAPI.getAll();
       const rawData = dishes.data.data;
@@ -30,6 +32,8 @@ const Dishes = () => {
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -52,7 +56,12 @@ const Dishes = () => {
             </Col>
             <Col span={19} className='flex flex-col gap-4'>
               <DishesTopBar onOpenModal={() => setIsModalOpen(true)} />
-              <DishesTable data={dishesData} onSetEdit={handleSetEdit} toReload={toReload} />
+              <DishesTable
+                data={dishesData}
+                onSetEdit={handleSetEdit}
+                toReload={toReload}
+                isLoading={isLoading}
+              />
             </Col>
           </Row>
         </div>

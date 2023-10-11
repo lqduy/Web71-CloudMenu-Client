@@ -4,7 +4,7 @@ import DishesAPI from '~/services/dishAPI';
 import Dish from '~/utils/data/dish';
 import DishDefaultImage from '~/assets/layouts/dish-default.png';
 
-const DishesTable = ({ data, onSetEdit, toReload }) => {
+const DishesTable = ({ data, onSetEdit, toReload, isLoading }) => {
   const handleDeleteDish = async (id, name) => {
     try {
       await DishesAPI.deleteById(id);
@@ -27,18 +27,20 @@ const DishesTable = ({ data, onSetEdit, toReload }) => {
       title: 'Hình ảnh',
       dataIndex: 'images',
       key: 'images',
-      render: images => {
+      render: (images, dish) => {
         let imageSrc = DishDefaultImage;
         if (images) {
           imageSrc = images[0].url;
         }
-        return <img src={imageSrc} className='h-32' />;
+        return <img src={imageSrc} alt={dish.name} className='h-32' />;
       }
     },
     {
       title: 'Tên món',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      render: name => <p>{name}</p>,
+      width: '25%'
     },
     {
       title: 'Loại',
@@ -81,13 +83,14 @@ const DishesTable = ({ data, onSetEdit, toReload }) => {
             <Button type='text' danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
-      )
+      ),
+      width: '12.5%'
     }
   ];
 
   return (
     <>
-      <Table columns={columns} dataSource={data} rowKey={dish => dish._id} />
+      <Table columns={columns} dataSource={data} rowKey={dish => dish._id} loading={isLoading} />
     </>
   );
 };

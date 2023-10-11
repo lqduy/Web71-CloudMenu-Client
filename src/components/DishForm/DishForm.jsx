@@ -9,7 +9,7 @@ import DishDefault from '~/assets/layouts/dish-default.png';
 const initalImageList = [
   {
     uid: '-1',
-    name: 'image.png',
+    name: 'default.png',
     status: 'done',
     url: DishDefault
   }
@@ -33,7 +33,8 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
         preOrder: editingDish.preOrder,
         sku: editingDish.sku,
         unit: editingDish.unit,
-        price: editingDish.price
+        price: editingDish.price,
+        note: editingDish.node
       });
     };
     fieldData();

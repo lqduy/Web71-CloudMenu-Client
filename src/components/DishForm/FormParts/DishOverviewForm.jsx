@@ -9,11 +9,11 @@ const initialValues = {
   preOrder: false,
   sku: '',
   unit: 'Phần',
-  price: null
+  price: null,
+  note: ''
 };
 
 const DishOverviewForm = ({ form, onFinish }) => {
-
   return (
     <Form
       form={form}
@@ -95,9 +95,13 @@ const DishOverviewForm = ({ form, onFinish }) => {
           <Form.Item
             label='Mã SKU'
             name='sku'
-            rules={[{ required: true, message: 'Vui lòng nhập đơn vị!' }]}
+            rules={[
+              { required: true, message: 'Vui lòng nhập mã SKU!' },
+              { pattern: /^[a-zA-Z0-9]{4,12}$/, message: 'Dài 4-12, không ký tự đặc biệt' }
+            ]}
+            validateDebounce={600}
           >
-            <Input />
+            <Input placeholder='VD: CANHCHUA' />
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -127,6 +131,10 @@ const DishOverviewForm = ({ form, onFinish }) => {
           </Form.Item>
         </Col>
       </Row>
+
+      <Form.Item label='Ghi chú' name='note'>
+        <Input placeholder='Nguyên liệu, khẩu vị, thời gian chế biến...' />
+      </Form.Item>
     </Form>
   );
 };

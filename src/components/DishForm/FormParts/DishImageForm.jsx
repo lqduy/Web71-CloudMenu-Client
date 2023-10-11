@@ -13,7 +13,9 @@ const DishImageForm = ({ fileList, handleChange }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
+
   const handleCancel = () => setPreviewOpen(false);
+
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);

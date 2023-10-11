@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Button, Space } from 'antd';
 import {
   HomeOutlined,
@@ -9,6 +10,7 @@ import {
 import Container from '~/components/Container';
 
 const BottomHeader = () => {
+  const navigate = useNavigate();
   return (
     <div className='bg-orange-500'>
       <Container>
@@ -17,7 +19,12 @@ const BottomHeader = () => {
             <Button type='text' icon={<HomeOutlined />} style={{ color: 'white' }}>
               Bảng tin
             </Button>
-            <Button type='text' icon={<BarsOutlined />} style={{ color: 'white' }}>
+            <Button
+              type='text'
+              icon={<BarsOutlined />}
+              style={{ color: 'white' }}
+              onClick={() => navigate('/p/lqduycp/dishes')}
+            >
               Món ăn
             </Button>
             <Button type='text' icon={<BookOutlined />} style={{ color: 'white' }}>
