@@ -1,4 +1,5 @@
 import { Button, Modal, Tabs } from 'antd';
+import { CheckOutlined, SaveOutlined } from '@ant-design/icons';
 import MenuContentForm from './FormParts/MenuContentForm';
 import MenuDesignForm from './FormParts/MenuDesignForm';
 
@@ -16,6 +17,17 @@ const MenuForm = ({ form, isModalOpen, handleCancel }) => {
     }
   ];
 
+  const buttonGroup = (
+    <div className='flex gap-1'>
+      <Button key='save' icon={<SaveOutlined />} type='primary' onClick={() => form.submit()}>
+        Lưu
+      </Button>
+      <Button key='apply' icon={<CheckOutlined />} type='primary' onClick={() => form.submit()}>
+        Lưu và áp dụng
+      </Button>
+    </div>
+  );
+
   return (
     <>
       <Modal
@@ -26,17 +38,9 @@ const MenuForm = ({ form, isModalOpen, handleCancel }) => {
         maskClosable={false}
         width='70%'
         className='min-w-[1180px]'
-        footer={[
-          <Button key='cancel' onClick={handleCancel}>
-            Hủy
-          </Button>,
-          <Button key='reset'>Điền lại</Button>,
-          <Button key='create' type='primary' onClick={() => form.submit()}>
-            Tạo
-          </Button>
-        ]}
+        footer={false}
       >
-        <Tabs defaultActiveKey='1' items={items} />
+        <Tabs defaultActiveKey='1' items={items} type='card' tabBarExtraContent={buttonGroup} />
       </Modal>
     </>
   );

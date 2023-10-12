@@ -126,7 +126,7 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
           </Button>
         ]}
       >
-        <Tabs defaultActiveKey='1' items={items} />
+        <Tabs defaultActiveKey='1' items={items} type='card' />
       </Modal>
     </>
   );

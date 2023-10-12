@@ -1,9 +1,9 @@
-import React from 'react'
-
 const MenuDesignForm = () => {
   return (
-    <div>MenuDesignForm</div>
-  )
-}
+    <div>
+      <h1>MenuDesignForm</h1>
+    </div>
+  );
+};
 
-export default MenuDesignForm
+export default MenuDesignForm;

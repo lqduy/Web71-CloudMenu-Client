@@ -1,11 +1,16 @@
 import { useEffect } from 'react';
-import { Row, Col, Spin } from 'antd';
+import { Row, Col, Spin, Button } from 'antd';
+import { CloseOutlined, MenuOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllDishes } from '~/redux/slices/dishSlice';
+import { unselectAll } from '~/redux/slices/menuSlice';
 import MenuItem from '~/components/MenuItem';
+import Search from 'antd/es/input/Search';
+import Dish from '~/utils/data/dish';
 
 const MenuContentForm = () => {
   const { dishData, isLoading } = useSelector(state => state.dish);
+  const { menuContent } = useSelector(state => state.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,21 +19,57 @@ const MenuContentForm = () => {
   }, []);
 
   return (
-    <Row gutter={32}>
-      <Col span={8}>
-        <div className=''>
-          <h2>Danh sách món</h2>
-          <div className='flex flex-col gap-1'>
-            {isLoading ? <Spin /> : dishData.map(dish => <MenuItem key={dish._id} data={dish} />)}
-          </div>
-        </div>
-      </Col>
-      <Col span={16}>
-        <div className='bg-red-300'>
+    <>
+      <Row gutter={32}>
+        <Col span={8} className='flex gap-2'>
+          <Button icon={<MenuOutlined />} />
+          <Search placeholder='Tìm món' allowClear />
+        </Col>
+        <Col span={16} className='flex justify-between'>
           <h2>Thực đơn</h2>
-        </div>
-      </Col>
-    </Row>
+          <div className='flex gap-1'>
+            <Button icon={<CloseOutlined />} onClick={() => dispatch(unselectAll())}>
+              Bỏ chọn tất cả
+            </Button>
+            <Button icon={<PlusOutlined />}>Thêm nhóm</Button>
+          </div>
+        </Col>
+      </Row>
+      <Row gutter={32}>
+        <Col span={8} className='flex flex-col gap-1'>
+          {isLoading ? <Spin /> : dishData.map(dish => <MenuItem key={dish._id} data={dish} />)}
+        </Col>
+        <Col span={16}>
+          {menuContent.length > 0 && (
+            <div className='flex flex-col gap-8 p-4 border border-gray-300 border-1 rounded-lg'>
+              {menuContent.map(group => {
+                const groupData = Dish.group.find(item => item.value === group.value);
+                return (
+                  <div key={group.id}>
+                    <h2 className='pl-2 py-1 rounded-md bg-gray-200'>{groupData.title}</h2>
+                    <div className='flex flex-col gap-2 pl-8'>
+                      {group.subGroup.map(type => {
+                        const typeData = Dish.type.find(item => item.value === type.value);
+                        return (
+                          <div key={type.id}>
+                            <h3>{typeData.title}</h3>
+                            <div className='flex flex-col gap-2 pl-4'>
+                              {type.dishList.map(dish => (
+                                <MenuItem key={dish.id} data={dish} isPreview />
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </Col>
+      </Row>
+    </>
   );
 };
 
