@@ -1,4 +1,5 @@
 import { Row, Col, Form, Input, InputNumber, Select } from 'antd';
+import { useMemo } from 'react';
 import Dish from '~/utils/data/dish';
 
 const initialValues = {
@@ -14,6 +15,38 @@ const initialValues = {
 };
 
 const DishOverviewForm = ({ form, onFinish }) => {
+  const groupOptionsElement = useMemo(
+    () =>
+      Dish.group.map(group => (
+        <Select.Option key={group.value} value={group.value}>
+          {group.title}
+        </Select.Option>
+      )),
+    []
+  );
+
+  const originOptionsElement = useMemo(
+    () =>
+      Dish.origin.map(origin => (
+        <Select.Option key={origin.value} value={origin.value}>
+          {origin.title}
+        </Select.Option>
+      )),
+    []
+  );
+
+  const typeOptionsElement = useMemo(
+    () =>
+      Dish.type
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .map(type => (
+          <Select.Option key={type.value} value={type.value}>
+            {type.title}
+          </Select.Option>
+        )),
+    []
+  );
+
   return (
     <Form
       form={form}
@@ -38,13 +71,7 @@ const DishOverviewForm = ({ form, onFinish }) => {
             name='group'
             rules={[{ required: true, message: 'Vui lòng chọn phân loại!' }]}
           >
-            <Select>
-              {Dish.group.map(group => (
-                <Select.Option key={group.value} value={group.value}>
-                  {group.title}
-                </Select.Option>
-              ))}
-            </Select>
+            <Select>{groupOptionsElement}</Select>
           </Form.Item>
         </Col>
       </Row>
@@ -56,13 +83,7 @@ const DishOverviewForm = ({ form, onFinish }) => {
             name='origin'
             rules={[{ required: true, message: 'Vui lòng chọn phân loại!' }]}
           >
-            <Select>
-              {Dish.origin.map(origin => (
-                <Select.Option key={origin.value} value={origin.value}>
-                  {origin.title}
-                </Select.Option>
-              ))}
-            </Select>
+            <Select>{originOptionsElement}</Select>
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -71,13 +92,7 @@ const DishOverviewForm = ({ form, onFinish }) => {
             name='type'
             rules={[{ required: true, message: 'Vui lòng chọn phân loại!' }]}
           >
-            <Select>
-              {Dish.type.map(type => (
-                <Select.Option key={type.value} value={type.value}>
-                  {type.title}
-                </Select.Option>
-              ))}
-            </Select>
+            <Select>{typeOptionsElement}</Select>
           </Form.Item>
         </Col>
         <Col span={8}>

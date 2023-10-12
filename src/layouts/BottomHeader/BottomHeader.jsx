@@ -23,11 +23,16 @@ const BottomHeader = () => {
               type='text'
               icon={<BarsOutlined />}
               style={{ color: 'white' }}
-              onClick={() => navigate('/p/lqduycp/dishes')}
+              onClick={() => navigate('/p/lqduycp/dish')}
             >
               Món ăn
             </Button>
-            <Button type='text' icon={<BookOutlined />} style={{ color: 'white' }}>
+            <Button
+              type='text'
+              icon={<BookOutlined />}
+              style={{ color: 'white' }}
+              onClick={() => navigate('/p/lqduycp/menu')}
+            >
               Thực đơn
             </Button>
             <Button type='text' icon={<FileDoneOutlined />} style={{ color: 'white' }}>

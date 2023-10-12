@@ -108,7 +108,7 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
   return (
     <>
       <Modal
-        title='Thêm món ăn'
+        title={editingDish ? 'CHỈNH SỬA MÓN ĂN' : 'THÊM MÓN ĂN'}
         open={isModalOpen}
         onOk={() => form.submit()}
         onCancel={handleCancel}

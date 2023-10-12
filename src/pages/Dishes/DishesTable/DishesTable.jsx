@@ -57,9 +57,10 @@ const DishesTable = ({ data, onSetEdit, toReload, isLoading }) => {
       dataIndex: 'price',
       render: (price, dish) => {
         const formattedPrice = price.toLocaleString('vi-VN');
+        const formattedUnit = dish.unit.toLowerCase();
         return (
           <p className='mb-0'>
-            {formattedPrice}/{dish.unit}
+            {formattedPrice}/{formattedUnit}
           </p>
         );
       }

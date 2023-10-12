@@ -17,12 +17,16 @@ const group = [
 ];
 
 const type = [
+  { value: 'com', title: 'Cơm' },
   { value: 'kho', title: 'Kho' },
   { value: 'xao', title: 'Xào' },
   { value: 'chien', title: 'Chiên' },
   { value: 'hap', title: 'Hấp' },
   { value: 'luoc', title: 'Luộc' },
   { value: 'nuong', title: 'Nướng' },
+  { value: 'canh', title: 'Canh' },
+  { value: 'chao', title: 'Cháo' },
+  { value: 'lau', title: 'Lẩu' },
   { value: 'goitron', title: 'Gỏi, trộn' },
   { value: 'song', title: 'Tươi sống' },
   { value: 'nemchacuon', title: 'Nem, chả, cuốn' },
