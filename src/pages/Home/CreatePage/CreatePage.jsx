@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Row, Col, Button, Modal, Form, Input, InputNumber, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import AddressAPI from '~/services/addressAPI';
 
 const initialValues = {
   brandName: '',
@@ -19,8 +20,34 @@ const initialValues = {
 const MODAL_WIDTH = 680;
 
 const CreatePage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [provinceData, setProvinceData] = useState([]);
+  const [districtData, setDistrictData] = useState([]);
+  const [wardData, setWardData] = useState([]);
+
+  useEffect(() => {
+    fetchProvinceData();
+  }, []);
+
+  const fetchProvinceData = async () => {
+    const provinces = await AddressAPI.getProvinces();
+    setProvinceData(provinces.data.results);
+  };
+
+  const fetchDistrictData = async provinceName => {
+    const selectedProvince = provinceData.find(province => provinceName === province.province_name);
+    const provinceId = selectedProvince.province_id;
+    const districts = await AddressAPI.getDistricts(provinceId);
+    setDistrictData(districts.data.results);
+  };
+
+  const fetchWardData = async districtName => {
+    const selectedDistrict = districtData.find(district => districtName === district.district_name);
+    const districtId = selectedDistrict.district_id;
+    const wards = await AddressAPI.getWard(districtId);
+    setWardData(wards.data.results);
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -136,10 +163,12 @@ const CreatePage = () => {
                 name='province'
                 rules={[{ required: true, message: 'Vui lòng chọn tỉnh thành!' }]}
               >
-                <Select>
-                  <Select.Option value='restaurant'>Nhà hàng</Select.Option>
-                  <Select.Option value='restaurant1'>Quán ăn</Select.Option>
-                  <Select.Option value='restaurant2'>Quầy</Select.Option>
+                <Select onChange={value => fetchDistrictData(value)}>
+                  {provinceData.map(province => (
+                    <Select.Option key={province.province_id} value={province.province_name}>
+                      {province.province_name}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
@@ -149,10 +178,15 @@ const CreatePage = () => {
                 name='district'
                 rules={[{ required: true, message: 'Vui lòng chọn huyện quận!' }]}
               >
-                <Select>
-                  <Select.Option value='restaurant'>Nhà hàng</Select.Option>
-                  <Select.Option value='restaurant1'>Quán ăn</Select.Option>
-                  <Select.Option value='restaurant2'>Quầy</Select.Option>
+                <Select
+                  disabled={districtData.length === 0}
+                  onChange={value => fetchWardData(value)}
+                >
+                  {districtData.map(district => (
+                    <Select.Option key={district.district_id} value={district.district_name}>
+                      {district.district_name}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
@@ -162,10 +196,12 @@ const CreatePage = () => {
                 name='ward'
                 rules={[{ required: true, message: 'Vui lòng chọn xã phường!' }]}
               >
-                <Select>
-                  <Select.Option value='restaurant'>Nhà hàng</Select.Option>
-                  <Select.Option value='restaurant1'>Quán ăn</Select.Option>
-                  <Select.Option value='restaurant2'>Quầy</Select.Option>
+                <Select disabled={wardData.length === 0}>
+                  {wardData.map(ward => (
+                    <Select.Option key={ward.ward_id} value={ward.ward_name}>
+                      {ward.ward_name}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>

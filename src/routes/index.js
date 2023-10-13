@@ -2,6 +2,7 @@ import Authen from '~/pages/Authen';
 import Home from '~/pages/Home';
 import Dishes from '~/pages/Dishes';
 import Menus from '~/pages/Menus';
+import MenuDetails from '~/pages/MenuDetails';
 
 export const PATH = {
   LOGIN: '/login',
@@ -19,7 +20,8 @@ const privateRoutes = [
   { path: '/u/:userId', component: Home },
   { path: '/p/:pageId/dashboard', component: Home },
   { path: '/p/:pageId/dish', component: Dishes },
-  { path: '/p/:pageId/menu', component: Menus }
+  { path: '/p/:pageId/menu', component: Menus },
+  { path: '/m/:menuId', component: MenuDetails }
 ];
 
 const privateRoutesMapping = privateRoutes.map(route => ({ ...route, isPrivated: true }));

@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Button, Card, Avatar } from 'antd';
+import { Row, Col } from 'antd';
 import BodyPageTopBar from '~/components/BodyPageTopBar';
 import MenuForm from './MenuForm';
 import MenusAPI from '~/services/menuAPI';
-import {
-  DollarOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  FileTextOutlined,
-  SettingOutlined
-} from '@ant-design/icons';
-import Meta from 'antd/es/card/Meta';
+import MenuCard from './MenuCard';
 
 const Menus = () => {
   const [menuData, setMenuData] = useState([]);
@@ -54,31 +47,7 @@ const Menus = () => {
             />
             <div className='flex gap-4 w-full flex-wrap'>
               {menuData.map((menu, index) => (
-                <Card
-                  key={menu._id}
-                  className='ct-card-shadow w-[calc(33.33%-16px*2/3)]'
-                  cover={<div className='h-12 bg-red-300 rounded-t-lg'></div>}
-                  actions={[
-                    <SettingOutlined key='setting' />,
-                    <EditOutlined key='edit' />,
-                    <EllipsisOutlined key='ellipsis' />
-                  ]}
-                >
-                  <Meta
-                    avatar={<Avatar>#{index + 1}</Avatar>}
-                    title={menu.name}
-                    description={
-                      <div className='flex gap-8'>
-                        <Button icon={<FileTextOutlined />} type='text' className='p-0.5'>
-                          {menu.dishQuantity} món
-                        </Button>
-                        <Button icon={<DollarOutlined />} type='text' className='p-0.5'>
-                          {menu.priceAverage?.toLocaleString('vi-VN')}đ
-                        </Button>
-                      </div>
-                    }
-                  />
-                </Card>
+                <MenuCard key={menu._id} data={menu} index={index} />
               ))}
             </div>
           </Col>

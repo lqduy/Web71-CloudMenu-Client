@@ -5,6 +5,10 @@ const MenusAPI = {
     const url = '/menus';
     return api.get(url);
   },
+  getOne: id => {
+    const url = `/menus/${id}`;
+    return api.get(url);
+  },
   create: data => {
     const url = '/menus';
     return api.post(url, data);
