@@ -50,7 +50,7 @@ const DishOverviewForm = ({ form, onFinish }) => {
   return (
     <Form
       form={form}
-      name='businessPageData'
+      name='dishOverview'
       initialValues={initialValues}
       layout='vertical'
       onFinish={onFinish}

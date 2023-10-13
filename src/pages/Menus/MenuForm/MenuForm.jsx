@@ -1,14 +1,40 @@
-import { Button, Modal, Tabs } from 'antd';
+import { useSelector } from 'react-redux';
+import { useForm } from 'antd/es/form/Form';
+import { Button, Modal, Tabs, message } from 'antd';
 import { CheckOutlined, SaveOutlined } from '@ant-design/icons';
 import MenuContentForm from './FormParts/MenuContentForm';
 import MenuDesignForm from './FormParts/MenuDesignForm';
+import MenusAPI from '~/services/menuAPI';
 
-const MenuForm = ({ form, isModalOpen, handleCancel }) => {
+const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
+  const { menuContent, itemList } = useSelector(state => state.menu);
+  const [form] = useForm();
+
+  const handleSaveMenu = async value => {
+    const priceAverage = itemList.reduce((sum, item) => sum + item.price, 0) / itemList.length;
+    try {
+      const menuContentData = {
+        name: value.name,
+        priceAverage,
+        dishQuantity: itemList.length,
+        content: menuContent
+      };
+      await MenusAPI.create(menuContentData);
+      message.success('Đã lưu thực đơn');
+      handleCancel();
+      form.resetFields();
+      handleReload();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
+
   const items = [
     {
       key: '1',
       label: 'Chọn món',
-      children: <MenuContentForm />
+      children: <MenuContentForm form={form} onFinish={handleSaveMenu} />
     },
     {
       key: '2',
@@ -22,7 +48,7 @@ const MenuForm = ({ form, isModalOpen, handleCancel }) => {
       <Button key='save' icon={<SaveOutlined />} type='primary' onClick={() => form.submit()}>
         Lưu
       </Button>
-      <Button key='apply' icon={<CheckOutlined />} type='primary' onClick={() => form.submit()}>
+      <Button key='apply' icon={<CheckOutlined />} type='primary' onClick={handleSaveMenu}>
         Lưu và áp dụng
       </Button>
     </div>
@@ -33,7 +59,6 @@ const MenuForm = ({ form, isModalOpen, handleCancel }) => {
       <Modal
         title='TẠO THỰC ĐƠN MỚI'
         open={isModalOpen}
-        onOk={() => form.submit()}
         onCancel={handleCancel}
         maskClosable={false}
         width='70%'

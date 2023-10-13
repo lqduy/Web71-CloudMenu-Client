@@ -7,10 +7,10 @@ import Dish from '~/utils/data/dish';
 import { addMenuItem } from '~/redux/slices/menuSlice';
 
 const MenuItem = ({ data, isPreview }) => {
-  const { itemIdList } = useSelector(state => state.menu);
+  const { itemList } = useSelector(state => state.menu);
   const dispatch = useDispatch();
 
-  const isAdded = itemIdList.some(id => data._id === id);
+  const isAdded = itemList.some(item => data._id === item._id);
 
   const handleAddMenuItem = dishData => {
     dispatch(addMenuItem(dishData));

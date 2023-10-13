@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   menuContent: [],
-  itemIdList: []
+  itemList: []
 };
 
 const menuSlice = createSlice({
@@ -12,7 +12,7 @@ const menuSlice = createSlice({
   reducers: {
     addMenuItem: (state, action) => {
       const itemData = action.payload;
-      state.itemIdList.push(itemData._id);
+      state.itemList.push(itemData);
       const group = state.menuContent.find(group => group.value === itemData.group);
       if (!group) {
         const newGroup = {
@@ -44,7 +44,7 @@ const menuSlice = createSlice({
     },
     unselectAll: state => {
       state.menuContent = [];
-      state.itemIdList = [];
+      state.itemList = [];
     }
   }
 });

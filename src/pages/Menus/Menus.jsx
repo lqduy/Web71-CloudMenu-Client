@@ -1,15 +1,42 @@
-import { useState } from 'react';
-import { Row, Col } from 'antd';
-import { useForm } from 'antd/es/form/Form';
+import { useEffect, useState } from 'react';
+import { Row, Col, Button, Card, Avatar } from 'antd';
 import BodyPageTopBar from '~/components/BodyPageTopBar';
 import MenuForm from './MenuForm';
+import MenusAPI from '~/services/menuAPI';
+import {
+  DollarOutlined,
+  EditOutlined,
+  EllipsisOutlined,
+  FileTextOutlined,
+  SettingOutlined
+} from '@ant-design/icons';
+import Meta from 'antd/es/card/Meta';
 
 const Menus = () => {
+  const [menuData, setMenuData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [form] = useForm();
+  const [reload, setReload] = useState(null);
+
+  useEffect(() => {
+    fetchAllMenus();
+  }, [reload]);
+
+  const fetchAllMenus = async () => {
+    try {
+      const res = await MenusAPI.getAll();
+      setMenuData(res.data.data);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const handleReload = () => {
+    setReload(Math.random());
   };
 
   return (
@@ -25,10 +52,39 @@ const Menus = () => {
               createButtonTitle={'Tạo thực đơn mới'}
               onOpenModal={() => setIsModalOpen(true)}
             />
+            <div className='flex gap-4 w-full flex-wrap'>
+              {menuData.map((menu, index) => (
+                <Card
+                  key={menu._id}
+                  className='ct-card-shadow w-[calc(33.33%-16px*2/3)]'
+                  cover={<div className='h-12 bg-red-300 rounded-t-lg'></div>}
+                  actions={[
+                    <SettingOutlined key='setting' />,
+                    <EditOutlined key='edit' />,
+                    <EllipsisOutlined key='ellipsis' />
+                  ]}
+                >
+                  <Meta
+                    avatar={<Avatar>#{index + 1}</Avatar>}
+                    title={menu.name}
+                    description={
+                      <div className='flex gap-8'>
+                        <Button icon={<FileTextOutlined />} type='text' className='p-0.5'>
+                          {menu.dishQuantity} món
+                        </Button>
+                        <Button icon={<DollarOutlined />} type='text' className='p-0.5'>
+                          {menu.priceAverage?.toLocaleString('vi-VN')}đ
+                        </Button>
+                      </div>
+                    }
+                  />
+                </Card>
+              ))}
+            </div>
           </Col>
         </Row>
       </div>
-      <MenuForm form={form} isModalOpen={isModalOpen} handleCancel={handleCancel} />
+      <MenuForm isModalOpen={isModalOpen} handleCancel={handleCancel} handleReload={handleReload} />
     </>
   );
 };
