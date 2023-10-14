@@ -1,8 +1,8 @@
 import api from './axiosInstance';
 
 const PageAPI = {
-  getAll: () => {
-    const url = '/pages';
+  getAllOfUser: userId => {
+    const url = `/pages/user/${userId}`;
     return api.get(url);
   },
   getOne: id => {

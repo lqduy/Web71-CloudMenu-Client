@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import PageAPI from '~/services/pageAPI';
 
-const FETCH_ALL_PAGE = 'app/fetch-all-page';
+const FETCH_PAGES_OF_USER = 'app/fetch-pages-of-user';
 
-export const fetchAllPages = createAsyncThunk(
-  FETCH_ALL_PAGE,
+export const fetchPagesOfUser = createAsyncThunk(
+  FETCH_PAGES_OF_USER,
   async (payload, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await PageAPI.getAll();
+      const response = await PageAPI.getAllOfUser(payload);
       const pageData = response.data.data;
       return fulfillWithValue(pageData);
     } catch (error) {

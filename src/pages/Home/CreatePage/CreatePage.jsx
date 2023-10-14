@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Button, Modal, Form, Input, InputNumber, Select, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AddressAPI from '~/services/addressAPI';
 import PageAPI from '~/services/pageAPI';
-import { reloadPage } from '~/redux/page/pageSlice';
+import { reloadUser } from '~/redux/user/userSlice';
 
 const initialValues = {
   name: '',
@@ -28,6 +28,7 @@ const CreatePage = () => {
   const [provinceData, setProvinceData] = useState([]);
   const [districtData, setDistrictData] = useState([]);
   const [wardData, setWardData] = useState([]);
+  const { currentUser } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,8 +65,12 @@ const CreatePage = () => {
 
   const handleCreatePage = async value => {
     try {
-      await PageAPI.create(value);
-      dispatch(reloadPage());
+      const newPageData = {
+        userId: currentUser._id,
+        ...value
+      };
+      await PageAPI.create(newPageData);
+      dispatch(reloadUser());
       handleCancel();
       message.success('Tạo trang kinh doanh thành công');
     } catch (err) {
