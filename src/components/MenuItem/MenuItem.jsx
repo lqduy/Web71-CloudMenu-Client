@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import DishDefaultImage from '~/assets/layouts/default-dish.png';
 import Dish from '~/utils/data/dish';
-import { addMenuItem } from '~/redux/slices/menuSlice';
+import { addMenuItem } from '~/redux/menu/menuSlice';
 
 const MenuItem = ({ data, isPreview }) => {
   const { itemList } = useSelector(state => state.menu);

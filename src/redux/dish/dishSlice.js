@@ -1,16 +1,11 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import DishesAPI from '~/services/dishAPI';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllDishes } from './dishActions';
 
 const initialState = {
   dishData: [],
   isLoading: false,
   error: null
 };
-
-export const fetchAllDishes = createAsyncThunk('dish/fetchAll', async () => {
-  const response = await DishesAPI.getAll();
-  return response.data.data;
-});
 
 const dishSlice = createSlice({
   name: 'dish',

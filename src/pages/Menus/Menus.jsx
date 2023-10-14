@@ -1,28 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import BodyPageTopBar from '~/components/BodyPageTopBar';
 import MenuForm from './MenuForm';
-import MenusAPI from '~/services/menuAPI';
 import MenuCard from './MenuCard';
+import { fetchAllMenus } from '~/redux/menu/menuActions';
 
 const Menus = () => {
-  const [menuData, setMenuData] = useState([]);
+  const { menuList } = useSelector(state => state.menu);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reload, setReload] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchAllMenus();
+    dispatch(fetchAllMenus());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload]);
-
-  const fetchAllMenus = async () => {
-    try {
-      const res = await MenusAPI.getAll();
-      setMenuData(res.data.data);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err);
-    }
-  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -46,9 +39,10 @@ const Menus = () => {
               onOpenModal={() => setIsModalOpen(true)}
             />
             <div className='flex gap-4 w-full flex-wrap'>
-              {menuData.map((menu, index) => (
-                <MenuCard key={menu._id} data={menu} index={index} />
-              ))}
+              {menuList &&
+                menuList.map((menu, index) => (
+                  <MenuCard key={menu._id} data={menu} index={index} />
+                ))}
             </div>
           </Col>
         </Row>

@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { Row, Col, Spin, Button, Input, Form } from 'antd';
 import { CloseOutlined, MenuOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllDishes } from '~/redux/slices/dishSlice';
-import { unselectAll } from '~/redux/slices/menuSlice';
+import { fetchAllDishes } from '~/redux/dish/dishActions';
+import { unselectAll } from '~/redux/menu/menuSlice';
 import MenuItem from '~/components/MenuItem';
 import Search from 'antd/es/input/Search';
-import Dish from '~/utils/data/dish';
+import MenuContent from '~/components/MenuContent';
 
 const MenuContentForm = ({ form, onFinish }) => {
   const { dishData, isLoading } = useSelector(state => state.dish);
@@ -50,35 +50,7 @@ const MenuContentForm = ({ form, onFinish }) => {
         <Col span={8} className='flex flex-col gap-1'>
           {isLoading ? <Spin /> : dishData.map(dish => <MenuItem key={dish._id} data={dish} />)}
         </Col>
-        <Col span={16}>
-          {menuContent.length > 0 && (
-            <div className='flex flex-col gap-8 p-4 border border-gray-300 border-1 rounded-lg'>
-              {menuContent.map(group => {
-                const groupData = Dish.group.find(item => item.value === group.value);
-                return (
-                  <div key={group.id}>
-                    <h2 className='pl-2 py-1 rounded-md bg-gray-200'>{groupData.title}</h2>
-                    <div className='flex flex-col gap-2 pl-8'>
-                      {group.subGroup.map(type => {
-                        const typeData = Dish.type.find(item => item.value === type.value);
-                        return (
-                          <div key={type.id}>
-                            <h3>{typeData.title}</h3>
-                            <div className='flex flex-col gap-2 pl-4'>
-                              {type.dishList.map(dish => (
-                                <MenuItem key={dish.id} data={dish} isPreview />
-                              ))}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </Col>
+        <Col span={16}>{menuContent.length > 0 && <MenuContent data={menuContent} />}</Col>
       </Row>
     </>
   );

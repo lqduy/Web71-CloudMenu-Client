@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Space } from 'antd';
+import { Button, Row, Space } from 'antd';
 import {
   HomeOutlined,
   BarsOutlined,
@@ -11,18 +11,19 @@ import Container from '~/components/Container';
 
 const BottomHeader = () => {
   const navigate = useNavigate();
+
   return (
     <div className='bg-orange-500'>
       <Container>
-        <div className='flex justify-between items-center h-11'>
+        <Row className='justify-between items-center h-11'>
           <Space wrap>
-            <Button type='text' icon={<HomeOutlined />} style={{ color: 'white' }}>
+            <Button type='text' icon={<HomeOutlined />} className='h-11 text-white'>
               Bảng tin
             </Button>
             <Button
               type='text'
               icon={<BarsOutlined />}
-              style={{ color: 'white' }}
+              className='h-11 text-white'
               onClick={() => navigate('/p/lqduycp/dish')}
             >
               Món ăn
@@ -30,20 +31,19 @@ const BottomHeader = () => {
             <Button
               type='text'
               icon={<BookOutlined />}
-              style={{ color: 'white' }}
+              className='h-11 text-white'
               onClick={() => navigate('/p/lqduycp/menu')}
             >
               Thực đơn
             </Button>
-            <Button type='text' icon={<FileDoneOutlined />} style={{ color: 'white' }}>
+            <Button type='text' icon={<FileDoneOutlined />} className='h-11 text-white'>
               Gọi món
             </Button>
-            <Button type='text' icon={<LineChartOutlined />} style={{ color: 'white' }}>
+            <Button type='text' icon={<LineChartOutlined />} className='h-11 text-white'>
               Thống kê
             </Button>
           </Space>
-          <Space wrap></Space>
-        </div>
+        </Row>
       </Container>
     </div>
   );

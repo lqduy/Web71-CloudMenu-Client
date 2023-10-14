@@ -5,7 +5,7 @@ import BodyPageTopBar from '~/components/BodyPageTopBar';
 import DishesTable from './DishesTable';
 import DishesAsideBar from './DishesAsideBar';
 import DishForm from './DishForm';
-import { fetchAllDishes } from '~/redux/slices/dishSlice';
+import { fetchAllDishes } from '~/redux/dish/dishActions';
 
 const Dishes = () => {
   const { dishData, isLoading } = useSelector(state => state.dish);

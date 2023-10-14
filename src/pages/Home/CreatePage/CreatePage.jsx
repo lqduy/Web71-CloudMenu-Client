@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Button, Modal, Form, Input, InputNumber, Select } from 'antd';
+import { useDispatch } from 'react-redux';
+import { Row, Col, Button, Modal, Form, Input, InputNumber, Select, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AddressAPI from '~/services/addressAPI';
+import PageAPI from '~/services/pageAPI';
+import { reloadPage } from '~/redux/page/pageSlice';
 
 const initialValues = {
-  brandName: '',
-  businessType: 'restaurant',
+  name: '',
+  businessType: 'Nhà hàng',
   isVegetarian: false,
   hasAlcoholic: false,
   orderWays: ['direct'],
@@ -25,6 +28,7 @@ const CreatePage = () => {
   const [provinceData, setProvinceData] = useState([]);
   const [districtData, setDistrictData] = useState([]);
   const [wardData, setWardData] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchProvinceData();
@@ -58,8 +62,16 @@ const CreatePage = () => {
     setIsModalOpen(false);
   };
 
-  const onFinish = values => {
-    console.log('Success:', values);
+  const handleCreatePage = async value => {
+    try {
+      await PageAPI.create(value);
+      dispatch(reloadPage());
+      handleCancel();
+      message.success('Tạo trang kinh doanh thành công');
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
   };
 
   return (
@@ -97,14 +109,14 @@ const CreatePage = () => {
           name='businessPageData'
           initialValues={initialValues}
           layout='vertical'
-          onFinish={onFinish}
+          onFinish={handleCreatePage}
           className='mt-8'
         >
           <Row gutter={16}>
             <Col span={16}>
               <Form.Item
                 label='Tên kinh doanh'
-                name='brandName'
+                name='name'
                 rules={[{ required: true, message: 'Vui lòng nhập tên cơ sở kinh doanh!' }]}
               >
                 <Input />
@@ -113,9 +125,9 @@ const CreatePage = () => {
             <Col span={8}>
               <Form.Item label='Loại hình' name='businessType'>
                 <Select>
-                  <Select.Option value='restaurant'>Nhà hàng</Select.Option>
-                  <Select.Option value='eatery'>Quán ăn</Select.Option>
-                  <Select.Option value='canteen'>Căng tin</Select.Option>
+                  <Select.Option value='Nhà hàng'>Nhà hàng</Select.Option>
+                  <Select.Option value='Quán ăn'>Quán ăn</Select.Option>
+                  <Select.Option value='Căng tin'>Căng tin</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
