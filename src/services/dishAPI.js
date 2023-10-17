@@ -1,8 +1,8 @@
 import api from './axiosInstance';
 
 const DishesAPI = {
-  getAll: () => {
-    const url = '/dishes';
+  getAllOfPage: pageId => {
+    const url = `/dishes/page/${pageId}`;
     return api.get(url);
   },
   create: data => {

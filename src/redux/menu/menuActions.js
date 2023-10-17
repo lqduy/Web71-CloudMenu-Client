@@ -7,7 +7,7 @@ export const fetchAllMenus = createAsyncThunk(
   FETCH_ALL_MENU,
   async (payload, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await MenusAPI.getAll();
+      const response = await MenusAPI.getAllOfPage(payload);
       const menuData = response.data.data;
       return fulfillWithValue(menuData);
     } catch (error) {

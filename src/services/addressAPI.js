@@ -1,16 +1,23 @@
-import api from './axiosInstance';
+import axios from 'axios';
+
+const BASE_API_URL = 'https://vapi.vnappmob.com/api/province';
+
+const api = axios.create({
+  baseURL: BASE_API_URL,
+  timeout: 10000
+});
 
 const AddressAPI = {
   getProvinces: () => {
-    const url = 'https://vapi.vnappmob.com/api/province';
+    const url = '/';
     return api.get(url);
   },
   getDistricts: provinceId => {
-    const url = `https://vapi.vnappmob.com/api/province/district/${provinceId}`;
+    const url = `/district/${provinceId}`;
     return api.get(url);
   },
   getWard: districtId => {
-    const url = `https://vapi.vnappmob.com/api/province/ward/${districtId}`;
+    const url = `/ward/${districtId}`;
     return api.get(url);
   }
 };

@@ -9,7 +9,7 @@ export const fetchAllDishes = createAsyncThunk(
   FETCH_ALL_DISH,
   async (payload, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const response = await DishesAPI.getAll();
+      const response = await DishesAPI.getAllOfPage(payload);
       const dishData = response.data.data;
       return fulfillWithValue(dishData);
     } catch (error) {

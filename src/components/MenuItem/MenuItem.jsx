@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { DragOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import DishDefaultImage from '~/assets/layouts/default-dish.png';
 import Dish from '~/utils/data/dish';
-import { addMenuItem } from '~/redux/menu/menuSlice';
+import { addMenuItem, unselectOne } from '~/redux/menu/menuSlice';
 
-const MenuItem = ({ data, isPreview }) => {
+const MenuItem = ({ data, isPreviewer }) => {
   const { itemList } = useSelector(state => state.menu);
   const dispatch = useDispatch();
 
@@ -28,9 +28,9 @@ const MenuItem = ({ data, isPreview }) => {
   const formattedUnit = data.unit.toLowerCase();
   return (
     <div
-      className={classNames('flex justify-between items-center p-1 rounded-md', {
-        border: !isPreview,
-        'cursor-pointer hover:bg-gray-100': isPreview
+      className={classNames('flex justify-between items-center p-1 rounded-full pr-6', {
+        border: !isPreviewer,
+        'cursor-pointer border border-transparent hover:bg-gray-100 hover:shadow-card': isPreviewer
       })}
     >
       <div className='flex items-center gap-1'>
@@ -46,12 +46,24 @@ const MenuItem = ({ data, isPreview }) => {
         <p className='mb-0'>
           {formattedPrice}/{formattedUnit}
         </p>
-        <Button
-          icon={<PlusOutlined style={{ fontSize: '12px' }} />}
-          size='small'
-          disabled={isAdded}
-          onClick={() => handleAddMenuItem(data)}
-        />
+        {!isPreviewer && (
+          <Button
+            icon={<PlusOutlined style={{ fontSize: '12px' }} />}
+            size='small'
+            disabled={isAdded}
+            onClick={() => handleAddMenuItem(data)}
+          />
+        )}
+        {isPreviewer && (
+          <div className='flex gap-1'>
+            <Button
+              icon={<MinusOutlined style={{ fontSize: '12px' }} />}
+              size='small'
+              onClick={() => dispatch(unselectOne(data))}
+            />
+            <Button icon={<DragOutlined style={{ fontSize: '12px' }} />} size='small' />
+          </div>
+        )}
       </div>
     </div>
   );

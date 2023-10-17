@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Tabs, Button, Modal, Form, message } from 'antd';
+import { useSelector } from 'react-redux';
 import DishOverviewForm from './FormParts/DishOverviewForm';
 import DishDescriptionForm from './FormParts/DishDescriptionForm';
 import DishesAPI from '~/services/dishAPI';
@@ -16,6 +17,8 @@ const initalImageList = [
 ];
 
 const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload }) => {
+  const { currentUser } = useSelector(state => state.user);
+  const { activePage } = useSelector(state => state.page);
   const [descriptionValue, setDescriptionValue] = useState('');
   const [imageList, setImageList] = useState(initalImageList);
   const [form] = Form.useForm();
@@ -56,7 +59,13 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
   };
 
   const onFinish = async values => {
-    const dishData = { ...values, description: descriptionValue, images: imageList };
+    const dishData = {
+      ...values,
+      userId: currentUser._id,
+      pageId: activePage._id,
+      description: descriptionValue,
+      images: imageList
+    };
     if (!editingDish) {
       try {
         await DishesAPI.create(dishData);

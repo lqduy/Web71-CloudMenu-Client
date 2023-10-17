@@ -5,6 +5,7 @@ import Menus from '~/pages/Menus';
 import MenuDetails from '~/pages/MenuDetails';
 
 export const PATH = {
+  DASH_BOARD: '/u/dashboard',
   LOGIN: '/login',
   SIGNUP: '/signup'
 };
@@ -18,6 +19,7 @@ const publicRoutes = [
 
 const privateRoutes = [
   { path: '/u/:userId', component: Home },
+  { path: PATH.DASH_BOARD, component: Home },
   { path: '/p/:pageId/dashboard', component: Home },
   { path: '/p/:pageId/dish', component: Dishes },
   { path: '/p/:pageId/menu', component: Menus },

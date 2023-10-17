@@ -4,9 +4,11 @@ import PageLayout from './layouts/PageLayout';
 import PrivateRoute from './components/PrivateRoute';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPagesOfUser } from './redux/page/pageActions';
 import { fetchCurrentUser } from './redux/user/userActions';
+import { fetchPagesOfUser } from './redux/page/pageActions';
 import { setActivePage } from './redux/page/pageSlice';
+import AuthenAPI from './services/authenAPI';
+import CreatePage from './pages/Home/CreatePage';
 
 const App = () => {
   const { reload: userReload, currentUser, isAuthenticated } = useSelector(state => state.user);
@@ -14,9 +16,36 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCurrentUser('652acc4d67abf081c37e1636'));
+    login();
+    // const accessToken = localStorage.getItem('accessToken');
+    // if (accessToken) {
+    //   dispatch(fetchCurrentUser());
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userReload]);
+
+  const login = async () => {
+    const loginData = {
+      email: 'duy123@gmail.com',
+      password: 'Aa123456!'
+    };
+    try {
+      const response = await AuthenAPI.login(loginData);
+      const accessToken = response.data.accessToken;
+      if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        await dispatch(fetchCurrentUser());
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     handleFetchPages();
@@ -35,20 +64,23 @@ const App = () => {
   };
 
   return (
-    <div className='bg-[#eee] text-base'>
-      <PageLayout>
-        <Routes>
-          {routes.map(route => {
-            const Page = route.component;
-            let routeElement = <Page />;
-            if (route.isPrivated) {
-              routeElement = <PrivateRoute component={Page} />;
-            }
-            return <Route key={route.path} path={route.path} element={routeElement} />;
-          })}
-        </Routes>
-      </PageLayout>
-    </div>
+    <>
+      <div className='bg-[#eee] text-base'>
+        <PageLayout>
+          <Routes>
+            {routes.map(route => {
+              const Page = route.component;
+              let routeElement = <Page />;
+              if (route.isPrivated) {
+                routeElement = <PrivateRoute component={Page} />;
+              }
+              return <Route key={route.path} path={route.path} element={routeElement} />;
+            })}
+          </Routes>
+        </PageLayout>
+      </div>
+      <CreatePage />
+    </>
   );
 };
 

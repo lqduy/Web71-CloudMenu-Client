@@ -42,6 +42,28 @@ const addMenuItemToMenuContent = (state, itemData) => {
   }
 };
 
+const unselectItemInMenu = (state, itemData) => {
+  // Remove in itemList State
+  const itemIndexInItemList = state.itemList.indexOf(itemData);
+  state.itemList.splice(itemIndexInItemList, 1);
+
+  // Remove in menuContent State
+  const group = state.menuContent.find(group => group.value === itemData.group);
+  const subGroup = group.subGroup.find(subGroup => subGroup.value === itemData.type);
+  const itemIndexInDishList = subGroup.dishList.indexOf(itemData);
+  subGroup.dishList.splice(itemIndexInDishList, 1);
+
+  // Check empty group & subGroup to removing
+  if (subGroup.dishList.length === 0) {
+    const subGroupIndexInGroup = group.subGroup.indexOf(subGroup);
+    group.subGroup.splice(subGroupIndexInGroup, 1);
+  }
+  if (group.subGroup.length === 0) {
+    const groupIndexInMenu = state.menuContent.indexOf(group);
+    state.menuContent.splice(groupIndexInMenu, 1);
+  }
+};
+
 const menuSlice = createSlice({
   name: 'menu',
   initialState,
@@ -49,6 +71,10 @@ const menuSlice = createSlice({
     addMenuItem: (state, action) => {
       const itemData = action.payload;
       addMenuItemToMenuContent(state, itemData);
+    },
+    unselectOne: (state, action) => {
+      const itemData = action.payload;
+      unselectItemInMenu(state, itemData);
     },
     unselectAll: state => {
       state.menuContent = [];
@@ -71,6 +97,6 @@ const menuSlice = createSlice({
       })
 });
 
-export const { addMenuItem, unselectAll } = menuSlice.actions;
+export const { addMenuItem, unselectOne, unselectAll } = menuSlice.actions;
 
 export default menuSlice.reducer;

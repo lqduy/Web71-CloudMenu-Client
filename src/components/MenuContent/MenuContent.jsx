@@ -17,7 +17,7 @@ const MenuContent = ({ data }) => {
                     <h3>{typeData.title}</h3>
                     <div className='flex flex-col gap-2 pl-4'>
                       {type.dishList.map(dish => (
-                        <MenuItem key={dish.id} data={dish} isPreview />
+                        <MenuItem key={dish.id} data={dish} isPreviewer />
                       ))}
                     </div>
                   </div>

@@ -7,6 +7,8 @@ import MenuDesignForm from './FormParts/MenuDesignForm';
 import MenusAPI from '~/services/menuAPI';
 
 const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
+  const { currentUser } = useSelector(state => state.user);
+  const { activePage } = useSelector(state => state.page);
   const { menuContent, itemList } = useSelector(state => state.menu);
   const [form] = useForm();
 
@@ -15,6 +17,8 @@ const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
     try {
       const menuContentData = {
         name: value.name,
+        userId: currentUser._id,
+        pageId: activePage._id,
         priceAverage,
         dishQuantity: itemList.length,
         content: menuContent

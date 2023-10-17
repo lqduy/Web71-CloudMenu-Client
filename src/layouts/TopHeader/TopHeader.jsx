@@ -19,9 +19,9 @@ const TopHeader = () => {
   const UserButton = useCallback(
     () => (
       <Button type='text' icon={<UserOutlined />} className='flex items-center'>
-        {currentUser.userName}
+        {`${currentUser.firstName} ${currentUser.lastName}`}
         <Avatar size='small' className='ml-2 align-middle bg-blue-800'>
-          D
+          {currentUser.firstName.charAt(0)}
         </Avatar>
       </Button>
     ),
@@ -51,7 +51,7 @@ const TopHeader = () => {
       <div className='flex justify-between items-center h-[50px]'>
         <Link to={'/'}>CLOUD MENU</Link>
         <Space wrap>
-          <Popover placement='bottomRight' content={<ThemeColors />} trigger='click'>
+          <Popover placement='bottomRight' content={<ThemeColors />}>
             <Button type='text' icon={<BgColorsOutlined />}>
               Chủ đề
             </Button>
@@ -62,9 +62,9 @@ const TopHeader = () => {
           <Button type='text' icon={<SettingOutlined />}>
             Thiết lập
           </Button>
-          <Popover placement='bottomRight' content={<User />} trigger='click'>
-            {activePage && Object.keys(activePage).length > 0 && <ActivePageButton />}
-            {!activePage && <UserButton />}
+          <Popover placement='bottomRight' content={<User />}>
+            {activePage && <ActivePageButton />}
+            {!activePage && Object.keys(currentUser).length > 0 && <UserButton />}
           </Popover>
         </Space>
       </div>

@@ -5,6 +5,9 @@ export default {
     extend: {
       backgroundImage: {
         'create-page': 'url("/src/assets/layouts/create-page.jpg")'
+      },
+      boxShadow: {
+        card: '0 1px 1px #091e4240, 0 0 1px #091e424f'
       }
     }
   },

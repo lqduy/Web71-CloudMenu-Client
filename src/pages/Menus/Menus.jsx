@@ -1,21 +1,34 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import BodyPageTopBar from '~/components/BodyPageTopBar';
 import MenuForm from './MenuForm';
 import MenuCard from './MenuCard';
 import { fetchAllMenus } from '~/redux/menu/menuActions';
+import { PATH } from '~/routes';
 
 const Menus = () => {
+  const { activePage } = useSelector(state => state.page);
   const { menuList } = useSelector(state => state.menu);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reload, setReload] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchAllMenus());
+    if (!activePage) {
+      navigate(PATH.DASH_BOARD);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reload]);
+  }, [activePage]);
+
+  useEffect(() => {
+    if (activePage) {
+      dispatch(fetchAllMenus(activePage._id));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload, activePage]);
 
   const handleCancel = () => {
     setIsModalOpen(false);

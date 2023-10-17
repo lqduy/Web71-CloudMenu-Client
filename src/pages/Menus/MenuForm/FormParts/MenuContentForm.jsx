@@ -9,14 +9,17 @@ import Search from 'antd/es/input/Search';
 import MenuContent from '~/components/MenuContent';
 
 const MenuContentForm = ({ form, onFinish }) => {
+  const { activePage } = useSelector(state => state.page);
   const { dishData, isLoading } = useSelector(state => state.dish);
   const { menuContent } = useSelector(state => state.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllDishes());
+    if (activePage) {
+      dispatch(fetchAllDishes(activePage._id));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activePage]);
 
   return (
     <>

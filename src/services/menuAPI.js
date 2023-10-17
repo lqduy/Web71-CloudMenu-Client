@@ -1,8 +1,8 @@
 import api from './axiosInstance';
 
 const MenusAPI = {
-  getAll: () => {
-    const url = '/menus';
+  getAllOfPage: pageId => {
+    const url = `/menus/page/${pageId}`;
     return api.get(url);
   },
   getOne: id => {

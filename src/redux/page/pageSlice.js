@@ -2,8 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchPagesOfUser } from './pageActions';
 
 const initialState = {
+  openPageCreateForm: false,
   pageList: [],
-  activePage: {},
+  activePage: null,
   isLoading: false,
   reload: null
 };
@@ -12,6 +13,9 @@ const pageSlice = createSlice({
   name: 'page',
   initialState,
   reducers: {
+    setOpenPageCreateForm: state => {
+      state.openPageCreateForm = !state.openPageCreateForm;
+    },
     setActivePage: (state, action) => {
       state.activePage = state.pageList.find(page => page._id === action.payload);
     },
@@ -35,6 +39,6 @@ const pageSlice = createSlice({
       })
 });
 
-export const { setActivePage, reloadPage } = pageSlice.actions;
+export const { setActivePage, reloadPage, setOpenPageCreateForm } = pageSlice.actions;
 
 export default pageSlice.reducer;
