@@ -8,7 +8,9 @@ const MenuContent = ({ data }) => {
         const groupData = Dish.group.find(item => item.value === group.value);
         return (
           <div key={group.id}>
-            <h2 className='pl-2 py-1 rounded-md bg-gray-200'>{groupData.title}</h2>
+            <h2 className='pl-4 py-1 rounded-full bg-primary/70 text-white shadow-card'>
+              {groupData.title}
+            </h2>
             <div className='flex flex-col gap-2 pl-8'>
               {group.subGroup.map(type => {
                 const typeData = Dish.type.find(item => item.value === type.value);

@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      colors: {
+        primary: '#F97316'
+      },
       backgroundImage: {
         'create-page': 'url("/src/assets/layouts/create-page.jpg")'
       },
