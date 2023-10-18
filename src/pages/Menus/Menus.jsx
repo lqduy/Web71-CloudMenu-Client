@@ -7,6 +7,7 @@ import MenuForm from './MenuForm';
 import MenuCard from './MenuCard';
 import { fetchAllMenus } from '~/redux/menu/menuActions';
 import { PATH } from '~/routes';
+import PageLayout from '~/layouts/PageLayout';
 
 const Menus = () => {
   const { activePage } = useSelector(state => state.page);
@@ -39,7 +40,7 @@ const Menus = () => {
   };
 
   return (
-    <>
+    <PageLayout>
       <div className='flex flex-col gap-4'>
         <Row gutter={16} className='mt-4 min-h-screen'>
           <Col span={5} className='flex flex-col gap-4'>
@@ -61,7 +62,7 @@ const Menus = () => {
         </Row>
       </div>
       <MenuForm isModalOpen={isModalOpen} handleCancel={handleCancel} handleReload={handleReload} />
-    </>
+    </PageLayout>
   );
 };
 

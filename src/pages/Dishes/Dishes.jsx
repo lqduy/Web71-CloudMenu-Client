@@ -8,6 +8,7 @@ import DishesAsideBar from './DishesAsideBar';
 import DishForm from './DishForm';
 import { fetchAllDishes } from '~/redux/dish/dishActions';
 import { PATH } from '~/routes';
+import PageLayout from '~/layouts/PageLayout';
 
 const Dishes = () => {
   const { dishData, isLoading } = useSelector(state => state.dish);
@@ -46,7 +47,7 @@ const Dishes = () => {
   };
 
   return (
-    <>
+    <PageLayout>
       <div className='flex flex-col gap-4'>
         <Row gutter={16} className='mt-4 min-h-screen'>
           <Col span={5} className='flex flex-col gap-4'>
@@ -74,7 +75,7 @@ const Dishes = () => {
         resetEditing={() => handleSetEdit(null)}
         toReload={toReload}
       />
-    </>
+    </PageLayout>
   );
 };
 

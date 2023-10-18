@@ -5,7 +5,6 @@ import useThemeSwitcher from '../../hooks/useThemeSwitcher';
 import logoLight from '../../image/Kios/Kios_dark.png';
 import logoDark from '../../image/Kios/Kios_light.png';
 import { motion } from 'framer-motion';
-import Button from '../Button/Button-Landing';
 
 const AppHeader = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -24,7 +23,7 @@ const AppHeader = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       id='nav'
-      className=' w-full z-10 fixed top-0 left-0 shadow-lg bg-white dark:bg-[#FB8900]   sm:container sm: mx-auto '
+      className='w-full h-[100px] z-10 fixed top-0 left-1/2 -translate-x-1/2 shadow-lg bg-white dark:bg-[#FB8900] sm:container sm:mx-auto '
     >
       <div className='z-10 max-w-screen-lg xl:max-w-screen-xl block sm:flex sm:justify-between sm:items-center py-0'>
         {/* Header menu links and small screen hamburger menu */}
@@ -43,7 +42,7 @@ const AppHeader = () => {
           <div
             onClick={() => setTheme(activeTheme)}
             aria-label='Theme Switcher'
-            className='block sm:hidden ml-0 bg-gray-light dark:bg-ternary-dark p-3 shadow-sm rounded-xl cursor-pointer'
+            className='h-11 aspect-square sm:hidden ml-0 bg-gray-light dark:bg-ternary-dark p-3 shadow-sm rounded-xl cursor-pointer'
           >
             {activeTheme === 'dark' ? (
               <FiMoon className='text-ternary-dark hover:text-gray-400 dark:text-ternary-light dark:hover:text-primary-light text-xl' />
@@ -53,29 +52,25 @@ const AppHeader = () => {
           </div>
 
           {/* Small screen hamburger menu */}
-          <div className='sm:hidden'>
-            <button
-              onClick={toggleMenu}
-              type='button'
-              className='focus:outline-none'
-              aria-label='Hamburger Menu'
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 24 24'
-                className='h-7 w-7 fill-current text-secondary-dark dark:text-ternary-light'
-              >
-                {showMenu ? <FiX className='text-3xl' /> : <FiMenu className='text-3xl' />}
-              </svg>
-            </button>
-          </div>
+          <button
+            onClick={toggleMenu}
+            type='button'
+            className='ct-flex-center h-11 aspect-square rounded-lg sm:hidden focus:outline-none'
+            aria-label='Hamburger Menu'
+          >
+            {showMenu ? (
+              <FiX className='text-3xl align-middle' />
+            ) : (
+              <FiMenu className='text-3xl align-middle' />
+            )}
+          </button>
         </div>
 
         {/* Header links small screen */}
         <div
           className={
             showMenu
-              ? 'block m-0 sm:ml-4 mt-5 sm:mt-3 sm:flex p-5 sm:p-0 justify-center items-center shadow-lg sm:shadow-none'
+              ? 'block bg-white m-0 sm:ml-4 sm:flex p-5 sm:p-0 justify-center items-center shadow-lg sm:shadow-none'
               : 'hidden'
           }
         >
@@ -109,10 +104,10 @@ const AppHeader = () => {
           </Link>
           <div className='border-t-2 pt-3 sm:pt-0 sm:border-t-0 border-primary-light dark:border-secondary-dark'>
             <span
-              className='font-general-medium sm:hidden block text-left text-md bg-indigo-500 hover:bg-indigo-600 text-white shadow-sm rounded-sm px-4 py-2 mt-2 duration-300 w-24'
+              className='w-fit font-general-medium sm:hidden block text-left text-md bg-primary hover:bg-primary/80 text-white shadow-sm rounded-lg px-4 py-2 mt-2 duration-300 cursor-pointer'
               aria-label='Hire Me Button'
             >
-              <Button title='Đăng ký' />
+              Đăng ký
             </span>
           </div>
         </div>
@@ -169,7 +164,7 @@ const AppHeader = () => {
           <div
             onClick={() => setTheme(activeTheme)}
             aria-label='Theme Switcher'
-            className='ml-8 bg-primary-light dark:bg-ternary-dark p-3 shadow-sm rounded-xl cursor-pointer'
+            className='h-11 aspect-square ml-8 bg-primary-light dark:bg-ternary-dark p-3 shadow-sm rounded-xl cursor-pointer'
           >
             {activeTheme === 'dark' ? (
               <FiMoon className='text-ternary-dark hover:text-black dark:text-ternary-light dark:hover:text-black text-xl' />

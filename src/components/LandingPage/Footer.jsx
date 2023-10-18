@@ -1,4 +1,3 @@
-import React from 'react';
 import Logo from '../../image/Kios/Kios_light.png';
 import { AiFillFacebook, AiFillInstagram, AiFillRedditSquare } from 'react-icons/ai';
 
@@ -9,7 +8,7 @@ const Footer = () => {
         <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4'>
           <div className='sm:col-span-2'>
             <div className=' flex flex-row items-center gap-4 pl-10 '>
-              <img className='w-auto h-32' src={Logo} alt />
+              <img className='w-auto h-32' src={Logo} alt='Logo' />
               <div className=' font-semibold text-gray-800 xl:text-2xl dark:text-white'>
                 Quản lý nhà hàng chuyên nghiệp
               </div>

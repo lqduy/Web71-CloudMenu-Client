@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import routes from './routes';
-import PageLayout from './layouts/PageLayout';
 import PrivateRoute from './components/PrivateRoute';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +8,6 @@ import { fetchPagesOfUser } from './redux/page/pageActions';
 import { setActivePage } from './redux/page/pageSlice';
 import AuthenAPI from './services/authenAPI';
 import CreatePage from './pages/Home/CreatePage';
-import Landing from './pages/Landing/Landing';
 
 const App = () => {
   const { reload: userReload, currentUser, isAuthenticated } = useSelector(state => state.user);
@@ -67,20 +65,16 @@ const App = () => {
   return (
     <>
       <div className='bg-[#eee] text-base'>
-        <PageLayout>
-          <Routes>
-            <Route path='/landing' element={<Landing />} />
-
-            {routes.map(route => {
-              const Page = route.component;
-              let routeElement = <Page />;
-              if (route.isPrivated) {
-                routeElement = <PrivateRoute component={Page} />;
-              }
-              return <Route key={route.path} path={route.path} element={routeElement} />;
-            })}
-          </Routes>
-        </PageLayout>
+        <Routes>
+          {routes.map(route => {
+            const Page = route.component;
+            let routeElement = <Page />;
+            if (route.isPrivated) {
+              routeElement = <PrivateRoute component={Page} />;
+            }
+            return <Route key={route.path} path={route.path} element={routeElement} />;
+          })}
+        </Routes>
       </div>
       <CreatePage />
     </>

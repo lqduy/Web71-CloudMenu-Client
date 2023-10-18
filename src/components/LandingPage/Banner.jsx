@@ -1,18 +1,15 @@
 import { Link } from 'react-router-dom';
-import useThemeSwitcher from '../../hooks/useThemeSwitcher';
 import pictureBanner from '../../image/Nut-CH-sieu-thi-mini-min.png';
 import { motion } from 'framer-motion';
 
 const AppBanner = () => {
-  const [activeTheme] = useThemeSwitcher();
-
   return (
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ ease: 'linear', duration: 2, x: { duration: 1 } }}
-      className='flex  items-center   2xl:justify-evenly 2xl:flex-row ssm:flex-col  '
-      style={{ paddingTop: 50, paddingBottom: 30 }}
+      className='flex items-center 2xl:justify-evenly 2xl:flex-row ssm:flex-col'
+      style={{ paddingTop: 116, paddingBottom: 30 }}
     >
       <div className='w-full md:w-1/3 text-left'>
         <motion.h1
@@ -35,7 +32,7 @@ const AppBanner = () => {
             duration: 0.9,
             delay: 0.2
           }}
-          className='font-general-medium mt-4  md:text-xl lg:text-xl xl:text-xl text-center sm:text-left leading-normal text-gray-500 dark:text-gray-200'
+          className='font-general-medium mt-4 md:text-xl lg:text-xl xl:text-xl text-center sm:text-left leading-normal text-gray-500 dark:text-gray-200'
         >
           Quản lý hàng hoá theo mã vạch, chủng loại - Quản lý doanh thu cửa hàng, kho hàng chặt chẽ
           theo ngày, ca làm việc nhân viên
@@ -64,7 +61,7 @@ const AppBanner = () => {
         initial={{ opacity: 0, y: -80 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ease: 'easeInOut', duration: 0.9, delay: 0.2 }}
-        className='w-full sm:w-1/2 text-right float-right mt-8 sm:mt-0'
+        className='w-full sm:w-1/2 text-center sm:text-right float-right mt-8 sm:mt-0'
       >
         <img className='w-5/6' src={pictureBanner} alt='Banner' />
       </motion.div>
