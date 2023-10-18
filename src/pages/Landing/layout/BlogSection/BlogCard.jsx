@@ -1,4 +1,4 @@
-export default function BlogCard({ imgSrc, title, description }) {
+const BlogCard = ({ imgSrc, title, description }) => {
   return (
     <div>
       <div className='w-72 relative border border-gray-300 max-w-xs overflow-hidden rounded-2xl shadow-lg group'>
@@ -16,4 +16,6 @@ export default function BlogCard({ imgSrc, title, description }) {
       </div>
     </div>
   );
-}
+};
+
+export default BlogCard;

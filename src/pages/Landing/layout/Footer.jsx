@@ -1,4 +1,4 @@
-import Logo from '../../image/Kios/Kios_light.png';
+import Logo from '~/assets/image/Kios/Kios_light.png';
 import { AiFillFacebook, AiFillInstagram, AiFillRedditSquare } from 'react-icons/ai';
 
 const Footer = () => {

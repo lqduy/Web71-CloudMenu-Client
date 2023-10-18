@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FiMenu, FiMoon, FiSun, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import useThemeSwitcher from '../../hooks/useThemeSwitcher';
-import logoLight from '../../image/Kios/Kios_dark.png';
-import logoDark from '../../image/Kios/Kios_light.png';
+import useThemeSwitcher from '~/hooks/useThemeSwitcher';
+import logoLight from '~/assets/image/Kios/Kios_dark.png';
+import logoDark from '~/assets/image/Kios/Kios_light.png';
 import { motion } from 'framer-motion';
 
 const AppHeader = () => {

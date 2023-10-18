@@ -1,8 +1,8 @@
-import AppBanner from '../../components/LandingPage/Banner';
-import AppHeader from '../../components/LandingPage/Header';
-import DataPricing from '../../components/LandingPage/Pricing/DataPricing';
-import Blog from '../../components/LandingPage/BlogSection/BlogSection';
-import Footer from '~/components/LandingPage/Footer';
+import AppBanner from './layout/Banner';
+import AppHeader from './layout/Header';
+import DataPricing from './layout/Pricing/DataPricing';
+import Blog from './layout/BlogSection/BlogSection';
+import Footer from './layout/Footer';
 
 const Landing = () => {
   return (

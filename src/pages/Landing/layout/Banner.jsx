@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import pictureBanner from '../../image/Nut-CH-sieu-thi-mini-min.png';
+import pictureBanner from '~/assets/image/Nut-CH-sieu-thi-mini-min.png';
 import { motion } from 'framer-motion';
 
 const AppBanner = () => {

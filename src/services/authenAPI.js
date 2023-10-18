@@ -1,7 +1,7 @@
 import api from './axiosInstance';
 
 const AuthenAPI = {
-  signUp: body => {
+  signup: body => {
     const url = '/auth/signup';
     return api.post(url, body);
   },

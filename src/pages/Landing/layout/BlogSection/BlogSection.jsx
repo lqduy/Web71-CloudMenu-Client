@@ -1,8 +1,8 @@
 import BlogCard from './BlogCard';
-import bgImage0 from '../../../image/blog/kinh-doanh-grab.jpg';
-import bgImage1 from '../../../image/blog/dat-hang-online-1.jpg';
-import bgImage2 from '../../../image/blog/blog1.png';
-import bgImage3 from '../../../image/blog/qr-order-1.jpg';
+import bgImage0 from '~/assets/image/blog/kinh-doanh-grab.jpg';
+import bgImage1 from '~/assets/image/blog/dat-hang-online-1.jpg';
+import bgImage2 from '~/assets/image/blog/blog1.png';
+import bgImage3 from '~/assets/image/blog/qr-order-1.jpg';
 import { motion } from 'framer-motion';
 
 const data = [
@@ -38,7 +38,6 @@ const Blog = () => {
       viewport={{ once: true, amount: 0.8 }}
       initial={{ opacity: 0, y: -80 }}
       animate={{ opacity: 1, y: 0 }}
-      //   whileInView="visible"
       transition={{ ease: 'easeInOut', duration: 0.9, delay: 0.2 }}
     >
       <div className='py-2 pb-3 px-4 mx-auto max-w-screen-xl lg:py-10 lg:px-6'>

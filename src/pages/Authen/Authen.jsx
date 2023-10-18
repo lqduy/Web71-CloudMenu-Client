@@ -2,7 +2,7 @@ import { Navigate, useLocation, Link } from 'react-router-dom';
 import { PATH } from '~/routes';
 import Signup from './Signup';
 import Login from './Login';
-import Logo from '../../image/Kios/Kios_dark.png';
+import Logo from '~/assets/image/Kios/Kios_dark.png';
 
 const Authen = () => {
   const location = useLocation();

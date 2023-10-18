@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchCurrentUser } from './userActions';
+import { TOKEN_TYPES } from '~/utils/constants';
 
 const initialState = {
   isAuthenticated: false,
@@ -14,6 +15,12 @@ const userSlice = createSlice({
   reducers: {
     reloadUser: state => {
       state.reload = Math.random();
+    },
+    logout: state => {
+      localStorage.removeItem(TOKEN_TYPES.ACCESS_TOKEN);
+      state.isAuthenticated = false;
+      state.currentUser = {};
+      window.location.href = '/login';
     }
   },
   extraReducers: builder =>
@@ -33,6 +40,6 @@ const userSlice = createSlice({
       })
 });
 
-export const { reloadUser } = userSlice.actions;
+export const { reloadUser, logout } = userSlice.actions;
 
 export default userSlice.reducer;

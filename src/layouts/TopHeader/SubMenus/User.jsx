@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import UserAPI from '~/services/userAPI';
-import { reloadUser } from '~/redux/user/userSlice';
+import { logout, reloadUser } from '~/redux/user/userSlice';
 import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
 
 const User = () => {
@@ -98,6 +98,7 @@ const User = () => {
         danger
         icon={<LogoutOutlined />}
         style={{ textAlign: 'left', width: '100%' }}
+        onClick={() => dispatch(logout())}
       >
         Đăng xuất
       </Button>
