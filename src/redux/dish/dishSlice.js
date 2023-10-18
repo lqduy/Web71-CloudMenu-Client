@@ -18,7 +18,6 @@ const dishSlice = createSlice({
       })
       .addCase(fetchAllDishes.fulfilled, (state, action) => {
         state.isLoading = false;
-        // const sortedData = rawData.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         state.dishData = action.payload;
       })
       .addCase(fetchAllDishes.rejected, (state, action) => {

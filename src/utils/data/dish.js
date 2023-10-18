@@ -33,9 +33,10 @@ const type = [
   { value: 'khonang', title: 'Khô' },
   { value: 'banhngot', title: 'Bánh ngọt' },
   { value: 'banhman', title: 'Bánh mặn' },
-  { value: 'monnuoc', title: 'Món nước' },
-  { value: 'other', title: 'Khác' }
-];
+  { value: 'monnuoc', title: 'Món nước' }
+].sort((a, b) => a.title.localeCompare(b.title));
+
+type.push({ value: 'other', title: 'Khác' });
 
 const Dish = {
   origin,

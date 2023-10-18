@@ -29,8 +29,10 @@ const MenuItem = ({ data, isPreviewer }) => {
   return (
     <div
       className={classNames('flex justify-between items-center p-1 rounded-full pr-6', {
-        border: !isPreviewer,
-        'cursor-pointer border border-transparent hover:bg-gray-100 hover:shadow-card': isPreviewer
+        'bg-gray-100': !isPreviewer,
+        'hover:shadow-card': !isAdded && !isPreviewer,
+        'cursor-pointer hover:bg-gray-100 hover:shadow-card': isPreviewer,
+        'opacity-20': isAdded && !isPreviewer
       })}
     >
       <div className='flex items-center gap-1'>
@@ -61,7 +63,7 @@ const MenuItem = ({ data, isPreviewer }) => {
               size='small'
               onClick={() => dispatch(unselectOne(data))}
             />
-            <Button icon={<DragOutlined style={{ fontSize: '12px' }} />} size='small' />
+            <Button icon={<DragOutlined />} size='small' className='cursor-grab' />
           </div>
         )}
       </div>

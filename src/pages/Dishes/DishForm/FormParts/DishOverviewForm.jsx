@@ -37,13 +37,11 @@ const DishOverviewForm = ({ form, onFinish }) => {
 
   const typeOptionsElement = useMemo(
     () =>
-      Dish.type
-        .sort((a, b) => a.title.localeCompare(b.title))
-        .map(type => (
-          <Select.Option key={type.value} value={type.value}>
-            {type.title}
-          </Select.Option>
-        )),
+      Dish.type.map(type => (
+        <Select.Option key={type.value} value={type.value}>
+          {type.title}
+        </Select.Option>
+      )),
     []
   );
 
