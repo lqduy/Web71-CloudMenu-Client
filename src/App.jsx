@@ -9,6 +9,7 @@ import { fetchPagesOfUser } from './redux/page/pageActions';
 import { setActivePage } from './redux/page/pageSlice';
 import AuthenAPI from './services/authenAPI';
 import CreatePage from './pages/Home/CreatePage';
+import Landing from './pages/Landing/Landing';
 
 const App = () => {
   const { reload: userReload, currentUser, isAuthenticated } = useSelector(state => state.user);
@@ -68,6 +69,8 @@ const App = () => {
       <div className='bg-[#eee] text-base'>
         <PageLayout>
           <Routes>
+            <Route path='/landing' element={<Landing />} />
+
             {routes.map(route => {
               const Page = route.component;
               let routeElement = <Page />;
