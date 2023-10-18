@@ -3,6 +3,7 @@ import Home from '~/pages/Home';
 import Dishes from '~/pages/Dishes';
 import Menus from '~/pages/Menus';
 import MenuDetails from '~/pages/MenuDetails';
+import Landing from '~/pages/Landing/Landing';
 
 export const PATH = {
   DASH_BOARD: '/u/dashboard',
@@ -14,7 +15,8 @@ const publicRoutes = [
   { path: '/', component: Home },
   { path: '/p/:pageId', component: Home },
   { path: PATH.LOGIN, component: Authen },
-  { path: PATH.SIGNUP, component: Authen }
+  { path: PATH.SIGNUP, component: Authen },
+  { path: '/about-me', component: Landing }
 ];
 
 const privateRoutes = [

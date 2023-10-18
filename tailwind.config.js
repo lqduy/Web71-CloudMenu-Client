@@ -1,10 +1,31 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+const colors = require('tailwindcss/colors');
+
+module.exports = {
+  content: ['./src/**/*.{js,jsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: '#F97316'
+        primary: '#F97316',
+        'primary-light': '#F7F8FC',
+        'secondary-light': '#FFFFFF',
+        'ternary-light': '#f6f7f8',
+
+        'primary-dark': '#fb8700',
+        'secondary-dark': '#C27217',
+        'ternary-dark': '#C27217'
+      },
+      container: {
+        padding: {
+          DEFAULT: '0.5rem',
+          sm: '2rem',
+          lg: '5rem',
+          xl: '6rem',
+          '2xl': '8rem'
+        }
+      },
+      screens: {
+        ssm: '300px'
       },
       backgroundImage: {
         'create-page': 'url("/src/assets/layouts/create-page.jpg")'
@@ -14,7 +35,10 @@ export default {
       }
     }
   },
-  plugins: [],
+  variants: {
+    extend: { opacity: ['disabled'] }
+  },
+  plugins: ['@tailwindcss/forms'],
   corePlugins: {
     // Remove Tailwind CSS's preflight style so it can use the antd's preflight instead (reset.css).
     preflight: false

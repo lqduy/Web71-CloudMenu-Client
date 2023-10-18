@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Space, Avatar, Popover, Tag } from 'antd';
 import {
@@ -15,6 +15,7 @@ import { useCallback } from 'react';
 const TopHeader = () => {
   const { currentUser } = useSelector(state => state.user);
   const { activePage } = useSelector(state => state.page);
+  const navigate = useNavigate();
 
   const UserButton = useCallback(
     () => (
@@ -56,8 +57,12 @@ const TopHeader = () => {
               Chủ đề
             </Button>
           </Popover>
-          <Button type='text' icon={<QuestionCircleOutlined />}>
-            Hỗ trợ
+          <Button
+            type='text'
+            icon={<QuestionCircleOutlined />}
+            onClick={() => navigate('/about-me')}
+          >
+            Giới thiệu
           </Button>
           <Button type='text' icon={<SettingOutlined />}>
             Thiết lập
