@@ -8,8 +8,8 @@ const AppBanner = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ ease: 'linear', duration: 2, x: { duration: 1 } }}
-      className='flex items-center 2xl:justify-evenly 2xl:flex-row ssm:flex-col'
-      style={{ paddingTop: 116, paddingBottom: 30 }}
+      className='flex items-center lg:justify-evenly lg:flex-row ssm:flex-col ssm:justify-center h-screen'
+      style={{ paddingTop: 100, paddingBottom: 30 }}
     >
       <div className='w-full md:w-1/3 text-left'>
         <motion.h1
@@ -47,13 +47,10 @@ const AppBanner = () => {
           }}
           className='flex justify-center sm:block'
         >
-          <Link
-            to='/signup'
-            className=' no-underline font-general-medium flex justify-center items-center w-36 sm:w-48 mt-12 mb-6 sm:mb-0 text-lg border border-indigo-200 py-2.5 sm:py-3 shadow-lg rounded-lg bg-indigo-50 focus:ring-1 hover:bg-black text-gray-500 hover:text-white duration-500'
-          >
-            <span className='text-sm sm:text-lg font-general-medium duration-100'>
+          <Link to='/signup'>
+            <button className='h-12 px-8 bg-primary text-white hover:bg-[#b6600e] font-bold rounded-2xl cursor-pointer'>
               Dùng thử miễn phí
-            </span>
+            </button>
           </Link>
         </motion.div>
       </div>

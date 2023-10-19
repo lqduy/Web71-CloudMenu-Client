@@ -4,7 +4,7 @@ import classNames from 'classnames';
 const Container = ({ children, className }) => {
   return (
     <div
-      className={classNames('w-full 2xl:max-w-screen-2xl lg:px-[5%] 2xl:px-0 mx-auto', {
+      className={classNames('w-full 2xl:max-w-screen-2xl lg:px-[5%] px-4 2xl:px-0 mx-auto', {
         [className]: className
       })}
     >

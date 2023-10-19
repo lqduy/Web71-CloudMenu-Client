@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchCurrentUser } from './userActions';
 import { TOKEN_TYPES } from '~/utils/constants';
+import { PATH } from '~/routes';
 
 const initialState = {
   isAuthenticated: false,
@@ -20,7 +21,7 @@ const userSlice = createSlice({
       localStorage.removeItem(TOKEN_TYPES.ACCESS_TOKEN);
       state.isAuthenticated = false;
       state.currentUser = {};
-      window.location.href = '/login';
+      window.location.href = PATH.ABOUT_ME;
     }
   },
   extraReducers: builder =>

@@ -8,19 +8,20 @@ import Landing from '~/pages/Landing/Landing';
 export const PATH = {
   DASH_BOARD: '/u/dashboard',
   LOGIN: '/login',
-  SIGNUP: '/signup'
+  SIGNUP: '/signup',
+  ABOUT_ME: 'about-me'
 };
 
 const publicRoutes = [
-  { path: '/', component: Home },
   { path: '/p/:pageId', component: Home },
   { path: PATH.LOGIN, component: Authen },
   { path: PATH.SIGNUP, component: Authen },
-  { path: '/about-me', component: Landing }
+  { path: PATH.ABOUT_ME, component: Landing }
 ];
 
 const privateRoutes = [
-  { path: '/u/:userId', component: Home },
+  { path: '/', component: Home },
+  // { path: '/u/:userId', component: Home },
   { path: PATH.DASH_BOARD, component: Home },
   { path: '/p/:pageId/dashboard', component: Home },
   { path: '/p/:pageId/dish', component: Dishes },

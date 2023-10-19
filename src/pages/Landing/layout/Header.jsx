@@ -23,7 +23,7 @@ const AppHeader = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       id='nav'
-      className='w-full h-[100px] z-10 fixed top-0 left-1/2 -translate-x-1/2 shadow-lg bg-white dark:bg-[#FB8900] sm:container sm:mx-auto '
+      className='w-full h-[100px] z-10 fixed top-0 left-1/2 -translate-x-1/2 shadow-xl rounded-lg bg-white dark:bg-[#FB8900] sm:container sm:mx-auto '
     >
       <div className='z-10 max-w-screen-lg xl:max-w-screen-xl block sm:flex sm:justify-between sm:items-center py-0'>
         {/* Header menu links and small screen hamburger menu */}

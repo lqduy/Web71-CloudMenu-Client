@@ -20,7 +20,7 @@ const Dishes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!activePage) {
+    if (!isLoading && !activePage) {
       navigate(PATH.DASH_BOARD);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

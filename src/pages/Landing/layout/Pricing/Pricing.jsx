@@ -1,8 +1,8 @@
 const Pricing = ({ Title, Description, price, time, titleLists }) => {
   return (
-    <div>
+    <div className="">
       {/* Pricing Card */}
-      <div className='flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-2xl border border-gray-300 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white'>
+      <div className='flex flex-col min-h-[502px] p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-2xl border border-gray-300 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white'>
         <h3 className='mb-4 text-2xl font-semibold'>{Title}</h3>
         <p className='font-light text-gray-500 sm:text-lg dark:text-gray-400'>{Description}</p>
         <div className='flex justify-center items-baseline my-8'>
@@ -31,7 +31,7 @@ const Pricing = ({ Title, Description, price, time, titleLists }) => {
         </ul>
         <a
           href='#'
-          className='no-underline duration-500 text-white bg-ternary-dark hover:bg-primary-dark hover:text-black  font-medium rounded-2xl text-sm px-5 py-2.5 text-center  '
+          className='mt-auto no-underline duration-500 text-white bg-ternary-dark hover:bg-primary-dark hover:text-black font-medium rounded-2xl text-sm px-5 py-2.5 text-center  '
         >
           Đăng ký ngay
         </a>
