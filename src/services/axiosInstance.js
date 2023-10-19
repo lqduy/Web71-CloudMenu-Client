@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PATH } from '~/routes';
 import { TOKEN_TYPES } from '~/utils/constants';
 
 const BASE_API_URL = 'http://localhost:3001/api/v1';
@@ -23,8 +24,8 @@ api.interceptors.response.use(
   response => response,
   error => {
     if (error.response.status === 401) {
-      localStorage.removeItem('accessToken');
-      // window.location.href = '/login';
+      localStorage.removeItem(TOKEN_TYPES.ACCESS_TOKEN);
+      window.location.href = PATH.LOGIN;
     }
   }
 );

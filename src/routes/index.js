@@ -6,7 +6,6 @@ import MenuDetails from '~/pages/MenuDetails';
 import Landing from '~/pages/Landing/Landing';
 
 export const PATH = {
-  DASH_BOARD: '/u/dashboard',
   LOGIN: '/login',
   SIGNUP: '/signup',
   ABOUT_ME: '/about-me'

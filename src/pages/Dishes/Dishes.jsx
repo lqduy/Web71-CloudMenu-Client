@@ -13,6 +13,7 @@ import PageLayout from '~/layouts/PageLayout';
 const Dishes = () => {
   const { dishData, isLoading } = useSelector(state => state.dish);
   const { activePage } = useSelector(state => state.page);
+  const [renderDishList, setRenderDishList] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDish, setEditingDish] = useState(null);
   const [reload, setReload] = useState(null);
@@ -46,12 +47,16 @@ const Dishes = () => {
     setEditingDish(data);
   };
 
+  const handleSetDishList = newList => {
+    setRenderDishList(newList);
+  };
+
   return (
     <PageLayout>
       <div className='flex flex-col gap-4'>
         <Row gutter={16} className='mt-4 min-h-screen'>
           <Col span={5} className='flex flex-col gap-4'>
-            <DishesAsideBar />
+            <DishesAsideBar handleSetDishList={handleSetDishList} />
           </Col>
           <Col span={19} className='flex flex-col gap-4'>
             <BodyPageTopBar
@@ -60,7 +65,7 @@ const Dishes = () => {
               onOpenModal={() => setIsModalOpen(true)}
             />
             <DishesTable
-              data={dishData}
+              data={renderDishList ?? dishData}
               onSetEdit={handleSetEdit}
               toReload={toReload}
               isLoading={isLoading}

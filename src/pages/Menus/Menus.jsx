@@ -7,7 +7,6 @@ import MenuForm from './MenuForm';
 import MenuCard from './MenuCard';
 import { fetchAllMenus } from '~/redux/menu/menuActions';
 import PageLayout from '~/layouts/PageLayout';
-import MenuContent from '~/components/MenuContent';
 import MenuFullCard from '~/components/MenuFullCard';
 
 const Menus = () => {

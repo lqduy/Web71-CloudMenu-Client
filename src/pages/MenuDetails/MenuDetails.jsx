@@ -1,10 +1,7 @@
-import { CheckOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Row } from 'antd';
-import Meta from 'antd/es/card/Meta';
+import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import MenuContent from '~/components/MenuContent';
 import MenuFullCard from '~/components/MenuFullCard';
 import SectionWrapper from '~/components/SectionWrapper';
 import PageLayout from '~/layouts/PageLayout';
