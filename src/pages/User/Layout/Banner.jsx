@@ -18,9 +18,9 @@ const Banner = () => {
         />
       </div>
 
-      <div className=' lg:w-96 md:w-56 sm:w-56 ssm:w-19 lg:pt-10 mb:pt-6  xl:left-1/3 lg:left-96 md:left-80 sm:left-72 ssm:left-36  absolute '>
-        <p className='m-0  lg:text-3xl md:text-lg font-bold font-roboto'>Nhà hàng Sài Gòn</p>
-        <p className='m-0 lg:text-lg ssm:text-sm'>
+      <div className=' lg:w-96 md:w-72 sm:w-56 ssm:w-19 lg:pt-10 mb:pt-6  xl:left-1/3 lg:left-96 md:left-80 sm:left-72 ssm:left-36  absolute '>
+        <p className='m-0 pl-5  lg:text-3xl md:text-lg font-bold font-roboto'>Nhà hàng Sài Gòn</p>
+        <p className='m-0 pl-5 lg:text-lg ssm:text-sm'>
           Địa chỉ: 74 Nguyễn Thị Thập, Phường Tân Hưng, Quận 7, Thành phố Hồ Chí Minh
         </p>
       </div>
