@@ -21,7 +21,7 @@ const Dishes = () => {
 
   useEffect(() => {
     if (!isLoading && !activePage) {
-      navigate(PATH.DASH_BOARD);
+      navigate(PATH.ABOUT_ME);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePage]);

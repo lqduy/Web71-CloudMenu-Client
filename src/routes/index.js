@@ -9,7 +9,7 @@ export const PATH = {
   DASH_BOARD: '/u/dashboard',
   LOGIN: '/login',
   SIGNUP: '/signup',
-  ABOUT_ME: 'about-me'
+  ABOUT_ME: '/about-me'
 };
 
 const publicRoutes = [
@@ -22,7 +22,7 @@ const publicRoutes = [
 const privateRoutes = [
   { path: '/', component: Home },
   // { path: '/u/:userId', component: Home },
-  { path: PATH.DASH_BOARD, component: Home },
+  // { path: PATH.DASH_BOARD, component: Home },
   { path: '/p/:pageId/dashboard', component: Home },
   { path: '/p/:pageId/dish', component: Dishes },
   { path: '/p/:pageId/menu', component: Menus },

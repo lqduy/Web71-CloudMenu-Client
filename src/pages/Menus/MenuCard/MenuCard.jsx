@@ -1,15 +1,33 @@
 import {
+  CheckCircleOutlined,
+  CheckOutlined,
   DollarOutlined,
   EditOutlined,
   EllipsisOutlined,
-  FileTextOutlined,
-  SettingOutlined
+  FileTextOutlined
 } from '@ant-design/icons';
-import { Avatar, Button, Card } from 'antd';
+import { Avatar, Button, Card, Popconfirm, message } from 'antd';
 import Meta from 'antd/es/card/Meta';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { reloadPage } from '~/redux/page/pageSlice';
+import PageAPI from '~/services/pageAPI';
 
 const MenuCard = ({ data, index }) => {
+  const { activePage } = useSelector(state => state.page);
+  const dispatch = useDispatch();
+
+  const handleApplyMenu = async () => {
+    try {
+      await PageAPI.applyMenu(activePage._id, { menuId: data._id });
+      message.success('Áp dụng thực đơn thành công');
+      dispatch(reloadPage());
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
+
   return (
     <Card
       key={data._id}
@@ -17,7 +35,17 @@ const MenuCard = ({ data, index }) => {
       className='w-[calc(33.33%-16px*2/3)] shadow-sm'
       cover={<div className='h-12 bg-red-300 rounded-t-lg'></div>}
       actions={[
-        <SettingOutlined key='setting' />,
+        <Popconfirm
+          key='apply'
+          title='Áp dụng thực đơn'
+          description='Thay thế thực đơn đang áp dụng?'
+          icon={<CheckCircleOutlined style={{ color: 'green' }} />}
+          cancelText='Đóng'
+          okText='Xác nhận'
+          onConfirm={handleApplyMenu}
+        >
+          <CheckOutlined />
+        </Popconfirm>,
         <EditOutlined key='edit' />,
         <EllipsisOutlined key='ellipsis' />
       ]}
