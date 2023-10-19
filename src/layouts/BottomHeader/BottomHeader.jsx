@@ -15,8 +15,6 @@ const BottomHeader = () => {
   const { activePage } = useSelector(state => state.page);
   const navigate = useNavigate();
 
-  const { _id: pageId } = activePage ?? {};
-
   return (
     <div className='bg-orange-500'>
       <Container>
@@ -28,7 +26,7 @@ const BottomHeader = () => {
               className='h-11 text-white'
               onClick={() => navigate('/')}
             >
-              Trang chủ
+              Bảng tin
             </Button>
             {!activePage && (
               <Button
@@ -46,7 +44,7 @@ const BottomHeader = () => {
                   type='text'
                   icon={<BarsOutlined />}
                   className='h-11 text-white'
-                  onClick={() => navigate(`/p/${pageId}/dish`)}
+                  onClick={() => navigate('/p/lqduycp/dish')}
                 >
                   Món ăn
                 </Button>
@@ -54,7 +52,7 @@ const BottomHeader = () => {
                   type='text'
                   icon={<BookOutlined />}
                   className='h-11 text-white'
-                  onClick={() => navigate(`/p/${pageId}/menu`)}
+                  onClick={() => navigate('/p/lqduycp/menu')}
                 >
                   Thực đơn
                 </Button>

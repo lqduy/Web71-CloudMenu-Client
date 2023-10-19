@@ -13,7 +13,6 @@ import PageLayout from '~/layouts/PageLayout';
 const Dishes = () => {
   const { dishData, isLoading } = useSelector(state => state.dish);
   const { activePage } = useSelector(state => state.page);
-  const [renderDishList, setRenderDishList] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDish, setEditingDish] = useState(null);
   const [reload, setReload] = useState(null);
@@ -22,7 +21,7 @@ const Dishes = () => {
 
   useEffect(() => {
     if (!isLoading && !activePage) {
-      navigate(PATH.ABOUT_ME);
+      navigate(PATH.DASH_BOARD);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePage]);
@@ -47,16 +46,12 @@ const Dishes = () => {
     setEditingDish(data);
   };
 
-  const handleSetDishList = newList => {
-    setRenderDishList(newList);
-  };
-
   return (
     <PageLayout>
       <div className='flex flex-col gap-4'>
         <Row gutter={16} className='mt-4 min-h-screen'>
           <Col span={5} className='flex flex-col gap-4'>
-            <DishesAsideBar handleSetDishList={handleSetDishList} />
+            <DishesAsideBar />
           </Col>
           <Col span={19} className='flex flex-col gap-4'>
             <BodyPageTopBar
@@ -65,7 +60,7 @@ const Dishes = () => {
               onOpenModal={() => setIsModalOpen(true)}
             />
             <DishesTable
-              data={renderDishList ?? dishData}
+              data={dishData}
               onSetEdit={handleSetEdit}
               toReload={toReload}
               isLoading={isLoading}

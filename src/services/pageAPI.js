@@ -12,10 +12,6 @@ const PageAPI = {
   create: data => {
     const url = '/pages';
     return api.post(url, data);
-  },
-  applyMenu: (id, body) => {
-    const url = `/pages/${id}/apply-menu`;
-    return api.put(url, body);
   }
 };
 

@@ -7,7 +7,6 @@ import { fetchCurrentUser } from './redux/user/userActions';
 import { fetchPagesOfUser } from './redux/page/pageActions';
 import { setActivePage } from './redux/page/pageSlice';
 import CreatePage from './pages/Home/CreatePage';
-import { TOKEN_TYPES } from './utils/constants';
 
 const App = () => {
   const { reload: userReload, currentUser, isAuthenticated } = useSelector(state => state.user);
@@ -15,7 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem(TOKEN_TYPES.ACCESS_TOKEN);
+    const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       dispatch(fetchCurrentUser());
     }

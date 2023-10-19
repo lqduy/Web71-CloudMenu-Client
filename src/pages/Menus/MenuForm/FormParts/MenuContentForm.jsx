@@ -18,7 +18,6 @@ import MenuItem from '~/components/MenuItem';
 import Search from 'antd/es/input/Search';
 import MenuContent from '~/components/MenuContent';
 import { SORT_TYPE } from '~/utils/constants';
-import sortDishesByType from '~/utils/functions/sortDishesByType';
 
 const MenuContentForm = ({ form, onFinish }) => {
   const { activePage } = useSelector(state => state.page);
@@ -89,7 +88,23 @@ const MenuContentForm = ({ form, onFinish }) => {
   );
 
   const renderDishList = useMemo(() => {
-    let list = sortDishesByType(dishData, viewMode.sortType);
+    let list = [...dishData];
+    switch (viewMode.sortType) {
+      case SORT_TYPE.Z_TO_A: {
+        list = list.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      }
+      case SORT_TYPE.L_TO_H: {
+        list = list.sort((a, b) => a.price - b.price);
+        break;
+      }
+      case SORT_TYPE.H_TO_L: {
+        list = list.sort((a, b) => b.price - a.price);
+        break;
+      }
+      default:
+        list = list.sort((a, b) => a.name.localeCompare(b.name));
+    }
     if (viewMode.hiddenAdded) {
       list = list.filter(dish => itemList.every(item => item._id !== dish._id));
     }
