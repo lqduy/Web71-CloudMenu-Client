@@ -5,6 +5,7 @@ import Menus from '~/pages/Menus';
 import MenuDetails from '~/pages/MenuDetails';
 import Landing from '~/pages/Landing/Landing';
 import Likes from '~/pages/Likes';
+import User from '~/pages/User/UserPage';
 
 export const PATH = {
   LOGIN: '/login',
@@ -13,6 +14,7 @@ export const PATH = {
 };
 
 const publicRoutes = [
+  { path: '/user', component: User },
   { path: '/p/:pageId', component: Home },
   { path: PATH.LOGIN, component: Authen },
   { path: PATH.SIGNUP, component: Authen },

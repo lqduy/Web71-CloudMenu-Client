@@ -4,6 +4,7 @@ import pageReducer from './page/pageSlice';
 import dishReducer from './dish/dishSlice';
 import menuReducer from './menu/menuSlice';
 import viewReducer from './view/viewSlice';
+import cartReducer from './cart/cartSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     page: pageReducer,
     dish: dishReducer,
     menu: menuReducer,
-    view: viewReducer
+    view: viewReducer,
+    cart: cartReducer
   }
 });
