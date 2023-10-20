@@ -6,9 +6,10 @@ import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
 import { Fragment, useEffect, useState } from 'react';
 import ListAPI from '~/services/listAPI';
 import NewsAPI from '~/services/newsAPI';
-import { NEWSFEED_LENGTH, TOP_LIST_LENGTH } from '~/utils/constants';
+import { NEWSFEED_LENGTH, TOP_LIST_LENGTH, VIEW_NAME } from '~/utils/constants';
 import getDateAndTime from '~/utils/functions/getDateAndTime';
 import PageLayout from '~/layouts/PageLayout';
+import { setCurrentView } from '~/redux/view/viewSlice';
 
 const Home = () => {
   const [topNewPageList, setTopNewPageList] = useState([]);
@@ -18,6 +19,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setCurrentView(VIEW_NAME.HOME));
     fetchListsFromServer(ListAPI.getTopNewPage, TOP_LIST_LENGTH, setTopNewPageList);
     fetchListsFromServer(ListAPI.getTopNewDish, TOP_LIST_LENGTH, setTopNewDishList);
     fetchListsFromServer(NewsAPI.getNewest, NEWSFEED_LENGTH, setNewfeed);

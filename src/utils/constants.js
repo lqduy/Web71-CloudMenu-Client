@@ -13,3 +13,16 @@ export const SORT_TYPE = {
   L_TO_H: 5,
   H_TO_L: 6
 };
+
+export const VIEW_NAME = {
+  HOME: 1,
+  DISH: 2,
+  MENU: 3,
+  ORDER: 4,
+  SALES: 5,
+  LIKE: 6
+};
+
+export const THEME_COLOR = {
+  DEFAULT: '#e67e22'
+};

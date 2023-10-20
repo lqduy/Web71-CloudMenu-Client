@@ -13,6 +13,10 @@ const PageAPI = {
     const url = '/pages';
     return api.post(url, data);
   },
+  update: (id, data) => {
+    const url = `/pages/${id}`;
+    return api.put(url, data);
+  },
   applyMenu: (id, body) => {
     const url = `/pages/${id}/apply-menu`;
     return api.put(url, body);

@@ -9,6 +9,8 @@ import { fetchAllMenus } from '~/redux/menu/menuActions';
 import PageLayout from '~/layouts/PageLayout';
 import MenuFullCard from '~/components/MenuFullCard';
 import { CheckOutlined } from '@ant-design/icons';
+import { setCurrentView } from '~/redux/view/viewSlice';
+import { VIEW_NAME } from '~/utils/constants';
 
 const Menus = () => {
   const { activePage } = useSelector(state => state.page);
@@ -19,6 +21,11 @@ const Menus = () => {
   const applyButtonRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(setCurrentView(VIEW_NAME.MENU));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!activePage) {

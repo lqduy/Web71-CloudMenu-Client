@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCurrentUser } from './userActions';
+import { fetchCurrentUser, updateUserById } from './userActions';
 import { TOKEN_TYPES } from '~/utils/constants';
 import { PATH } from '~/routes';
 
@@ -36,6 +36,14 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUserById.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateUserById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })

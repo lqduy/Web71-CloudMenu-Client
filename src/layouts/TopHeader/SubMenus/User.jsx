@@ -73,11 +73,13 @@ const User = () => {
 
   return (
     <Space direction='vertical'>
-      <Popover placement='leftTop' content={<ChangeActivist />}>
-        <Button type='text' icon={<SyncOutlined />} className='w-full text-left'>
-          Chuyển đổi
-        </Button>
-      </Popover>
+      {pageList.length > 0 && (
+        <Popover placement='leftTop' content={<ChangeActivist />}>
+          <Button type='text' icon={<SyncOutlined />} className='w-full text-left'>
+            Chuyển đổi
+          </Button>
+        </Popover>
+      )}
       <Button
         type='text'
         icon={<PlusOutlined />}

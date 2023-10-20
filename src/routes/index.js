@@ -4,6 +4,7 @@ import Dishes from '~/pages/Dishes';
 import Menus from '~/pages/Menus';
 import MenuDetails from '~/pages/MenuDetails';
 import Landing from '~/pages/Landing/Landing';
+import Likes from '~/pages/Likes';
 
 export const PATH = {
   LOGIN: '/login',
@@ -20,9 +21,7 @@ const publicRoutes = [
 
 const privateRoutes = [
   { path: '/', component: Home },
-  // { path: '/u/:userId', component: Home },
-  // { path: PATH.DASH_BOARD, component: Home },
-  { path: '/p/:pageId/dashboard', component: Home },
+  { path: '/u/:userId/like', component: Likes },
   { path: '/p/:pageId/dish', component: Dishes },
   { path: '/p/:pageId/menu', component: Menus },
   { path: '/m/:menuId', component: MenuDetails }

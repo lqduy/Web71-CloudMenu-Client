@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Row, Space } from 'antd';
@@ -10,22 +12,40 @@ import {
   HeartOutlined
 } from '@ant-design/icons';
 import Container from '~/components/Container';
+import { THEME_COLOR, VIEW_NAME } from '~/utils/constants';
+import { useMemo } from 'react';
 
 const BottomHeader = () => {
+  const { currentUser } = useSelector(state => state.user);
   const { activePage } = useSelector(state => state.page);
+  const { currentView } = useSelector(state => state.view);
   const navigate = useNavigate();
 
   const { _id: pageId } = activePage ?? {};
 
+  const themeColor = useMemo(() => {
+    let color = THEME_COLOR.DEFAULT;
+    if (activePage && activePage.themeColor) {
+      color = activePage.themeColor;
+    } else if (currentUser && currentUser.themeColor) {
+      color = currentUser.themeColor;
+    }
+    return color;
+  }, [activePage, currentUser]);
+
+  const FOCUS_STYLE = 'bg-black/[0.1]';
+
   return (
-    <div className='bg-orange-500'>
+    <div style={{ backgroundColor: themeColor }}>
       <Container>
         <Row className='justify-between items-center h-11'>
           <Space wrap>
             <Button
               type='text'
               icon={<HomeOutlined />}
-              className='h-11 text-white'
+              className={classNames('h-11 text-white', {
+                [FOCUS_STYLE]: currentView === VIEW_NAME.HOME
+              })}
               onClick={() => navigate('/')}
             >
               Trang chủ
@@ -34,8 +54,10 @@ const BottomHeader = () => {
               <Button
                 type='text'
                 icon={<HeartOutlined />}
-                className='h-11 text-white'
-                onClick={() => navigate('/p/lqduycp/dish')}
+                className={classNames('h-11 text-white', {
+                  [FOCUS_STYLE]: currentView === VIEW_NAME.LIKE
+                })}
+                onClick={() => navigate(`/u/${currentUser._id}/like`)}
               >
                 Yêu thích
               </Button>
@@ -45,7 +67,9 @@ const BottomHeader = () => {
                 <Button
                   type='text'
                   icon={<BarsOutlined />}
-                  className='h-11 text-white'
+                  className={classNames('h-11 text-white', {
+                    [FOCUS_STYLE]: currentView === VIEW_NAME.DISH
+                  })}
                   onClick={() => navigate(`/p/${pageId}/dish`)}
                 >
                   Món ăn
@@ -53,15 +77,29 @@ const BottomHeader = () => {
                 <Button
                   type='text'
                   icon={<BookOutlined />}
-                  className='h-11 text-white'
+                  className={classNames('h-11 text-white', {
+                    [FOCUS_STYLE]: currentView === VIEW_NAME.MENU
+                  })}
                   onClick={() => navigate(`/p/${pageId}/menu`)}
                 >
                   Thực đơn
                 </Button>
-                <Button type='text' icon={<FileDoneOutlined />} className='h-11 text-white'>
+                <Button
+                  type='text'
+                  icon={<FileDoneOutlined />}
+                  className={classNames('h-11 text-white', {
+                    [FOCUS_STYLE]: currentView === VIEW_NAME.ORDER
+                  })}
+                >
                   Gọi món
                 </Button>
-                <Button type='text' icon={<LineChartOutlined />} className='h-11 text-white'>
+                <Button
+                  type='text'
+                  icon={<LineChartOutlined />}
+                  className={classNames('h-11 text-white', {
+                    [FOCUS_STYLE]: currentView === VIEW_NAME.SALES
+                  })}
+                >
                   Thống kê
                 </Button>
               </>

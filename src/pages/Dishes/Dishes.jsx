@@ -9,6 +9,8 @@ import DishForm from './DishForm';
 import { fetchAllDishes } from '~/redux/dish/dishActions';
 import { PATH } from '~/routes';
 import PageLayout from '~/layouts/PageLayout';
+import { setCurrentView } from '~/redux/view/viewSlice';
+import { VIEW_NAME } from '~/utils/constants';
 
 const Dishes = () => {
   const { dishData, isLoading } = useSelector(state => state.dish);
@@ -19,6 +21,11 @@ const Dishes = () => {
   const [reload, setReload] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(setCurrentView(VIEW_NAME.DISH));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!isLoading && !activePage) {
