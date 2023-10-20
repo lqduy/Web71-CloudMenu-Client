@@ -23,6 +23,7 @@ const Home = () => {
     fetchListsFromServer(ListAPI.getTopNewPage, TOP_LIST_LENGTH, setTopNewPageList);
     fetchListsFromServer(ListAPI.getTopNewDish, TOP_LIST_LENGTH, setTopNewDishList);
     fetchListsFromServer(NewsAPI.getNewest, NEWSFEED_LENGTH, setNewfeed);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchListsFromServer = async (apiFunction, listLength, setStateFunction) => {

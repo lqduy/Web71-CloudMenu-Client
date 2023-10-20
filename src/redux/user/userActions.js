@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import AuthenAPI from '~/services/authenAPI';
-import PageAPI from '~/services/pageAPI';
 import UserAPI from '~/services/userAPI';
 
 const FETCH_CURRENT_USER = 'app/fetch-current-user';

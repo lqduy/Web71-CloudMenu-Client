@@ -1,16 +1,19 @@
 /* eslint-disable indent */
 import { useEffect, useMemo, useState } from 'react';
-import { Row, Col, Spin, Button, Input, Form, Popover, Divider, Space, Checkbox } from 'antd';
 import {
-  ArrowDownOutlined,
-  ArrowRightOutlined,
-  ArrowUpOutlined,
-  CloseOutlined,
-  MenuOutlined,
-  PlusOutlined,
-  SortAscendingOutlined,
-  SortDescendingOutlined
-} from '@ant-design/icons';
+  Row,
+  Col,
+  Spin,
+  Button,
+  Input,
+  Form,
+  Popover,
+  Divider,
+  Space,
+  Checkbox,
+  Radio
+} from 'antd';
+import { ArrowRightOutlined, CloseOutlined, MenuOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllDishes } from '~/redux/dish/dishActions';
 import { unselectAll } from '~/redux/menu/menuSlice';
@@ -19,6 +22,13 @@ import Search from 'antd/es/input/Search';
 import MenuContent from '~/components/MenuContent';
 import { SORT_TYPE } from '~/utils/constants';
 import sortDishesByType from '~/utils/functions/sortDishesByType';
+
+const sortTypeList = [
+  { label: 'Chữ cái tăng', value: SORT_TYPE.A_TO_Z },
+  { label: 'Chữ cái giảm', value: SORT_TYPE.Z_TO_A },
+  { label: 'Đơn giá tăng', value: SORT_TYPE.L_TO_H },
+  { label: 'Đơn giá giảm', value: SORT_TYPE.H_TO_L }
+];
 
 const MenuContentForm = ({ form, onFinish }) => {
   const { activePage } = useSelector(state => state.page);
@@ -53,38 +63,15 @@ const MenuContentForm = ({ form, onFinish }) => {
       </Button>
       <Divider className='my-1' />
       <h4>Sắp xếp theo</h4>
-      <Button
-        type='text'
-        icon={<SortAscendingOutlined />}
-        className='w-full text-left'
-        onClick={() => onChangeSortType(SORT_TYPE.A_TO_Z)}
-      >
-        Chữ cái tăng
-      </Button>
-      <Button
-        type='text'
-        icon={<SortDescendingOutlined />}
-        className='w-full text-left'
-        onClick={() => onChangeSortType(SORT_TYPE.Z_TO_A)}
-      >
-        Chữ cái giảm
-      </Button>
-      <Button
-        type='text'
-        icon={<ArrowUpOutlined />}
-        className='w-full text-left'
-        onClick={() => onChangeSortType(SORT_TYPE.L_TO_H)}
-      >
-        Đơn giá tăng
-      </Button>
-      <Button
-        type='text'
-        icon={<ArrowDownOutlined />}
-        className='w-full text-left'
-        onClick={() => onChangeSortType(SORT_TYPE.H_TO_L)}
-      >
-        Đơn giá giảm
-      </Button>
+      <Radio.Group value={viewMode.sortType} className='flex flex-col gap-2'>
+        {sortTypeList.map(option => (
+          <Button key={option.value} type='text' className='text-left'>
+            <Radio value={option.value} onClick={() => onChangeSortType(option.value)}>
+              {option.label}
+            </Radio>
+          </Button>
+        ))}
+      </Radio.Group>
     </Space>
   );
 

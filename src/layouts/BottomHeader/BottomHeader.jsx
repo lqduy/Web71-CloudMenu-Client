@@ -21,18 +21,19 @@ const BottomHeader = () => {
   const { currentView } = useSelector(state => state.view);
   const navigate = useNavigate();
 
-  const { _id: pageId } = activePage ?? {};
-
   const themeColor = useMemo(() => {
-    let color = THEME_COLOR.DEFAULT;
+    let color = '';
     if (activePage && activePage.themeColor) {
       color = activePage.themeColor;
     } else if (currentUser && currentUser.themeColor) {
       color = currentUser.themeColor;
+    } else {
+      color = THEME_COLOR.DEFAULT;
     }
     return color;
   }, [activePage, currentUser]);
 
+  const { _id: pageId } = activePage ?? {};
   const FOCUS_STYLE = 'bg-black/[0.1]';
 
   return (
