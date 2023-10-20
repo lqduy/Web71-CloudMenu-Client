@@ -5,8 +5,10 @@ import useThemeSwitcher from '~/hooks/useThemeSwitcher';
 import logoLight from '~/assets/image/Kios/Kios_dark.png';
 import logoDark from '~/assets/image/Kios/Kios_light.png';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 
 const AppHeader = () => {
+  const { isAuthenticated } = useSelector(state => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const [activeTheme, setTheme] = useThemeSwitcher();
 
@@ -144,20 +146,33 @@ const AppHeader = () => {
         {/* Header right section buttons */}
         <div className='hidden sm:flex justify-between items-center flex-col md:flex-row'>
           <div className='hidden gap-2 md:flex'>
-            <Link
-              to='/signup'
-              className=' no-underline text-white text-md font-general-medium bg-secondary-dark hover:bg-black rounded-md px-5 py-2.5 duration-300'
-              aria-label='buttonSignup'
-            >
-              Đăng ký
-            </Link>
-            <Link
-              to='/login'
-              className='no-underline text-white text-md font-general-medium bg-secondary-dark hover:bg-black rounded-md px-5 py-2.5 duration-300'
-              aria-label='buttonLogin'
-            >
-              Đăng nhập
-            </Link>
+            {!isAuthenticated && (
+              <>
+                <Link
+                  to='/signup'
+                  className=' no-underline text-white text-md font-general-medium bg-secondary-dark hover:bg-black rounded-md px-5 py-2.5 duration-300'
+                  aria-label='buttonSignup'
+                >
+                  Đăng ký
+                </Link>
+                <Link
+                  to='/login'
+                  className='no-underline text-white text-md font-general-medium bg-secondary-dark hover:bg-black rounded-md px-5 py-2.5 duration-300'
+                  aria-label='buttonLogin'
+                >
+                  Đăng nhập
+                </Link>
+              </>
+            )}
+            {isAuthenticated && (
+              <Link
+                to='/login'
+                className='no-underline text-white text-md font-general-medium bg-secondary-dark hover:bg-black rounded-md px-5 py-2.5 duration-300'
+                aria-label='buttonLogin'
+              >
+                Đến trang quản lý
+              </Link>
+            )}
           </div>
 
           {/* Theme switcher large screen */}

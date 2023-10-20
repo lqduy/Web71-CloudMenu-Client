@@ -1,3 +1,4 @@
+import { CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePageById } from '~/redux/page/pageActions';
 import { reloadPage } from '~/redux/page/pageSlice';
@@ -28,7 +29,6 @@ const ThemeColors = () => {
         id: activePage._id,
         data: { ...activePage, themeColor: color }
       };
-      console.log(payload);
       await dispatch(updatePageById(payload));
       dispatch(reloadPage());
     } else if (currentUser) {
@@ -41,16 +41,31 @@ const ThemeColors = () => {
     }
   };
 
+  const checkSelectedColor = color => {
+    if (activePage && activePage.themeColor) {
+      return activePage.themeColor === color;
+    } else if (currentUser && currentUser.themeColor) {
+      return currentUser.themeColor === color;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div className='flex flex-wrap gap-2 w-28'>
-      {colors.map(color => (
-        <span
-          key={color}
-          className='w-[calc(33.33%-8px*2/3)] aspect-square rounded-md cursor-pointer'
-          style={{ backgroundColor: color }}
-          onClick={() => handleChangeThemeColor(color)}
-        ></span>
-      ))}
+      {colors.map(color => {
+        const isSelectedColor = checkSelectedColor(color);
+        return (
+          <span
+            key={color}
+            className='flex justify-center items-center w-[calc(33.33%-8px*2/3)] aspect-square rounded-md cursor-pointer'
+            style={{ backgroundColor: color }}
+            onClick={() => handleChangeThemeColor(color)}
+          >
+            {isSelectedColor && <CheckOutlined className='text-white' />}
+          </span>
+        );
+      })}
     </div>
   );
 };
