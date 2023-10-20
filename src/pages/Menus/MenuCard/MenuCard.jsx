@@ -10,22 +10,21 @@ import { Avatar, Button, Card, Popconfirm, message } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { applyMenu } from '~/redux/page/pageActions';
 import { reloadPage } from '~/redux/page/pageSlice';
-import PageAPI from '~/services/pageAPI';
 
-const MenuCard = ({ data, index }) => {
+const MenuCard = ({ data, index, applyButtonRef }) => {
   const { activePage } = useSelector(state => state.page);
   const dispatch = useDispatch();
 
   const handleApplyMenu = async () => {
-    try {
-      await PageAPI.applyMenu(activePage._id, { menuId: data._id });
-      message.success('Áp dụng thực đơn thành công');
-      dispatch(reloadPage());
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err);
-    }
+    const payload = {
+      id: activePage._id,
+      data: { menuId: data._id }
+    };
+    await dispatch(applyMenu(payload));
+    dispatch(reloadPage());
+    message.success('Áp dụng thực đơn thành công');
   };
 
   return (
@@ -38,13 +37,13 @@ const MenuCard = ({ data, index }) => {
         <Popconfirm
           key='apply'
           title='Áp dụng thực đơn'
-          description='Thay thế thực đơn đang áp dụng?'
+          description='Thực đơn này sẽ được hiển thị cho khách hàng?'
           icon={<CheckCircleOutlined style={{ color: 'green' }} />}
           cancelText='Đóng'
           okText='Xác nhận'
           onConfirm={handleApplyMenu}
         >
-          <CheckOutlined />
+          <CheckOutlined ref={applyButtonRef} />
         </Popconfirm>,
         <EditOutlined key='edit' />,
         <EllipsisOutlined key='ellipsis' />

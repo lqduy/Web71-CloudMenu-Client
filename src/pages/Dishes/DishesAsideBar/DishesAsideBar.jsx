@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useMemo, useRef, useState } from 'react';
 import { Button, Checkbox, Collapse, Divider, Form, Radio } from 'antd';
 import Search from 'antd/es/input/Search';
 import { SORT_TYPE } from '~/utils/constants';
@@ -12,6 +12,7 @@ const DishesAsideBar = ({ handleSetDishList }) => {
   const { dishData } = useSelector(state => state.dish);
   const [activeSeeAllBtn, setActiveSeeAllBtn] = useState(false);
   const [form] = useForm();
+  const sortTypeRef = useRef(null);
 
   const onFinish = formValue => {
     const { group, origin, type, sortType } = formValue;
@@ -33,8 +34,9 @@ const DishesAsideBar = ({ handleSetDishList }) => {
     if (type && type.length > 0) {
       renderList = renderList.filter(dish => type.includes(dish.type));
     }
-    if (sortType) {
+    if (sortType && sortType !== sortTypeRef.current) {
       renderList = sortDishesByType(renderList, sortType);
+      sortTypeRef.current = sortType;
     }
     handleSetDishList(renderList);
   };

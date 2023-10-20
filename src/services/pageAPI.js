@@ -16,6 +16,10 @@ const PageAPI = {
   applyMenu: (id, body) => {
     const url = `/pages/${id}/apply-menu`;
     return api.put(url, body);
+  },
+  unApplyMenu: id => {
+    const url = `/pages/${id}/un-apply-menu`;
+    return api.put(url);
   }
 };
 

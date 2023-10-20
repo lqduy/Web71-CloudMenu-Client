@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchPagesOfUser } from './pageActions';
+import { applyMenu, fetchPagesOfUser } from './pageActions';
 
 const initialState = {
   openPageCreateForm: false,
@@ -34,6 +34,14 @@ const pageSlice = createSlice({
         state.pageList = action.payload;
       })
       .addCase(fetchPagesOfUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(applyMenu.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(applyMenu.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })

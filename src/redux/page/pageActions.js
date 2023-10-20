@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import PageAPI from '~/services/pageAPI';
 
 const FETCH_PAGES_OF_USER = 'app/fetch-pages-of-user';
+const APPLY_MENU = 'app/apply-menu';
 
 export const fetchPagesOfUser = createAsyncThunk(
   FETCH_PAGES_OF_USER,
@@ -17,3 +18,14 @@ export const fetchPagesOfUser = createAsyncThunk(
     }
   }
 );
+
+export const applyMenu = createAsyncThunk(APPLY_MENU, async (payload, { rejectWithValue }) => {
+  const { id, data } = payload;
+  try {
+    await PageAPI.applyMenu(id, data);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    rejectWithValue(error);
+  }
+});

@@ -6,8 +6,9 @@ import { CheckOutlined, SaveOutlined } from '@ant-design/icons';
 import MenuContentForm from './FormParts/MenuContentForm';
 import MenuDesignForm from './FormParts/MenuDesignForm';
 import MenusAPI from '~/services/menuAPI';
-import PageAPI from '~/services/pageAPI';
 import { reloadPage } from '~/redux/page/pageSlice';
+import { applyMenu } from '~/redux/page/pageActions';
+import { unselectAll } from '~/redux/menu/menuSlice';
 
 const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
   const { currentUser } = useSelector(state => state.user);
@@ -36,6 +37,7 @@ const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
       handleCancel();
       form.resetFields();
       handleReload();
+      dispatch(unselectAll());
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err);
@@ -45,13 +47,13 @@ const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
   useEffect(() => {
     if (!applyMenuId || !isApplyMenu) return;
     const handleApplyMenu = async () => {
-      try {
-        await PageAPI.applyMenu(activePage._id, { menuId: applyMenuId });
-        dispatch(reloadPage());
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log(err);
-      }
+      const payload = {
+        id: activePage._id,
+        data: { menuId: applyMenuId }
+      };
+      await dispatch(applyMenu(payload));
+      dispatch(reloadPage());
+      message.success('Áp dụng thực đơn thành công');
     };
     handleApplyMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
