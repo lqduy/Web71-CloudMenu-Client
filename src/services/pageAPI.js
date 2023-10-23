@@ -24,6 +24,10 @@ const PageAPI = {
   unApplyMenu: id => {
     const url = `/pages/${id}/un-apply-menu`;
     return api.put(url);
+  },
+  delete: (id, body) => {
+    const url = `pages/${id}`;
+    return api.post(url, body);
   }
 };
 

@@ -5,6 +5,7 @@ import AddressAPI from '~/services/addressAPI';
 import PageAPI from '~/services/pageAPI';
 import { reloadUser } from '~/redux/user/userSlice';
 import { setEditPage, setOpenPageCreateForm } from '~/redux/page/pageSlice';
+import DeletePageForm from './_DeletePageForm';
 
 const initialValues = {
   name: '',
@@ -131,6 +132,7 @@ const PageForm = () => {
         </Button>
       ]}
     >
+      {isEditingPage && <DeletePageForm handleCancel={handleCancel} />}
       <Form
         form={form}
         name='businessPageData'
