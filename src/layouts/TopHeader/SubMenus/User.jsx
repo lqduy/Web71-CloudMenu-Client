@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import UserAPI from '~/services/userAPI';
 import { logout, reloadUser } from '~/redux/user/userSlice';
-import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
+import { setOpenPageCreateForm, setEditPage } from '~/redux/page/pageSlice';
 
 const User = () => {
   const { currentUser } = useSelector(state => state.user);
@@ -26,6 +26,11 @@ const User = () => {
       // eslint-disable-next-line no-console
       console.log(err);
     }
+  };
+
+  const onClickEditPage = () => {
+    dispatch(setEditPage());
+    dispatch(setOpenPageCreateForm());
   };
 
   const ChangeActivist = () => (
@@ -89,10 +94,15 @@ const User = () => {
         Tạo trang mới
       </Button>
       <Divider className='my-1' />
-      <Button type='text' icon={<UserOutlined />} style={{ textAlign: 'left', width: '100%' }}>
+      <Button type='text' icon={<UserOutlined />} className='w-full text-left'>
         Tài khoản
       </Button>
-      <Button type='text' icon={<ShopOutlined />} style={{ textAlign: 'left', width: '100%' }}>
+      <Button
+        type='text'
+        icon={<ShopOutlined />}
+        className='w-full text-left'
+        onClick={onClickEditPage}
+      >
         Quản lý gian hàng
       </Button>
       <Button

@@ -4,7 +4,7 @@ import { Row, Col, Button, Modal, Form, Input, InputNumber, Select, message } fr
 import AddressAPI from '~/services/addressAPI';
 import PageAPI from '~/services/pageAPI';
 import { reloadUser } from '~/redux/user/userSlice';
-import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
+import { setEditPage, setOpenPageCreateForm } from '~/redux/page/pageSlice';
 
 const initialValues = {
   name: '',
@@ -22,14 +22,34 @@ const initialValues = {
 
 const MODAL_WIDTH = 680;
 
-const CreatePage = () => {
+const PageForm = () => {
   const [form] = Form.useForm();
   const [provinceData, setProvinceData] = useState([]);
   const [districtData, setDistrictData] = useState([]);
   const [wardData, setWardData] = useState([]);
   const { currentUser } = useSelector(state => state.user);
-  const { openPageCreateForm } = useSelector(state => state.page);
+  const { activePage, openPageCreateForm, isEditingPage } = useSelector(state => state.page);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fieldData = () => {
+      if (!isEditingPage) return;
+      form.setFieldsValue({
+        name: activePage.name,
+        businessType: activePage.businessType,
+        isVegetarian: activePage.isVegetarian,
+        orderWays: activePage.orderWays,
+        address: activePage.address,
+        province: activePage.province,
+        district: activePage.district,
+        ward: activePage.ward,
+        phoneNumber: activePage.phoneNumber,
+        email: activePage.email
+      });
+    };
+    fieldData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditingPage]);
 
   useEffect(() => {
     fetchProvinceData();
@@ -57,6 +77,9 @@ const CreatePage = () => {
   const handleCancel = () => {
     form.resetFields();
     dispatch(setOpenPageCreateForm());
+    if (isEditingPage) {
+      dispatch(setEditPage());
+    }
   };
 
   const handleCreatePage = async value => {
@@ -75,9 +98,22 @@ const CreatePage = () => {
     }
   };
 
+  const handleUpdatePage = async value => {
+    try {
+      const newPageData = { ...activePage, ...value };
+      await PageAPI.update(activePage._id, newPageData);
+      dispatch(reloadUser());
+      handleCancel();
+      message.success('Cập nhật trang thành công');
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
+
   return (
     <Modal
-      title='TẠO TRANG KINH DOANH'
+      title={!isEditingPage ? 'TẠO TRANG KINH DOANH' : 'CHỈNH SỬA TRANG KINH DOANH'}
       open={openPageCreateForm}
       onOk={() => form.submit()}
       onCancel={handleCancel}
@@ -100,7 +136,7 @@ const CreatePage = () => {
         name='businessPageData'
         initialValues={initialValues}
         layout='vertical'
-        onFinish={handleCreatePage}
+        onFinish={!isEditingPage ? handleCreatePage : handleUpdatePage}
         className='mt-8'
       >
         <Row gutter={16}>
@@ -232,4 +268,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default PageForm;

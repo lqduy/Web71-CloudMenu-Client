@@ -1,5 +1,3 @@
-const colors = require('tailwindcss/colors');
-
 module.exports = {
   content: ['./src/**/*.{js,jsx}'],
   darkMode: 'class',
@@ -28,7 +26,8 @@ module.exports = {
         ssm: '300px'
       },
       backgroundImage: {
-        'create-page': 'url("/src/assets/layouts/create-page.jpg")'
+        'create-page': 'url("/src/assets/layouts/create-page.jpg")',
+        bannerBg: 'url("/src/assets/image/banner.png")'
       },
       boxShadow: {
         card: '0 1px 1px #091e4240, 0 0 1px #091e424f'
@@ -36,9 +35,6 @@ module.exports = {
       fontFamily: {
         dancing: ['Dancing Script'],
         roboto: ['Roboto']
-      },
-      backgroundImage: {
-        bannerBg: "url('/src/assets/image/banner.png')"
       }
     }
   },
