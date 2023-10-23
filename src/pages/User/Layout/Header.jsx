@@ -10,6 +10,7 @@ import Cart from '../Cart/Cart';
 
 const Header = () => {
   const [activeTheme, setTheme] = useThemeSwitcher();
+  const { quantity } = useSelector(state => state.cart);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -49,14 +50,14 @@ const Header = () => {
           <div className=' relative'>
             <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
               <p className='text-black dark:text-white font-bold font-sans p- m-0 duration-500'>
-                0
+                {quantity}
               </p>
             </div>
             <AiFillShopping className='w-9 h-auto dark:text-black duration-500' />
           </div>
         </button>
       </div>
-      <Modal title='Basic Modal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title='Giỏ Hàng:' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <div>
           <Cart />
         </div>

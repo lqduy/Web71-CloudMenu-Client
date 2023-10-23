@@ -6,6 +6,8 @@ import menuReducer from './menu/menuSlice';
 import viewReducer from './view/viewSlice';
 import cartReducer from './cart/cartSlice';
 
+
+
 export const store = configureStore({
   reducer: {
     user: userReducer,
