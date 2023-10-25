@@ -73,7 +73,6 @@ const DishImageForm = ({ fileList, handleChange, setCloudinaryUrlList }) => {
     [uploading]
   );
 
-  console.log(fileList);
   return (
     <>
       <Space.Compact block size='middle' className='mb-4'>

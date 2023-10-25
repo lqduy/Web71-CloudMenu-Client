@@ -4,7 +4,8 @@ import {
   ShopOutlined,
   LogoutOutlined,
   SyncOutlined,
-  PlusOutlined
+  PlusOutlined,
+  PictureOutlined
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import UserAPI from '~/services/userAPI';
@@ -104,6 +105,13 @@ const User = () => {
         onClick={onClickEditPage}
       >
         Quản lý gian hàng
+      </Button>
+      <Button
+        type='text'
+        icon={<PictureOutlined />}
+        className='w-full text-left'
+      >
+        Đa phương tiện
       </Button>
       <Button
         type='text'
