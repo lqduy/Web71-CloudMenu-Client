@@ -16,6 +16,14 @@ const DishesAPI = {
   deleteById: id => {
     const url = `dishes/${id}`;
     return api.delete(url);
+  },
+  uploadImage: (body) => {
+    const url = 'dishes/images';
+    return api.post(url, body, {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    });
   }
 };
 
