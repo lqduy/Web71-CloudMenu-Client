@@ -2,7 +2,7 @@ export const TOKEN_TYPES = {
   ACCESS_TOKEN: 'accessToken'
 };
 
-export const TOP_LIST_LENGTH = 4;
+export const TOP_LIST_LENGTH = 8;
 export const NEWSFEED_LENGTH = 10;
 
 export const SORT_TYPE = {

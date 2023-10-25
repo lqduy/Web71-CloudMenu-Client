@@ -29,10 +29,10 @@ const DishesTable = ({ data, onSetEdit, toReload, isLoading }) => {
       key: 'images',
       render: (images, dish) => {
         let imageSrc = DishDefaultImage;
-        if (images) {
-          imageSrc = images[0].url;
+        if (images.length > 0) {
+          imageSrc = images[0];
         }
-        return <img src={imageSrc} alt={dish.name} className='h-32' />;
+        return <img src={imageSrc} alt={dish.name} className='w-32 object-contain aspect-square' />;
       }
     },
     {
@@ -91,7 +91,13 @@ const DishesTable = ({ data, onSetEdit, toReload, isLoading }) => {
 
   return (
     <>
-      <Table columns={columns} dataSource={data} rowKey={dish => dish._id} loading={isLoading} />
+      <Table
+        rowClassName='h-[128px]'
+        columns={columns}
+        dataSource={data}
+        rowKey={dish => dish._id}
+        loading={isLoading}
+      />
     </>
   );
 };

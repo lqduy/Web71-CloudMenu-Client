@@ -1,10 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Button, Modal, Form, Input, InputNumber, Select, message } from 'antd';
+import {
+  Row,
+  Col,
+  Button,
+  Modal,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  message,
+  Upload,
+  Radio
+} from 'antd';
 import AddressAPI from '~/services/addressAPI';
 import PageAPI from '~/services/pageAPI';
 import { reloadUser } from '~/redux/user/userSlice';
-import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
+import { setEditPage, setOpenPageCreateForm } from '~/redux/page/pageSlice';
+import DeletePageForm from './_DeletePageForm';
+import UploadAvatar from '~/components/UploadAvatar';
+import { PlusOutlined } from '@ant-design/icons';
+import TextArea from 'antd/es/input/TextArea';
 
 const initialValues = {
   name: '',
@@ -22,14 +38,34 @@ const initialValues = {
 
 const MODAL_WIDTH = 680;
 
-const CreatePage = () => {
+const PageForm = () => {
   const [form] = Form.useForm();
   const [provinceData, setProvinceData] = useState([]);
   const [districtData, setDistrictData] = useState([]);
   const [wardData, setWardData] = useState([]);
   const { currentUser } = useSelector(state => state.user);
-  const { openPageCreateForm } = useSelector(state => state.page);
+  const { activePage, openPageCreateForm, isEditingPage } = useSelector(state => state.page);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fieldData = () => {
+      if (!isEditingPage) return;
+      form.setFieldsValue({
+        name: activePage.name,
+        businessType: activePage.businessType,
+        isVegetarian: activePage.isVegetarian,
+        orderWays: activePage.orderWays,
+        address: activePage.address,
+        province: activePage.province,
+        district: activePage.district,
+        ward: activePage.ward,
+        phoneNumber: activePage.phoneNumber,
+        email: activePage.email
+      });
+    };
+    fieldData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditingPage]);
 
   useEffect(() => {
     fetchProvinceData();
@@ -57,6 +93,17 @@ const CreatePage = () => {
   const handleCancel = () => {
     form.resetFields();
     dispatch(setOpenPageCreateForm());
+    if (isEditingPage) {
+      dispatch(setEditPage());
+    }
+  };
+
+  const normFile = e => {
+    console.log(e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
   };
 
   const handleCreatePage = async value => {
@@ -75,9 +122,22 @@ const CreatePage = () => {
     }
   };
 
+  const handleUpdatePage = async value => {
+    try {
+      const newPageData = { ...activePage, ...value };
+      await PageAPI.update(activePage._id, newPageData);
+      dispatch(reloadUser());
+      handleCancel();
+      message.success('Cập nhật trang thành công');
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
+
   return (
     <Modal
-      title='TẠO TRANG KINH DOANH'
+      title={!isEditingPage ? 'TẠO TRANG KINH DOANH' : 'CHỈNH SỬA TRANG KINH DOANH'}
       open={openPageCreateForm}
       onOk={() => form.submit()}
       onCancel={handleCancel}
@@ -95,12 +155,13 @@ const CreatePage = () => {
         </Button>
       ]}
     >
+      {isEditingPage && <DeletePageForm handleCancel={handleCancel} />}
       <Form
         form={form}
         name='businessPageData'
         initialValues={initialValues}
         layout='vertical'
-        onFinish={handleCreatePage}
+        onFinish={!isEditingPage ? handleCreatePage : handleUpdatePage}
         className='mt-8'
       >
         <Row gutter={16}>
@@ -227,9 +288,23 @@ const CreatePage = () => {
             </Form.Item>
           </Col>
         </Row>
+
+        <Form.Item
+          label='Ảnh đại diện'
+          name='avatar'
+          rules={[{ required: true, message: 'Vui lòng tải lên ảnh đại diện!' }]}
+          valuePropName='fileList'
+          getValueFromEvent={normFile}
+        >
+          <UploadAvatar />
+        </Form.Item>
       </Form>
+      {/* <div>
+        <p>Ảnh đại diện</p>
+        <UploadAvatar />
+      </div> */}
     </Modal>
   );
 };
 
-export default CreatePage;
+export default PageForm;

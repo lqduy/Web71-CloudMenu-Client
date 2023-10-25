@@ -6,6 +6,7 @@ const initialState = {
   pageList: [],
   activePage: null,
   isLoading: false,
+  isEditingPage: false,
   reload: null
 };
 
@@ -21,6 +22,9 @@ const pageSlice = createSlice({
     },
     reloadPage: state => {
       state.reload = Math.random();
+    },
+    setEditPage: state => {
+      state.isEditingPage = !state.isEditingPage;
     }
   },
   extraReducers: builder =>
@@ -55,6 +59,6 @@ const pageSlice = createSlice({
       })
 });
 
-export const { setActivePage, reloadPage, setOpenPageCreateForm } = pageSlice.actions;
+export const { setActivePage, reloadPage, setOpenPageCreateForm, setEditPage } = pageSlice.actions;
 
 export default pageSlice.reducer;
