@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import SlideItem from '~/pages/Home/SlideItem';
+import SlideItem from './SlideItem';
 
 const MoveButton = props => {
   const { isNext, isPrev, style, onClick } = props;
@@ -11,7 +11,7 @@ const MoveButton = props => {
     <button
       type='text'
       className={classNames(
-        'absolute top-1/2 -translate-y-1/2 z-10 p-0 text-black/10 hover:text-black/90 bg-transparent cursor-pointer',
+        'absolute top-1/2 -translate-y-1/2 z-10 p-0 py-1 text-white hover:text-black/30 bg-gray-300/40 rounded-sm cursor-pointer',
         {
           'left-0': isPrev,
           'right-0 translate-x-1': isNext
