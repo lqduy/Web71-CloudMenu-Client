@@ -5,22 +5,13 @@ import DishOverviewForm from './FormParts/DishOverviewForm';
 import DishDescriptionForm from './FormParts/DishDescriptionForm';
 import DishesAPI from '~/services/dishAPI';
 import DishImageForm from './FormParts/DishImageForm';
-import DishDefault from '~/assets/layouts/dish-default.png';
-
-const initalImageList = [
-  {
-    uid: '-1',
-    name: 'default.png',
-    status: 'done',
-    url: DishDefault
-  }
-];
 
 const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload }) => {
   const { currentUser } = useSelector(state => state.user);
   const { activePage } = useSelector(state => state.page);
   const [descriptionValue, setDescriptionValue] = useState('');
-  const [imageList, setImageList] = useState(initalImageList);
+  const [imageList, setImageList] = useState([]);
+  const [cloudinaryUrlList, setCloudinaryUrlList] = useState([]);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -28,6 +19,10 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
       if (!editingDish) return;
       const description = editingDish.description;
       setDescriptionValue(description);
+
+      const images = editingDish.images.map(image => ({ url: image }));
+      setImageList(images);
+
       form.setFieldsValue({
         name: editingDish.name,
         group: editingDish.group,
@@ -49,13 +44,14 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
     closeModal();
     if (editingDish) {
       resetEditing();
+      setImageList([]);
     }
   };
 
   const handleResetForm = () => {
     form.resetFields();
     setDescriptionValue('');
-    setImageList(initalImageList);
+    setImageList([]);
   };
 
   const onFinish = async values => {
@@ -64,7 +60,7 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
       userId: currentUser._id,
       pageId: activePage._id,
       description: descriptionValue,
-      images: imageList
+      images: cloudinaryUrlList
     };
     if (!editingDish) {
       try {
@@ -104,6 +100,7 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
         <DishImageForm
           fileList={imageList}
           handleChange={({ fileList: newFileList }) => setImageList(newFileList)}
+          setCloudinaryUrlList={setCloudinaryUrlList}
         />
       )
     },

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'antd';
 import { DragOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import DishDefaultImage from '~/assets/layouts/default-dish.png';
+import DishDefaultImage from '~/assets/layouts/dish-default.png';
 import Dish from '~/utils/data/dish';
 import { addMenuItem, unselectOne } from '~/redux/menu/menuSlice';
 
@@ -18,7 +18,7 @@ const MenuItem = ({ data, isPreviewer }) => {
 
   let imageSrc = DishDefaultImage;
   if (data.images && data.images.length > 0) {
-    imageSrc = data.images[0].url;
+    imageSrc = data.images[0];
   }
 
   const typeData = Dish.type.find(item => item.value === data.type);
@@ -26,6 +26,7 @@ const MenuItem = ({ data, isPreviewer }) => {
 
   const formattedPrice = data.price.toLocaleString('vi-VN');
   const formattedUnit = data.unit.toLowerCase();
+
   return (
     <div
       className={classNames('flex justify-between items-center p-1 rounded-full pr-6', {
@@ -36,8 +37,8 @@ const MenuItem = ({ data, isPreviewer }) => {
       })}
     >
       <div className='flex items-center gap-1'>
-        <div className='w-14'>
-          <img src={imageSrc} alt={data._id} className='w-full' />
+        <div className='w-14 overflow-hidden rounded-full'>
+          <img src={imageSrc} alt={data.name} className='w-full' />
         </div>
         <div className='flex flex-col gap-2'>
           <h3 className='mb-0 leading-none'>{data.name}</h3>

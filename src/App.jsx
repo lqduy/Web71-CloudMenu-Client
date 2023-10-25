@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentUser } from './redux/user/userActions';
 import { fetchPagesOfUser } from './redux/page/pageActions';
 import { setActivePage } from './redux/page/pageSlice';
-import CreatePage from './pages/Home/CreatePage';
+import PageForm from './pages/Home/PageForm';
 import { TOKEN_TYPES } from './utils/constants';
 
 const App = () => {
@@ -60,7 +60,7 @@ const App = () => {
           })}
         </Routes>
       </div>
-      <CreatePage />
+      <PageForm />
     </>
   );
 };

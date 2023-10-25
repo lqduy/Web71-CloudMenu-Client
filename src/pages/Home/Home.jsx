@@ -10,6 +10,7 @@ import { NEWSFEED_LENGTH, TOP_LIST_LENGTH, VIEW_NAME } from '~/utils/constants';
 import getDateAndTime from '~/utils/functions/getDateAndTime';
 import PageLayout from '~/layouts/PageLayout';
 import { setCurrentView } from '~/redux/view/viewSlice';
+import ListSlider from '~/components/Slider';
 
 const Home = () => {
   const [topNewPageList, setTopNewPageList] = useState([]);
@@ -23,7 +24,7 @@ const Home = () => {
     fetchListsFromServer(ListAPI.getTopNewPage, TOP_LIST_LENGTH, setTopNewPageList);
     fetchListsFromServer(ListAPI.getTopNewDish, TOP_LIST_LENGTH, setTopNewDishList);
     fetchListsFromServer(NewsAPI.getNewest, NEWSFEED_LENGTH, setNewfeed);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchListsFromServer = async (apiFunction, listLength, setStateFunction) => {
@@ -36,41 +37,13 @@ const Home = () => {
     }
   };
 
-  const itemWidth = `calc(100% / ${TOP_LIST_LENGTH} - 16px * (${TOP_LIST_LENGTH} - 1) / ${TOP_LIST_LENGTH})`;
-
   return (
     <PageLayout>
       <div className='flex flex-col gap-4'>
         <Row gutter={16} className='mt-4 min-h-screen'>
           <Col span={19} className='flex flex-col gap-4'>
-            <div className='ct-section-wrapper p-2'>
-              <h2>TOP TRANG MỚI</h2>
-              <div className='flex gap-4'>
-                {topNewPageList.map(page => (
-                  <div
-                    key={page._id}
-                    style={{ width: itemWidth }}
-                    className='bg-slate-600 p-2 h-40'
-                  >
-                    <h3>{page.name}</h3>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className='ct-section-wrapper p-2'>
-              <h2>TOP MÓN MỚI</h2>
-              <div className='flex gap-4'>
-                {topNewDishList.map(page => (
-                  <div
-                    key={page._id}
-                    style={{ width: itemWidth }}
-                    className='bg-slate-600 p-2 h-40'
-                  >
-                    <h3>{page.name}</h3>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ListSlider listData={topNewPageList} title='Top trang mới' isPageSlide />
+            <ListSlider listData={topNewDishList} title='Top món mới' />
           </Col>
           <Col span={5} className='flex flex-col gap-4'>
             {!activePage && (
