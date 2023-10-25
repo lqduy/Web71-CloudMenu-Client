@@ -37,6 +37,7 @@ const cartSlice = createSlice({
       state.totalAmount += payload.price;
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems.map(item => item)));
       localStorage.setItem('totalAmount', JSON.stringify(state.totalAmount));
+      localStorage.setItem('quantity', JSON.stringify(state.quantity));
     },
 
     removeFromCart: (state, { payload }) => {
@@ -45,6 +46,7 @@ const cartSlice = createSlice({
       state.totalAmount -= payload.price * payload.quantity;
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems.map(item => item)));
       localStorage.setItem('totalAmount', JSON.stringify(state.totalAmount));
+      localStorage.setItem('quantity', JSON.stringify(state.quantity));
     },
 
     addItemQuantity: (state, { payload }) => {
@@ -59,6 +61,7 @@ const cartSlice = createSlice({
       state.totalAmount += payload.price;
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems.map(item => item)));
       localStorage.setItem('totalAmount', JSON.stringify(state.totalAmount));
+      localStorage.setItem('quantity', JSON.stringify(state.quantity));
     },
 
     subtractItemQuantity: (state, { payload }) => {
@@ -72,6 +75,7 @@ const cartSlice = createSlice({
       state.totalAmount -= subItem.price;
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems.map(item => item)));
       localStorage.setItem('totalAmount', JSON.stringify(state.totalAmount));
+      localStorage.setItem('quantity', JSON.stringify(state.quantity));
     }
   }
 });
