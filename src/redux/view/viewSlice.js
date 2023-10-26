@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentView: null
+  currentView: null,
+  themeColor: null
 };
 
 const viewSlice = createSlice({
@@ -10,10 +11,13 @@ const viewSlice = createSlice({
   reducers: {
     setCurrentView: (state, action) => {
       state.currentView = action.payload;
+    },
+    setThemeColor: (state, action) => {
+      state.themeColor = action.payload;
     }
   }
 });
 
-export const { setCurrentView } = viewSlice.actions;
+export const { setCurrentView, setThemeColor } = viewSlice.actions;
 
 export default viewSlice.reducer;

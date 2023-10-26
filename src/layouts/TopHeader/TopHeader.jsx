@@ -4,8 +4,8 @@ import { Button, Space, Avatar, Popover, Tag } from 'antd';
 import {
   QuestionCircleOutlined,
   BgColorsOutlined,
-  SettingOutlined,
-  UserOutlined
+  UserOutlined,
+  ShopOutlined
 } from '@ant-design/icons';
 import Container from '~/components/Container';
 import ThemeColors from './SubMenus/ThemeColors';
@@ -15,6 +15,7 @@ import { useCallback } from 'react';
 const TopHeader = () => {
   const { currentUser } = useSelector(state => state.user);
   const { activePage } = useSelector(state => state.page);
+  const { themeColor } = useSelector(state => state.view);
   const navigate = useNavigate();
 
   const UserButton = useCallback(
@@ -64,9 +65,16 @@ const TopHeader = () => {
           >
             Giới thiệu
           </Button>
-          <Button type='text' icon={<SettingOutlined />}>
-            Thiết lập
-          </Button>
+          {activePage && (
+            <Button
+              type='text'
+              icon={<ShopOutlined />}
+              style={{ backgroundColor: themeColor, color: 'white' }}
+              onClick={() => navigate('/user')}
+            >
+              Trang kinh doanh
+            </Button>
+          )}
           <Popover placement='bottomRight' content={<User />}>
             {activePage && <ActivePageButton />}
             {!activePage && Object.keys(currentUser).length > 0 && <UserButton />}

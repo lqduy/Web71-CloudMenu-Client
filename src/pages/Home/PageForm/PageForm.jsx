@@ -1,26 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Row,
-  Col,
-  Button,
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  message,
-  Upload,
-  Radio
-} from 'antd';
+import { Row, Col, Button, Modal, Form, Input, InputNumber, Select, message } from 'antd';
 import AddressAPI from '~/services/addressAPI';
 import PageAPI from '~/services/pageAPI';
 import { reloadUser } from '~/redux/user/userSlice';
 import { setEditPage, setOpenPageCreateForm } from '~/redux/page/pageSlice';
 import DeletePageForm from './_DeletePageForm';
 import UploadAvatar from '~/components/UploadAvatar';
-import { PlusOutlined } from '@ant-design/icons';
-import TextArea from 'antd/es/input/TextArea';
 
 const initialValues = {
   name: '',
@@ -39,10 +25,11 @@ const initialValues = {
 const MODAL_WIDTH = 680;
 
 const PageForm = () => {
-  const [form] = Form.useForm();
   const [provinceData, setProvinceData] = useState([]);
   const [districtData, setDistrictData] = useState([]);
   const [wardData, setWardData] = useState([]);
+  const [cloudinaryUrl, setCloudinaryUrl] = useState([]);
+  const [form] = Form.useForm();
   const { currentUser } = useSelector(state => state.user);
   const { activePage, openPageCreateForm, isEditingPage } = useSelector(state => state.page);
   const dispatch = useDispatch();
@@ -98,19 +85,12 @@ const PageForm = () => {
     }
   };
 
-  const normFile = e => {
-    console.log(e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
   const handleCreatePage = async value => {
     try {
       const newPageData = {
-        userId: currentUser._id,
-        ...value
+        ...value,
+        avatar: cloudinaryUrl,
+        userId: currentUser._id
       };
       await PageAPI.create(newPageData);
       dispatch(reloadUser());
@@ -289,20 +269,10 @@ const PageForm = () => {
           </Col>
         </Row>
 
-        <Form.Item
-          label='Ảnh đại diện'
-          name='avatar'
-          rules={[{ required: true, message: 'Vui lòng tải lên ảnh đại diện!' }]}
-          valuePropName='fileList'
-          getValueFromEvent={normFile}
-        >
-          <UploadAvatar />
+        <Form.Item label='Ảnh đại diện' name='avatar' valuePropName='fileList'>
+          <UploadAvatar setUrl={link => setCloudinaryUrl(link)} />
         </Form.Item>
       </Form>
-      {/* <div>
-        <p>Ảnh đại diện</p>
-        <UploadAvatar />
-      </div> */}
     </Modal>
   );
 };

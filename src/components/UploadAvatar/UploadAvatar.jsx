@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Modal, Upload } from 'antd';
+import { Modal, Upload, Spin } from 'antd';
+import MediaAPI from '~/services/mediaAPI';
+import { useSelector } from 'react-redux';
+
 const getBase64 = file =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -8,12 +11,24 @@ const getBase64 = file =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
   });
-const UploadAvatar = () => {
+
+const UploadAvatar = ({ setUrl }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const { activePage, isEditingPage } = useSelector(state => state.page);
+
+  useEffect(() => {
+    if (isEditingPage) {
+      setFileList([{ url: activePage.avatar[0] }]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditingPage]);
+
   const handleCancel = () => setPreviewOpen(false);
+
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -22,39 +37,79 @@ const UploadAvatar = () => {
     setPreviewOpen(true);
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
+
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8
-        }}
-      >
-        Upload
+
+  const handleUploadImage = async info => {
+    if (info.file.status === 'removed') return;
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('image', info.file);
+    try {
+      const res = await MediaAPI.uploadImage(formData);
+      if (res.data.url) {
+        setUrl(res.data.url);
+        handleChange(info);
+        setUrl([res.data.url]);
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    handleChange({ fileList: [] });
+    setUrl([]);
+  };
+
+  const uploadButton = useMemo(
+    () => (
+      <div>
+        {!uploading && (
+          <>
+            <PlusOutlined />
+            <div className='mt-2'>Chọn ảnh</div>
+          </>
+        )}
+        {uploading && (
+          <>
+            <Spin />
+            <div className='mt-2'>Đang tải ảnh lên</div>
+          </>
+        )}
       </div>
-    </div>
+    ),
+    [uploading]
   );
+
   return (
     <>
       <Upload
-        action='https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188'
+        accept='.png,.jpe,.jpeg,.webp'
         listType='picture-circle'
         fileList={fileList}
         onPreview={handlePreview}
-        onChange={handleChange}
+        onChange={handleUploadImage}
         maxCount={1}
+        onRemove={handleRemoveImage}
+        beforeUpload={file => {
+          return new Promise((resolve, reject) => {
+            const isLt2M = file.size / 1024 / 1024 < 2;
+            if (isLt2M) {
+              reject('File size exceeded');
+            } else {
+              resolve('Success');
+            }
+          });
+        }}
       >
         {fileList.length >= 1 ? null : uploadButton}
       </Upload>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img
-          alt='example'
-          style={{
-            width: '100%'
-          }}
-          src={previewImage}
-        />
+        <img alt='example' style={{ width: '100%' }} src={previewImage} />
       </Modal>
     </>
   );
