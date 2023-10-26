@@ -3,21 +3,41 @@ import LogoDark from '../../../assets/image/Kios/Kios_dark.png';
 import { AiFillShopping } from 'react-icons/ai';
 import { BsSun, BsMoonStars } from 'react-icons/bs';
 import useThemeSwitcher from '~/hooks/useThemeSwitcher';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Cart from '../Cart/Cart';
+import OrderAPI from '~/services/orderApi';
 
 const Header = () => {
   const [activeTheme, setTheme] = useThemeSwitcher();
-
+  const { cartItems, quantity } = useSelector(state => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const itemsToRemove = ['cartItems', 'quantity', 'totalAmount'];
+
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
+  const handleOk = async () => {
+    if (cartItems.length === 0) {
+      message.error('Không có món ăn nào được chọn');
+    } else {
+      try {
+        await OrderAPI.create(cartItems);
+        message.success('Thêm đơn hàng thành công');
+      } catch (err) {
+        console.log('Không thêm được order!');
+      }
+    }
+
+    itemsToRemove.forEach(item => {
+      localStorage.removeItem(item);
+    });
     setIsModalOpen(false);
+    window.location.reload();
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -49,14 +69,14 @@ const Header = () => {
           <div className=' relative'>
             <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
               <p className='text-black dark:text-white font-bold font-sans p- m-0 duration-500'>
-                0
+                {quantity}
               </p>
             </div>
             <AiFillShopping className='w-9 h-auto dark:text-black duration-500' />
           </div>
         </button>
       </div>
-      <Modal title='Basic Modal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title='Giỏ Hàng:' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <div>
           <Cart />
         </div>

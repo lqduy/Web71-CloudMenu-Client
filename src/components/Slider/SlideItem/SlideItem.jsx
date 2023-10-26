@@ -12,10 +12,16 @@ const SlideItem = forwardRef(({ data, isPageSlide }, ref) => {
 
   return (
     <div ref={ref} className='mx-2 p-2 bg-white shadow-md'>
-      <div className='h-60 overflow-hidden text-center'>
+      <div className='relative h-60 overflow-hidden text-center'>
         <img
-          src={isPageSlide ? DishDefaultImage : data.images[0] || DishDefaultImage}
-          className='h-full object-cover align-middle mx-auto'
+          src={
+            isPageSlide
+              ? data.avatar
+                ? data.avatar[0]
+                : DishDefaultImage
+              : data.images[0] || DishDefaultImage
+          }
+          className='w-full align-middle mx-auto'
         />
       </div>
       <div className='mt-4 p-2'>

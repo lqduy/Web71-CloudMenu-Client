@@ -1,14 +1,20 @@
 import CartItem from './CartItem';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Cart = () => {
   const { cartItems, totalAmount } = useSelector(state => state.cart);
-  console.log(totalAmount);
+
   return (
     <div>
-      {cartItems.map(data => (
-        <CartItem {...data} key={data.id} />
-      ))}
+      <div className='flex flex-wrap'>
+        {cartItems.map(data => (
+          <CartItem {...data} key={data.id} />
+        ))}
+      </div>
+      <div className='flex justify-between'>
+        <h2>Price:</h2>
+        <h2 className=' text-red-800'>{totalAmount}$</h2>
+      </div>
     </div>
   );
 };

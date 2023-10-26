@@ -53,7 +53,7 @@ const User = () => {
                 <Tag className='py-0.5 mr-0 bg-[#F97316] text-white'>Cá nhân</Tag>
               </div>
             </Button>
-            <Divider className='my-1' />
+            {pageList.length > 1 && <Divider className='my-1' />}
           </>
         )}
         {pageList.map(page => {
@@ -106,11 +106,7 @@ const User = () => {
       >
         Quản lý gian hàng
       </Button>
-      <Button
-        type='text'
-        icon={<PictureOutlined />}
-        className='w-full text-left'
-      >
+      <Button type='text' icon={<PictureOutlined />} className='w-full text-left'>
         Đa phương tiện
       </Button>
       <Button

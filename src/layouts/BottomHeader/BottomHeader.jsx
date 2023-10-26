@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Row, Space } from 'antd';
 import {
   HomeOutlined,
@@ -13,13 +13,15 @@ import {
 } from '@ant-design/icons';
 import Container from '~/components/Container';
 import { THEME_COLOR, VIEW_NAME } from '~/utils/constants';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { setThemeColor } from '~/redux/view/viewSlice';
 
 const BottomHeader = () => {
   const { currentUser } = useSelector(state => state.user);
   const { activePage } = useSelector(state => state.page);
   const { currentView } = useSelector(state => state.view);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const themeColor = useMemo(() => {
     let color = '';
@@ -32,6 +34,13 @@ const BottomHeader = () => {
     }
     return color;
   }, [activePage, currentUser]);
+
+  useEffect(() => {
+    if (themeColor) {
+      dispatch(setThemeColor(themeColor));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [themeColor]);
 
   const { _id: pageId } = activePage ?? {};
   const FOCUS_STYLE = 'bg-black/[0.1]';

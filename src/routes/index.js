@@ -14,7 +14,7 @@ export const PATH = {
 };
 
 const publicRoutes = [
-  { path: '/user', component: User },
+  { path: '/:pageId', component: User },
   { path: '/p/:pageId', component: Home },
   { path: PATH.LOGIN, component: Authen },
   { path: PATH.SIGNUP, component: Authen },

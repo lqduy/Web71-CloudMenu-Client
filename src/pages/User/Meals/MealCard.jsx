@@ -4,6 +4,7 @@ import { addToCart } from '../../../redux/cart/cartSlice';
 
 const MealCard = ({ id, name, price, image }) => {
   const dispatch = useDispatch();
+
   return (
     <div className=' flex gap-10'>
       <div className='flex'>

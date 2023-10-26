@@ -37,6 +37,8 @@ const Home = () => {
     }
   };
 
+  console.log(topNewPageList);
+
   return (
     <PageLayout>
       <div className='flex flex-col gap-4'>
