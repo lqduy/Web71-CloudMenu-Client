@@ -1,9 +1,9 @@
+import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Tag, Divider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { PlusOutlined } from '@ant-design/icons';
 import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
-import { Fragment, useEffect, useState } from 'react';
 import ListAPI from '~/services/listAPI';
 import NewsAPI from '~/services/newsAPI';
 import { NEWSFEED_LENGTH, TOP_LIST_LENGTH, VIEW_NAME } from '~/utils/constants';
@@ -36,8 +36,6 @@ const Home = () => {
       console.log(err);
     }
   };
-
-  console.log(topNewPageList);
 
   return (
     <PageLayout>
