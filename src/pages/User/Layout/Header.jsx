@@ -1,17 +1,15 @@
-import LogoLight from '../../../assets/image/Kios/Kios_light.png';
-import LogoDark from '../../../assets/image/Kios/Kios_dark.png';
+import LogoDark from '~/assets/image/Kios/Kios_dark.png';
 import { AiFillShopping } from 'react-icons/ai';
 import { BsSun, BsMoonStars } from 'react-icons/bs';
 import useThemeSwitcher from '~/hooks/useThemeSwitcher';
-import { Modal, message } from 'antd';
-import React, { useState } from 'react';
+import { Modal } from 'antd';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Cart from '../Cart/Cart';
-import OrderAPI from '~/services/orderApi';
 
-const Header = () => {
+const Header = ({ handleSubmitOrder }) => {
   const [activeTheme, setTheme] = useThemeSwitcher();
-  const { cartItems, quantity } = useSelector(state => state.cart);
+  const { quantity } = useSelector(state => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const itemsToRemove = ['cartItems', 'quantity', 'totalAmount'];
@@ -20,17 +18,7 @@ const Header = () => {
     setIsModalOpen(true);
   };
   const handleOk = async () => {
-    if (cartItems.length === 0) {
-      message.error('Không có món ăn nào được chọn');
-    } else {
-      try {
-        await OrderAPI.create(cartItems);
-        message.success('Thêm đơn hàng thành công');
-      } catch (err) {
-        console.log('Không thêm được order!');
-      }
-    }
-
+    handleSubmitOrder();
     itemsToRemove.forEach(item => {
       localStorage.removeItem(item);
     });
@@ -76,7 +64,7 @@ const Header = () => {
           </div>
         </button>
       </div>
-      <Modal title='Giỏ Hàng:' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title='ĐƠN ĐẶT MÓN' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <div>
           <Cart />
         </div>

@@ -12,7 +12,7 @@ const SlideItem = forwardRef(({ data, isPageSlide }, ref) => {
 
   return (
     <div ref={ref} className='mx-2 p-2 bg-white shadow-md'>
-      <div className='relative h-60 overflow-hidden text-center'>
+      <div className='flex justify-center items-center h-60 overflow-hidden text-center'>
         <img
           src={
             isPageSlide

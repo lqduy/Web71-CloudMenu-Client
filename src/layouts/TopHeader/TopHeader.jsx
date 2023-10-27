@@ -70,7 +70,7 @@ const TopHeader = () => {
               type='text'
               icon={<ShopOutlined />}
               style={{ backgroundColor: themeColor, color: 'white' }}
-              onClick={() => navigate('/user')}
+              onClick={() => navigate(`/${activePage._id}`)}
             >
               Trang kinh doanh
             </Button>
