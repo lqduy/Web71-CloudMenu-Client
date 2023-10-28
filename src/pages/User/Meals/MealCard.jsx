@@ -1,19 +1,21 @@
 import { Button } from 'antd';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { addToCart } from '~/redux/cart/cartSlice';
 
 const MealCard = ({ data }) => {
+  const { pageId } = useParams();
   const dispatch = useDispatch();
   const { id, name, images, price, unit } = data;
 
   return (
-    <div className='w-[calc(33.33%-80px*2/3)] aspect-square flex flex-col gap-2 border p-1 rounded'>
-      <div className='flex items-center w-full h-full bg-slate-300 p-1 rounded'>
-        <img src={images[0]} className='w-full' />
+    <div className='w-[calc(33.33%-80px*2/3)] aspect-square flex flex-col gap-2 border rounded'>
+      <div className='flex items-center w-full h-full rounded-t overflow-hidden object-cover'>
+        <img src={images[0]} className='w-full ' />
       </div>
-      <div className='flex flex-col gap-1'>
+      <div className='h-[90px] flex flex-col gap-1 p-1'>
         <h3 className='mb-0'>{name}</h3>
-        <div className='flex justify-between items-end'>
+        <div className='flex justify-between items-end mt-auto'>
           <p className='mb-0'>
             {price.toLocaleString()} đ/<span className='lowercase'>{unit}</span>
           </p>
@@ -22,7 +24,7 @@ const MealCard = ({ data }) => {
             ghost
             size='small'
             className='cursor-pointer'
-            onClick={() => dispatch(addToCart({ id, image: images[0], name, price, unit }))}
+            onClick={() => dispatch(addToCart({ id, image: images[0], name, price, unit, pageId }))}
           >
             Thêm
           </Button>
