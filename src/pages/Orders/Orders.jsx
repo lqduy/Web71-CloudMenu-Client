@@ -5,14 +5,12 @@ import { setCurrentView } from '~/redux/view/viewSlice';
 import { VIEW_NAME } from '~/utils/constants';
 import { Row, Col } from 'antd';
 import OrderAPI from '~/services/orderApi';
-import Dish from '~/utils/data/dish';
-import MenuItem from '~/components/MenuItem';
-import { calcLength } from 'framer-motion';
+import OrderCard from './OrderCard';
 
 const Orders = () => {
   const { activePage } = useSelector(state => state.page);
-  const { dishData } = useSelector(state => state.dish);
   const [orderData, setOrderData] = useState([]);
+  const [reload, setReload] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +21,7 @@ const Orders = () => {
   useEffect(() => {
     fetchOrderData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reload]);
 
   const fetchOrderData = async () => {
     if (!activePage) return;
@@ -36,8 +34,6 @@ const Orders = () => {
     }
   };
 
-  console.log(orderData);
-  console.log(dishData);
   return (
     <PageLayout>
       <div className='flex flex-col gap-4'>
@@ -48,19 +44,13 @@ const Orders = () => {
           <Col span={19} className='flex flex-col gap-4'>
             <div className='flex gap-4'>
               {orderData.length > 0 &&
-                (orderData || []).map(order => {
-                  return (
-                    <div key={order._id} className='w-[calc(33.33%-16px*2/3)] h-[200px] shadow-2xl'>
-                      {order.list.map(dish => {
-                        return (
-                          <div key={dish._id}>
-                            <h4>{dish.name}</h4>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+                (orderData || []).map(order => (
+                  <OrderCard
+                    key={order._id}
+                    data={order}
+                    handleReload={() => setReload(Math.random())}
+                  />
+                ))}
             </div>
           </Col>
         </Row>
