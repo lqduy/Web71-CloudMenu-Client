@@ -1,12 +1,10 @@
 import { Button } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { addToCart } from '~/redux/cart/cartSlice';
 
 const MealCard = ({ data }) => {
-  const { pageId } = useParams();
   const dispatch = useDispatch();
-  const { id, name, images, price, unit } = data;
+  const { name, images, price, unit } = data;
 
   return (
     <div className='w-[calc(33.33%-80px*2/3)] aspect-square flex flex-col gap-2 border rounded'>
@@ -24,7 +22,7 @@ const MealCard = ({ data }) => {
             ghost
             size='small'
             className='cursor-pointer'
-            onClick={() => dispatch(addToCart({ id, image: images[0], name, price, unit, pageId }))}
+            onClick={() => dispatch(addToCart(data))}
           >
             Thêm
           </Button>

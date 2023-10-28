@@ -71,7 +71,6 @@ const User = () => {
           clientName: orderInfo.clientName,
           note: orderInfo.note
         };
-        console.log(payload);
         await OrderAPI.create(payload);
         message.success('Thêm đơn hàng thành công');
       } catch (err) {

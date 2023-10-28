@@ -1,5 +1,5 @@
 import backgroundBanner from '~/assets/image/blog/pexels-vincent-ma-janssen-1310777.jpg';
-import { Avatar, Button, Tag } from 'antd';
+import { Button, Tag } from 'antd';
 import { EnvironmentOutlined, LikeOutlined, SendOutlined } from '@ant-design/icons';
 
 const Banner = ({ pageData }) => {
@@ -24,9 +24,7 @@ const Banner = ({ pageData }) => {
               />
             ) : (
               <div className='flex items-center justify-center w-72 h-72 rounded-full text-[172px] bg-primary'>
-                <span className='leading-3 font-roboto text-white'>
-                  Q
-                </span>
+                <span className='leading-3 font-roboto text-white'>Q</span>
               </div>
             )}
           </div>
