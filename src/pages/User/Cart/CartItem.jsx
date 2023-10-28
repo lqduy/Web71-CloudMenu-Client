@@ -4,8 +4,8 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import DishDefaultImg from '~/assets/layouts/dish-default.png';
 
 const CartItem = props => {
-  const dispatch = useDispatch();
   const { name, image, quantity, price, unit } = props;
+  const dispatch = useDispatch();
 
   return (
     <div className='flex justify-between items-center'>
@@ -31,6 +31,7 @@ const CartItem = props => {
           <input
             type='number'
             value={quantity}
+            readOnly
             className='w-8 outline-none border border-primary text-center'
           />
           <button

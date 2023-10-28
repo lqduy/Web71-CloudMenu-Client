@@ -1,9 +1,10 @@
 import backgroundBanner from '~/assets/image/blog/pexels-vincent-ma-janssen-1310777.jpg';
-import { Button, Tag } from 'antd';
+import { Avatar, Button, Tag } from 'antd';
 import { EnvironmentOutlined, LikeOutlined, SendOutlined } from '@ant-design/icons';
 
 const Banner = ({ pageData }) => {
-  const { name, businessType, address, ward, district, province } = pageData || {};
+  const { name, businessType, address, ward, district, province, avatar } = pageData || {};
+
   return (
     <div className='md:mt-20 ssm:mt-14 bg-white'>
       <div>
@@ -14,12 +15,20 @@ const Banner = ({ pageData }) => {
       </div>
       <div className='ct-client-page-container relative'>
         <div className='w-full absolute left-0 top-0 -translate-y-1/2 flex items-end'>
-          <div>
-            <img
-              className='w-72 aspect-square rounded-full object-cover shadow-2xl'
-              src='https://picsum.photos/536/354'
-              alt='Avatar Restaurant'
-            />
+          <div className='bg-gray-300/60 rounded-full p-2'>
+            {Array.isArray(avatar) && avatar.length > 0 ? (
+              <img
+                className='w-72 aspect-square rounded-full object-cover shadow-2xl'
+                src={avatar[0]}
+                alt={name}
+              />
+            ) : (
+              <div className='flex items-center justify-center w-72 h-72 rounded-full text-[172px] bg-primary'>
+                <span className='leading-3 font-roboto text-white'>
+                  Q
+                </span>
+              </div>
+            )}
           </div>
           <div className='flex-1 flex justify-between items-end'>
             <div className='flex flex-col gap-4'>

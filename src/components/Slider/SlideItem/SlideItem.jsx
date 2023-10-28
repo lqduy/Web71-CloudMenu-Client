@@ -1,7 +1,10 @@
 import { forwardRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DishDefaultImage from '~/assets/layouts/dish-default.png';
 
 const SlideItem = forwardRef(({ data, isPageSlide }, ref) => {
+  const navigate = useNavigate();
+
   const description = isPageSlide
     ? data.businessType
     : `${data.pageData.businessType} - ${data.pageData.name}`;
@@ -25,7 +28,12 @@ const SlideItem = forwardRef(({ data, isPageSlide }, ref) => {
         />
       </div>
       <div className='mt-4 p-2'>
-        <h3 className='mb-2 text-lg'>{data.name}</h3>
+        <h3
+          className='mb-2 text-lg cursor-pointer'
+          onClick={() => (isPageSlide ? navigate(`/${data._id}`) : undefined)}
+        >
+          {data.name}
+        </h3>
         <p className='mb-0 text-gray-500'>{description}</p>
         <p className='mb-0 text-gray-500 text-xs'>{address}</p>
       </div>

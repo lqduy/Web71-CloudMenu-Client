@@ -39,7 +39,7 @@ const BottomHeader = () => {
     if (themeColor) {
       dispatch(setThemeColor(themeColor));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [themeColor]);
 
   const { _id: pageId } = activePage ?? {};
@@ -100,6 +100,7 @@ const BottomHeader = () => {
                   className={classNames('h-11 text-white', {
                     [FOCUS_STYLE]: currentView === VIEW_NAME.ORDER
                   })}
+                  onClick={() => navigate(`/p/${pageId}/order`)}
                 >
                   Gọi món
                 </Button>

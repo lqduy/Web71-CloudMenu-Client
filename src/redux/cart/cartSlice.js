@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const cardOfPage =
+  localStorage.getItem('cardOfPage') !== null ? JSON.parse(localStorage.getItem('cardOfPage')) : '';
 const items =
   localStorage.getItem('cartItems') !== null ? JSON.parse(localStorage.getItem('cartItems')) : [];
 const totalAmount =
@@ -10,6 +12,7 @@ const quantity =
   localStorage.getItem('quantity') !== null ? JSON.parse(localStorage.getItem('quantity')) : 0;
 
 const initialState = {
+  pageId: cardOfPage,
   quantity: quantity,
   cartItems: items,
   totalAmount: totalAmount
@@ -24,6 +27,8 @@ const cartSlice = createSlice({
       const isItemExist = state.cartItems.find(item => item.id === payload.id);
       if (!isItemExist) {
         state.cartItems = [...state.cartItems, { ...payload, quantity: 1 }];
+        state.pageId = payload.pageId;
+        localStorage.setItem('cardOfPage', JSON.stringify(payload.pageId));
       } else {
         state.cartItems = state.cartItems.map(item => {
           if (item.id === payload.id) {
@@ -76,11 +81,22 @@ const cartSlice = createSlice({
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems.map(item => item)));
       localStorage.setItem('totalAmount', JSON.stringify(state.totalAmount));
       localStorage.setItem('quantity', JSON.stringify(state.quantity));
+    },
+
+    removeAllCart: state => {
+      localStorage.removeItem('cardOfPage');
+      localStorage.removeItem('cartItems');
+      localStorage.removeItem('totalAmount');
+      localStorage.removeItem('quantity');
+      state.pageId = '';
+      state.quantity = 0;
+      state.cartItems = [];
+      state.totalAmount = 0;
     }
   }
 });
 
-export const { addToCart, addItemQuantity, subtractItemQuantity, removeFromCart } =
+export const { addToCart, addItemQuantity, subtractItemQuantity, removeFromCart, removeAllCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
