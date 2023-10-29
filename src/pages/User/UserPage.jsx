@@ -71,7 +71,6 @@ const User = () => {
           clientName: orderInfo.clientName,
           note: orderInfo.note
         };
-        console.log(payload);
         await OrderAPI.create(payload);
         message.success('Thêm đơn hàng thành công');
       } catch (err) {
@@ -102,9 +101,9 @@ const User = () => {
                     <Button
                       key={index}
                       type='primary'
-                      ghost={index !== orderInfo.tableIndex}
+                      ghost={index + 1 !== orderInfo.tableIndex}
                       className='flex justify-center items-center w-[calc(12.25%-8px*7/8)] rounded-sm'
-                      onClick={() => setOrderInfo(pre => ({ ...pre, tableIndex: index }))}
+                      onClick={() => setOrderInfo(pre => ({ ...pre, tableIndex: index + 1 }))}
                     >
                       {index + 1}
                     </Button>

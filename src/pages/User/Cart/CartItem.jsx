@@ -4,14 +4,14 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import DishDefaultImg from '~/assets/layouts/dish-default.png';
 
 const CartItem = props => {
-  const { name, image, quantity, price, unit } = props;
+  const { name, images, quantity, price, unit } = props;
   const dispatch = useDispatch();
 
   return (
     <div className='flex justify-between items-center'>
       <div className='h-20 flex items-center gap-3'>
         <div className='flex items-center h-full w-20'>
-          <img src={image ?? DishDefaultImg} className='w-full' />
+          <img src={images[0] ?? DishDefaultImg} className='w-full' />
         </div>
         <div className='flex flex-col'>
           <h4 className='m-0'>{name}</h4>

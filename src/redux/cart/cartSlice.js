@@ -24,7 +24,7 @@ const cartSlice = createSlice({
 
   reducers: {
     addToCart: (state, { payload }) => {
-      const isItemExist = state.cartItems.find(item => item.id === payload.id);
+      const isItemExist = state.cartItems.find(item => item._id === payload._id);
       if (!isItemExist) {
         state.cartItems = [...state.cartItems, { ...payload, quantity: 1 }];
         state.pageId = payload.pageId;
