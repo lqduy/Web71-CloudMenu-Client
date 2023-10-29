@@ -21,9 +21,9 @@ const TabBar = () => {
           </Button>
         </div>
         <div className='flex gap-2'>
-          <Button type='primary' size='large' className='px-6 font-bold text-base'>
+          {/* <Button type='primary' size='large' className='px-6 font-bold text-base'>
             Đơn gọi món
-          </Button>
+          </Button> */}
           <Button size='large'>
             <EllipsisOutlined />
           </Button>

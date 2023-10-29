@@ -1,13 +1,27 @@
 import { useMemo } from 'react';
 import { Divider, Select } from 'antd';
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { ORDER_STATUS } from '~/utils/constants';
 import OrderAPI from '~/services/orderApi';
 
 const OrderCard = ({ data, handleReload }) => {
   const handleChangeStatus = async value => {
     const updatedData = { ...data, status: value };
-    console.log(updatedData);
+    try {
+      await OrderAPI.update(data._id, updatedData);
+      handleReload();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
+
+  const handleToNextStep = async () => {
+    // eslint-disable-next-line no-unused-vars
+    const { SHIPPING, ...stepsObject } = ORDER_STATUS;
+    const steps = Object.values(stepsObject);
+    const index = steps.findIndex(step => step === data.status);
+    const updatedData = { ...data, status: steps[index + 1] };
     try {
       await OrderAPI.update(data._id, updatedData);
       handleReload();
@@ -30,7 +44,7 @@ const OrderCard = ({ data, handleReload }) => {
         <div className='w-14 py-[1px] -translate-x-[16px] bg-primary text-center text-white'>
           #{data.orderIndex}
         </div>
-        {data.tableIndex && <h2 className='text-center'>Bàn số {data.tableIndex + 1}</h2>}
+        {data.tableIndex && <h2 className='text-center'>Bàn số {data.tableIndex}</h2>}
         {data.clientName !== '' && <h2 className='text-center'>{data.clientName}</h2>}
         <Divider />
         <div className='flex flex-col gap-2'>
@@ -58,13 +72,24 @@ const OrderCard = ({ data, handleReload }) => {
             );
           })}
         </div>
+        {data.note && (
+          <>
+            <Divider />
+            <div className='flex gap-2'>
+              <div className='w-20 text-center'>
+                <InfoCircleOutlined />
+              </div>
+              <p className='m-0'>{data.note}</p>
+            </div>
+          </>
+        )}
         <Divider />
         <div className='flex justify-between'>
           <h3>Tổng tiền:</h3>
           <h3>{totalAmount.toLocaleString()} đ</h3>
         </div>
       </div>
-      <div className=' rounded-b-lg p-4'>
+      <div className='rounded-b-lg p-4'>
         <div className='flex justify-between items-end'>
           <Select
             options={orderStatusOptions}
@@ -72,10 +97,15 @@ const OrderCard = ({ data, handleReload }) => {
             onChange={handleChangeStatus}
             className='w-40 h-8'
           />
-          <button className='h-[30px] px-3 rounded bg-primary hover:bg-primary/80 text-white cursor-pointer'>
-            <CheckOutlined />
-            <span className='ml-1'>Bước tiếp</span>
-          </button>
+          {data.status !== ORDER_STATUS.DONE && (
+            <button
+              className='h-[30px] px-3 rounded bg-primary hover:bg-primary/80 text-white cursor-pointer'
+              onClick={handleToNextStep}
+            >
+              <CheckOutlined />
+              <span className='ml-1'>Bước tiếp</span>
+            </button>
+          )}
         </div>
       </div>
     </div>
