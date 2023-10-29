@@ -8,6 +8,10 @@ const UserAPI = {
   update: (id, data) => {
     const url = `/users/${id}`;
     return api.put(url, data);
+  },
+  getLikes: id => {
+    const url = `/users/${id}/likes`;
+    return api.get(url);
   }
 };
 

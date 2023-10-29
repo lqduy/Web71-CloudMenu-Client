@@ -17,8 +17,8 @@ const Banner = ({ pageData }) => {
 
   useEffect(() => {
     const checkLiked = () => {
-      const isLiked = Array.isArray(currentUser.likes) && currentUser.likes.includes(_id);
-      if (isLiked) {
+      const isLikedPage = Array.isArray(currentUser.likes) && currentUser.likes.includes(_id);
+      if (isLikedPage) {
         setIsLiked(true);
       } else {
         setIsLiked(false);
@@ -26,7 +26,7 @@ const Banner = ({ pageData }) => {
     };
     checkLiked();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
+  }, [currentUser, pageData]);
 
   const handleToggleLike = async () => {
     let updatedUserData = { ...currentUser };
@@ -57,7 +57,7 @@ const Banner = ({ pageData }) => {
     const url = convertAddressToGoogleMapsUrl(fullAddress);
     return url;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pageData]);
 
   return (
     <div className='md:mt-20 ssm:mt-14 bg-white'>
@@ -78,7 +78,9 @@ const Banner = ({ pageData }) => {
               />
             ) : (
               <div className='flex items-center justify-center w-72 h-72 rounded-full text-[172px] bg-primary'>
-                <span className='leading-3 font-roboto text-white'>Q</span>
+                <span className='leading-3 font-roboto text-white'>
+                  {name ? name[0] : undefined}
+                </span>
               </div>
             )}
           </div>

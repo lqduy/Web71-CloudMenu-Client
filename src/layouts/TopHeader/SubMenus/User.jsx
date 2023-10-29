@@ -98,14 +98,16 @@ const User = () => {
       <Button type='text' icon={<UserOutlined />} className='w-full text-left'>
         Tài khoản
       </Button>
-      <Button
-        type='text'
-        icon={<ShopOutlined />}
-        className='w-full text-left'
-        onClick={onClickEditPage}
-      >
-        Quản lý gian hàng
-      </Button>
+      {activePage && (
+        <Button
+          type='text'
+          icon={<ShopOutlined />}
+          className='w-full text-left'
+          onClick={onClickEditPage}
+        >
+          Quản lý gian hàng
+        </Button>
+      )}
       <Button type='text' icon={<PictureOutlined />} className='w-full text-left'>
         Đa phương tiện
       </Button>
