@@ -14,6 +14,7 @@ const initialValues = {
   isVegetarian: false,
   hasAlcoholic: false,
   orderWays: ['direct'],
+  tables: 0,
   address: '',
   province: '',
   district: '',
@@ -42,6 +43,8 @@ const PageForm = () => {
         businessType: activePage.businessType,
         isVegetarian: activePage.isVegetarian,
         orderWays: activePage.orderWays,
+        avatar: activePage.avatar,
+        tables: activePage.tables ?? 0,
         address: activePage.address,
         province: activePage.province,
         district: activePage.district,
@@ -103,6 +106,7 @@ const PageForm = () => {
   };
 
   const handleUpdatePage = async value => {
+    console.log(value);
     try {
       const newPageData = { ...activePage, ...value };
       await PageAPI.update(activePage._id, newPageData);
@@ -144,16 +148,15 @@ const PageForm = () => {
         onFinish={!isEditingPage ? handleCreatePage : handleUpdatePage}
         className='mt-8'
       >
+        <Form.Item
+          label='Tên kinh doanh'
+          name='name'
+          rules={[{ required: true, message: 'Vui lòng nhập tên cơ sở kinh doanh!' }]}
+        >
+          <Input />
+        </Form.Item>
+
         <Row gutter={16}>
-          <Col span={16}>
-            <Form.Item
-              label='Tên kinh doanh'
-              name='name'
-              rules={[{ required: true, message: 'Vui lòng nhập tên cơ sở kinh doanh!' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
           <Col span={8}>
             <Form.Item label='Loại hình' name='businessType'>
               <Select>
@@ -163,9 +166,6 @@ const PageForm = () => {
               </Select>
             </Form.Item>
           </Col>
-        </Row>
-
-        <Row gutter={16}>
           <Col span={8}>
             <Form.Item label='Mặn/chay' name='isVegetarian'>
               <Select>
@@ -182,12 +182,24 @@ const PageForm = () => {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={8}>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={16}>
             <Form.Item label='Phục vụ' name='orderWays'>
               <Select mode='multiple'>
                 <Select.Option value={'direct'}>Tại chỗ</Select.Option>
                 <Select.Option value={'ship'}>Ship</Select.Option>
               </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              label='Số bàn'
+              name='tables'
+              rules={[{ type: 'number', message: 'Vui lòng nhập số!' }]}
+            >
+              <InputNumber controls={false} className='w-full' />
             </Form.Item>
           </Col>
         </Row>

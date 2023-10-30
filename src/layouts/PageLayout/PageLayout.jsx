@@ -1,6 +1,7 @@
 import Container from '~/components/Container';
 import BottomHeader from '../BottomHeader';
 import TopHeader from '../TopHeader';
+import Footer from '../Footer';
 
 const PageLayout = ({ children }) => {
   return (
@@ -8,6 +9,7 @@ const PageLayout = ({ children }) => {
       <TopHeader />
       <BottomHeader />
       <Container>{children}</Container>
+      <Footer />
     </>
   );
 };

@@ -29,8 +29,8 @@ const Cart = () => {
       </div>
       <Divider className='mb-2 mt-2' />
       <div className='flex justify-between'>
-        <h4 className='m-0 text-2xl'>Tổng tiền:</h4>
-        <p className='m-0 text-2xl text-red-800'>{totalAmount.toLocaleString()}đ</p>
+        <h4 className='m-0 text-lg'>Tổng tiền:</h4>
+        <p className='m-0 text-lg text-red-800'>{totalAmount.toLocaleString()}đ</p>
       </div>
     </div>
   );
