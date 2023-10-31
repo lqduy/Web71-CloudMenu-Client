@@ -12,6 +12,10 @@ const UserAPI = {
   getLikes: id => {
     const url = `/users/${id}/likes`;
     return api.get(url);
+  },
+  changePassword: (id, data) => {
+    const url = `/users/${id}/changePassword`;
+    return api.put(url, data)
   }
 };
 
