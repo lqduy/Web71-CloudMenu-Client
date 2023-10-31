@@ -122,11 +122,23 @@ const ProfileUser = () => {
   return (
     <Modal
       title={[
-        <div className='flex justify-center border-b-2 mx-6'>
-          <Button disabled={show == true} type='text' block onClick={handleButtonClick}>
+        <div key='button' className='flex justify-center border-b-2 mx-6'>
+          <Button
+            key='profile'
+            disabled={show == true}
+            type='text'
+            block
+            onClick={handleButtonClick}
+          >
             <b>Chỉnh sửa thông tin cá nhân</b>
           </Button>
-          <Button disabled={show == false} type='text' block onClick={handleButtonClick}>
+          <Button
+            key='changePass'
+            disabled={show == false}
+            type='text'
+            block
+            onClick={handleButtonClick}
+          >
             <b>Đổi mật khẩu</b>
           </Button>
         </div>
@@ -173,6 +185,7 @@ const ProfileUser = () => {
           <div className=' w-1/2'>
             <div className='grid grid-flow-col gap-8'>
               <Form.Item
+                key='lastname'
                 label='Tên :'
                 name='lastName'
                 rules={[{ required: true, message: 'Hãy nhập họ và tên đệm!' }]}
@@ -186,6 +199,7 @@ const ProfileUser = () => {
               </Form.Item>
 
               <Form.Item
+                key='fistname'
                 label='Họ và tên đệm :'
                 name='firstName'
                 rules={[{ required: true, message: 'Hãy nhập tên của bạn!' }]}
@@ -199,6 +213,7 @@ const ProfileUser = () => {
             </div>
             <div className='grid  grid-flow-col gap-8'>
               <Form.Item
+                key='gender'
                 label='Giới tính:'
                 name='gender'
                 rules={[{ required: true, message: 'Hãy nhập ngày sinh của bạn!' }]}
@@ -211,6 +226,7 @@ const ProfileUser = () => {
                 </Select>
               </Form.Item>
               <Form.Item
+                key='email'
                 label='Email:'
                 name='email'
                 rules={[
@@ -229,9 +245,11 @@ const ProfileUser = () => {
             </div>
             <div className='grid  grid-flow-col gap-8'>
               <Form.Item
+                key='age'
                 label='Ngày sinh:'
                 name='age'
                 rules={[{ required: true, message: 'Hãy chọn ngày sinh của bạn!' }]}
+                className='w-36'
               >
                 <Space direction='vertical'>
                   <DatePicker
@@ -243,6 +261,7 @@ const ProfileUser = () => {
               </Form.Item>
 
               <Form.Item
+                key='phone'
                 className='col-span-5 '
                 label='Số điện thoại:'
                 name='phoneNumber'
@@ -300,26 +319,6 @@ const ProfileUser = () => {
                 ))}
               </Select>
             </Form.Item>
-
-            {/* <Form.Item
-            name='password'
-            rules={[
-              { required: true, message: 'Hãy điền mật khẩu!' },
-              {
-                pattern:
-                  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&^()._-])[A-Za-z\d@$!%*#?&^()._-]{8,24}$/,
-                message: 'Dài 8-24, chứa đủ chữ thường, chữ hoa, ký tự đặc biệt'
-              }
-            ]}
-            validateDebounce={600}
-          >
-            <Input.Password
-              prefix={<LockOutlined className='mr-2' />}
-              type='password'
-              placeholder='Mật khẩu'
-              className='h-11'
-            />
-          </Form.Item> */}
           </div>
         </Form>
       ) : null}

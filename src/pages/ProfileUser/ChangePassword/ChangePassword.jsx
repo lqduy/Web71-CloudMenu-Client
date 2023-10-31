@@ -6,25 +6,25 @@ import UserAPI from '~/services/userAPI';
 
 const ChangePassword = () => {
   const { currentUser } = useSelector(state => state.user);
-  // const [error, setError] = useState(null);
+  const [err, setErr] = useState(null);
   const [form] = Form.useForm();
 
   const handleSubmit = async value => {
     try {
+      setErr(null);
       const response = await UserAPI.changePassword(currentUser._id, value);
+      console.log(response);
 
-      // form.resetFields();
-      if (!response) {
-        message.error('Đổi mật khẩu thất bại, xin vui lòng thử lại');
+      if (response.status === 200) {
+        message.success('Đổi mật khẩu thành công!');
+        form.resetFields();
         return;
       }
-      message.success('Đổi mật khẩu thành công!');
-      console.log(response);
     } catch (error) {
-      console.log(error);
+      message.error('Đổi mật khẩu không thành công, vui lòng thử lại');
     }
+    console.log(err);
   };
-
   return (
     <div className=' flex justify-center'>
       <Form form={form} layout='vertical' className=' font-bold w-1/2 p-10' onFinish={handleSubmit}>
