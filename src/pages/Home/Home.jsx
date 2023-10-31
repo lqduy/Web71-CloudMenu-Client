@@ -1,13 +1,11 @@
-import { Fragment, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Button, Tag, Divider } from 'antd';
+import { useEffect, useState } from 'react';
+import { Row, Col, Button } from 'antd';
 import { useDispatch } from 'react-redux';
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
 import ListAPI from '~/services/listAPI';
 import NewsAPI from '~/services/newsAPI';
 import { NEWSFEED_LENGTH, TOP_LIST_LENGTH, VIEW_NAME } from '~/utils/constants';
-import getDateAndTime from '~/utils/functions/getDateAndTime';
 import PageLayout from '~/layouts/PageLayout';
 import { setCurrentView } from '~/redux/view/viewSlice';
 import ListSlider from '~/components/Slider';
@@ -17,6 +15,7 @@ const Home = () => {
   const [topNewPageList, setTopNewPageList] = useState([]);
   const [topNewDishList, setTopNewDishList] = useState([]);
   const [newsfeed, setNewfeed] = useState([]);
+  const [apiCallsCompleted, setApiCallsCompleted] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,13 +36,28 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    if (topNewPageList.length > 0 && topNewDishList.length > 0 && newsfeed.length > 0) {
+      setApiCallsCompleted(true);
+    }
+  }, [topNewPageList, topNewDishList, newsfeed]);
+
   return (
     <PageLayout>
       <div className='flex flex-col gap-4'>
         <Row gutter={16} className='mt-4'>
           <Col span={19} className='flex flex-col gap-4'>
-            <ListSlider listData={topNewPageList} title='Top trang mới' isPageSlide />
-            <ListSlider listData={topNewDishList} title='Top món mới' />
+            <ListSlider
+              listData={topNewPageList}
+              title='Top trang mới'
+              isPageSlide
+              isLoading={!apiCallsCompleted}
+            />
+            <ListSlider
+              listData={topNewDishList}
+              title='Top món mới'
+              isLoading={!apiCallsCompleted}
+            />
           </Col>
           <Col span={5} className='flex flex-col gap-4'>
             <div className='ct-section-wrapper flex items-end bg-create-page bg-no-repeat bg-cover bg-right h-[140px] p-1.5'>
@@ -56,7 +70,7 @@ const Home = () => {
                 Tạo trang kinh doanh
               </Button>
             </div>
-            <NewsFeed data={newsfeed} />
+            <NewsFeed data={newsfeed} isLoading={!apiCallsCompleted} />
           </Col>
         </Row>
       </div>
