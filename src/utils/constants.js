@@ -3,7 +3,7 @@ export const TOKEN_TYPES = {
 };
 
 export const TOP_LIST_LENGTH = 8;
-export const NEWSFEED_LENGTH = 10;
+export const NEWSFEED_LENGTH = 5;
 
 export const SORT_TYPE = {
   N_TO_O: 1,

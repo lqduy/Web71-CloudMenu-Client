@@ -35,7 +35,11 @@ const TopHeader = () => {
       <Button
         type='text'
         icon={
-          <Avatar size='small' className='align-middle bg-blue-800'>
+          <Avatar
+            size='small'
+            src={activePage.avatar[0]}
+            className='align-middle bg-blue-800 border-none'
+          >
             {activePage.name.charAt(0)}
           </Avatar>
         }
