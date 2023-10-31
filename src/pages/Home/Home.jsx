@@ -1,22 +1,21 @@
-import { Fragment, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Button, Tag, Divider } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { Row, Col, Button } from 'antd';
+import { useDispatch } from 'react-redux';
 import { PlusOutlined } from '@ant-design/icons';
 import { setOpenPageCreateForm } from '~/redux/page/pageSlice';
 import ListAPI from '~/services/listAPI';
 import NewsAPI from '~/services/newsAPI';
 import { NEWSFEED_LENGTH, TOP_LIST_LENGTH, VIEW_NAME } from '~/utils/constants';
-import getDateAndTime from '~/utils/functions/getDateAndTime';
 import PageLayout from '~/layouts/PageLayout';
 import { setCurrentView } from '~/redux/view/viewSlice';
 import ListSlider from '~/components/Slider';
+import NewsFeed from './NewsFeed';
 
 const Home = () => {
   const [topNewPageList, setTopNewPageList] = useState([]);
   const [topNewDishList, setTopNewDishList] = useState([]);
   const [newsfeed, setNewfeed] = useState([]);
-  const { activePage } = useSelector(state => state.page);
+  const [apiCallsCompleted, setApiCallsCompleted] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,45 +36,41 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    if (topNewPageList.length > 0 && topNewDishList.length > 0 && newsfeed.length > 0) {
+      setApiCallsCompleted(true);
+    }
+  }, [topNewPageList, topNewDishList, newsfeed]);
+
   return (
     <PageLayout>
       <div className='flex flex-col gap-4'>
-        <Row gutter={16} className='mt-4 min-h-screen'>
+        <Row gutter={16} className='mt-4'>
           <Col span={19} className='flex flex-col gap-4'>
-            <ListSlider listData={topNewPageList} title='Top trang mới' isPageSlide />
-            <ListSlider listData={topNewDishList} title='Top món mới' />
+            <ListSlider
+              listData={topNewPageList}
+              title='Top trang mới'
+              isPageSlide
+              isLoading={!apiCallsCompleted}
+            />
+            <ListSlider
+              listData={topNewDishList}
+              title='Top món mới'
+              isLoading={!apiCallsCompleted}
+            />
           </Col>
           <Col span={5} className='flex flex-col gap-4'>
-            {!activePage && (
-              <div className='ct-section-wrapper flex items-end bg-create-page bg-no-repeat bg-cover bg-right h-[140px] p-1.5'>
-                <Button
-                  type='primary'
-                  icon={<PlusOutlined />}
-                  className='w-full h-11 outline outline-white'
-                  onClick={() => dispatch(setOpenPageCreateForm())}
-                >
-                  Tạo trang kinh doanh
-                </Button>
-              </div>
-            )}
-            <div className='ct-section-wrapper min-h-[500px] p-4'>
-              <h3>Tin tức</h3>
-              <div className='flex flex-col gap-4 mt-3'>
-                {newsfeed.map(news => {
-                  const formattedTime = getDateAndTime(news.time)[1];
-                  return (
-                    <Fragment key={news._id}>
-                      <p className='mb-0'>
-                        <Tag className='bg-[#4bac4d] text-white'>{formattedTime}</Tag>
-                        {news.madeBy} <span className='italic'>{news.action}</span>
-                        <Link className='ml-1 hover:underline cursor-pointer'>{news.object}</Link>
-                      </p>
-                      <Divider className='my-0' />
-                    </Fragment>
-                  );
-                })}
-              </div>
+            <div className='ct-section-wrapper flex items-end bg-create-page bg-no-repeat bg-cover bg-right h-[140px] p-1.5'>
+              <Button
+                type='primary'
+                icon={<PlusOutlined />}
+                className='w-full h-11 outline outline-white'
+                onClick={() => dispatch(setOpenPageCreateForm())}
+              >
+                Tạo trang kinh doanh
+              </Button>
             </div>
+            <NewsFeed data={newsfeed} isLoading={!apiCallsCompleted} />
           </Col>
         </Row>
       </div>

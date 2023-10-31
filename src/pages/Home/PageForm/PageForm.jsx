@@ -106,7 +106,6 @@ const PageForm = () => {
   };
 
   const handleUpdatePage = async value => {
-    console.log(value);
     try {
       const newPageData = { ...activePage, ...value };
       await PageAPI.update(activePage._id, newPageData);

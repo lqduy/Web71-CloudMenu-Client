@@ -3,6 +3,7 @@ import { Divider, Select } from 'antd';
 import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { ORDER_STATUS } from '~/utils/constants';
 import OrderAPI from '~/services/orderApi';
+import getDateAndTime from '~/utils/functions/getDateAndTime';
 
 const OrderCard = ({ data, handleReload }) => {
   const handleChangeStatus = async value => {
@@ -38,6 +39,8 @@ const OrderCard = ({ data, handleReload }) => {
     []
   );
 
+  const [formattedDate, formattedTime] = getDateAndTime(data.createdAt);
+
   return (
     <div key={data._id} className='w-[calc(33.33%-16px*2/3)] h-fit rounded-lg shadow-2xl'>
       <div className='bg-white rounded-t-lg p-4'>
@@ -46,7 +49,10 @@ const OrderCard = ({ data, handleReload }) => {
         </div>
         {data.tableIndex && <h2 className='text-center'>Bàn số {data.tableIndex}</h2>}
         {data.clientName !== '' && <h2 className='text-center'>{data.clientName}</h2>}
-        <Divider />
+        <p className='mt-4 mb-1 italic'>
+          {formattedTime}, {formattedDate}
+        </p>
+        <Divider className='mt-0' />
         <div className='flex flex-col gap-2'>
           {data.list.map(dish => {
             return (

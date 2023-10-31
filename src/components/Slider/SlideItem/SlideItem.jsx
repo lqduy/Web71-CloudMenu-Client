@@ -1,8 +1,9 @@
+import classNames from 'classnames';
 import { forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DishDefaultImage from '~/assets/layouts/dish-default.png';
 
-const SlideItem = forwardRef(({ data, isPageSlide }, ref) => {
+const SlideItem = forwardRef(({ data, isPageSlide, className }, ref) => {
   const navigate = useNavigate();
 
   const description = isPageSlide
@@ -14,7 +15,7 @@ const SlideItem = forwardRef(({ data, isPageSlide }, ref) => {
     : `${data.pageData.province}, ${data.pageData.district}`;
 
   return (
-    <div ref={ref} className='mx-2 p-2 bg-white shadow-md'>
+    <div ref={ref} className={classNames('mx-2 p-2 bg-white shadow-md', className)}>
       <div className='flex justify-center items-center h-60 object-cover overflow-hidden text-center'>
         <img
           src={

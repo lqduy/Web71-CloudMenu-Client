@@ -27,7 +27,10 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type='number'] {
-  -moz-appearance: textfield;
+  -webkit-appearance: none; /* Safari and Chrome */
+  -moz-appearance: none; /* Firefox */
+  -ms-appearance: none; /* Internet Explorer */
+  appearance: none; /* Standard */
 }
 
 @tailwind base;

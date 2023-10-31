@@ -4,6 +4,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SlideItem from './SlideItem';
+import SlideSkeleton from './SlideSkeleton/SlideSkeleton';
 
 const MoveButton = props => {
   const { isNext, isPrev, style, onClick } = props;
@@ -26,7 +27,7 @@ const MoveButton = props => {
   );
 };
 
-const ListSlider = ({ listData, title, isPageSlide }) => {
+const ListSlider = ({ listData, title, isPageSlide, isLoading }) => {
   const settings = {
     infinite: true,
     speed: 500,
@@ -39,10 +40,16 @@ const ListSlider = ({ listData, title, isPageSlide }) => {
   return (
     <div className='w-full'>
       <h2 className='uppercase'>{title}</h2>
-      <Slider {...settings} className='relative'>
-        {listData.length > 0 &&
-          listData.map(item => <SlideItem key={item._id} data={item} isPageSlide={isPageSlide} />)}
-      </Slider>
+      {isLoading ? (
+        <SlideSkeleton />
+      ) : (
+        <Slider {...settings} className='relative'>
+          {listData.length > 0 &&
+            listData.map(item => (
+              <SlideItem key={item._id} data={item} isPageSlide={isPageSlide} />
+            ))}
+        </Slider>
+      )}
     </div>
   );
 };
