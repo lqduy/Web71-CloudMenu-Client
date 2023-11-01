@@ -15,7 +15,7 @@ const UserAPI = {
   },
   changePassword: (id, data) => {
     const url = `/users/${id}/changePassword`;
-    return api.put(url, data)
+    return api.put(url, data);
   }
 };
 
