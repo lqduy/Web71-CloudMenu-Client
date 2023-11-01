@@ -88,7 +88,7 @@ const UploadAvatar = ({ setUrl }) => {
   return (
     <>
       <Upload
-        accept='.png,.jpe,.jpeg,.webp'
+        accept='.png,.jpg,.jpeg,.webp'
         listType='picture-circle'
         fileList={fileList}
         onPreview={handlePreview}

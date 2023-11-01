@@ -6,12 +6,13 @@ import { Modal } from 'antd';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Cart from '../Cart/Cart';
-import Container from '~/components/Container';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ handleSubmitOrder }) => {
   const [activeTheme, setTheme] = useThemeSwitcher();
   const { quantity } = useSelector(state => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const itemsToRemove = ['cartItems', 'quantity', 'totalAmount'];
 
@@ -36,7 +37,11 @@ const Header = ({ handleSubmitOrder }) => {
       <header className='fixed top-0 left-0 w-full h-16 md:h-20 leading-1 bg-gradient-to-r from-orange-600 to-yellow-500 text-white shadow-xl z-10'>
         <div className='ct-client-page-container flex justify-between items-center'>
           <div className='flex items-center gap-10'>
-            <img className='2xl:w-16 ssm:w-10' src={LogoDark} />
+            <img
+              className='2xl:w-16 ssm:w-10 cursor-pointer'
+              src={LogoDark}
+              onClick={() => navigate('/')}
+            />
             <h1 className='text-2xl md:text-[2rem] font-dancing sm:block ssm:hidden'>
               Chọn đi chờ chi !
             </h1>

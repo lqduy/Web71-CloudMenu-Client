@@ -16,7 +16,7 @@ const SlideItem = forwardRef(({ data, isPageSlide, className }, ref) => {
 
   return (
     <div ref={ref} className={classNames('mx-2 p-2 bg-white shadow-md', className)}>
-      <div className='flex justify-center items-center h-60 object-cover overflow-hidden text-center'>
+      <div className='flex justify-center items-center w-full aspect-square relative overflow-hidden text-center'>
         <img
           src={
             isPageSlide
@@ -25,7 +25,7 @@ const SlideItem = forwardRef(({ data, isPageSlide, className }, ref) => {
                 : DishDefaultImage
               : data.images[0] || DishDefaultImage
           }
-          className='w-full align-middle mx-auto'
+          className='absolute object-cover w-full h-full align-middle mx-auto'
         />
       </div>
       <div className='mt-4 p-2'>

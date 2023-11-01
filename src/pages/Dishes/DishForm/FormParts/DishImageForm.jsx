@@ -80,7 +80,7 @@ const DishImageForm = ({ fileList, handleChange, setCloudinaryUrlList }) => {
         <Button type='primary'>Chọn</Button>
       </Space.Compact>
       <Upload.Dragger
-        accept='.png,.jpe,.jpeg,.webp'
+        accept='.png,.jpg,.jpeg,.webp'
         multiple
         listType='picture-card'
         fileList={fileList}

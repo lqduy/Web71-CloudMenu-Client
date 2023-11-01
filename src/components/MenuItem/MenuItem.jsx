@@ -37,8 +37,8 @@ const MenuItem = ({ data, isPreviewer }) => {
       })}
     >
       <div className='flex items-center gap-1'>
-        <div className='w-14 overflow-hidden rounded-full'>
-          <img src={imageSrc} alt={data.name} className='w-full' />
+        <div className='w-14 aspect-square relative overflow-hidden rounded-full'>
+          <img src={imageSrc} alt={data.name} className='w-full h-full absolute object-cover' />
         </div>
         <div className='flex flex-col gap-2'>
           <h3 className='mb-0 leading-none'>{data.name}</h3>
