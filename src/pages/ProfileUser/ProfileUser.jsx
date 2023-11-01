@@ -219,7 +219,7 @@ const ProfileUser = () => {
                 rules={[{ required: true, message: 'Hãy nhập ngày sinh của bạn!' }]}
                 className=' w-36'
               >
-                <Select onChange={handleGenderChange} placeholder='...'>
+                <Select onChange={handleGenderChange} placeholder='Lựa chọn giới tính'>
                   <Select.Option value='Nam'>Nam</Select.Option>
                   <Select.Option value='Nữ'>Nữ</Select.Option>
                   <Select.Option value='Khác'>Khác</Select.Option>
@@ -253,9 +253,11 @@ const ProfileUser = () => {
               >
                 <Space direction='vertical'>
                   <DatePicker
-                    defaultValue={dayjs(currentUser.age, dateFormat)}
+                    name='age'
+                    defaultValue={!currentUser.age ? '' : dayjs(currentUser.age, dateFormat)}
                     format={dateFormat}
                     onChange={onChange}
+                    placeholder='Nhập ngày sinh...'
                   />
                 </Space>
               </Form.Item>
