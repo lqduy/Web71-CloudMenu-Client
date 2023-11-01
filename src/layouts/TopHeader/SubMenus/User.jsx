@@ -9,11 +9,12 @@ import {
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import UserAPI from '~/services/userAPI';
-import { logout, reloadUser } from '~/redux/user/userSlice';
+import { logout, reloadUser, setOpenEditProfile } from '~/redux/user/userSlice';
 import { setOpenPageCreateForm, setEditPage } from '~/redux/page/pageSlice';
 
 const User = () => {
   const { currentUser } = useSelector(state => state.user);
+
   const { pageList, activePage } = useSelector(state => state.page);
   const dispatch = useDispatch();
 
@@ -27,6 +28,10 @@ const User = () => {
       // eslint-disable-next-line no-console
       console.log(err);
     }
+  };
+
+  const onClickEditProfile = () => {
+    dispatch(setOpenEditProfile());
   };
 
   const onClickEditPage = () => {
@@ -95,7 +100,12 @@ const User = () => {
         Tạo trang mới
       </Button>
       <Divider className='my-1' />
-      <Button type='text' icon={<UserOutlined />} className='w-full text-left'>
+      <Button
+        type='text'
+        icon={<UserOutlined />}
+        className='w-full text-left'
+        onClick={() => dispatch(setOpenEditProfile())}
+      >
         Tài khoản
       </Button>
       {activePage && (

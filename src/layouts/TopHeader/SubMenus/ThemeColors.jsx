@@ -42,6 +42,7 @@ const ThemeColors = () => {
   };
 
   const checkSelectedColor = color => {
+    console.log(color);
     if (activePage && activePage.themeColor) {
       return activePage.themeColor === color;
     } else if (currentUser && currentUser.themeColor) {
@@ -50,6 +51,7 @@ const ThemeColors = () => {
       return false;
     }
   };
+
 
   return (
     <div className='flex flex-wrap gap-2 w-28'>

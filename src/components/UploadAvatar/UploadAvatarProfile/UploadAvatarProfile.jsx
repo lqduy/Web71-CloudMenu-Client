@@ -12,28 +12,19 @@ const getBase64 = file =>
     reader.onerror = error => reject(error);
   });
 
-const UploadAvatar = ({ setUrl }) => {
+const UploadAvatarProfile = ({ setUrl }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const { activePage, isEditingPage } = useSelector(state => state.page);
   const { currentUser, openEditProfile } = useSelector(state => state.user);
 
   useEffect(() => {
-    if (isEditingPage) {
-      setFileList([{ url: activePage.avatar[0] }]);
-    }
-    if (openEditProfile) {
-      if (!currentUser.avatar) {
-        return;
-      }
-      setFileList([{ url: currentUser.avatar[0] }]);
-    }
+    setFileList([{ url: currentUser.avatar[0] }]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditingPage, openEditProfile]);
+  }, [openEditProfile]);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -96,7 +87,7 @@ const UploadAvatar = ({ setUrl }) => {
   return (
     <>
       <Upload
-        accept='.png,.jpg,.jpeg,.webp'
+        accept='.png,.jpe,.jpeg,.webp'
         listType='picture-circle'
         fileList={fileList}
         onPreview={handlePreview}
@@ -122,4 +113,4 @@ const UploadAvatar = ({ setUrl }) => {
     </>
   );
 };
-export default UploadAvatar;
+export default UploadAvatarProfile;

@@ -8,6 +8,7 @@ import { fetchPagesOfUser } from './redux/page/pageActions';
 import { setActivePage } from './redux/page/pageSlice';
 import PageForm from './pages/Home/PageForm';
 import { TOKEN_TYPES } from './utils/constants';
+import ProfileUser from './pages/ProfileUser/ProfileUser';
 
 const App = () => {
   const { reload: userReload, currentUser, isAuthenticated } = useSelector(state => state.user);
@@ -61,6 +62,7 @@ const App = () => {
         </Routes>
       </div>
       <PageForm />
+      <ProfileUser />
     </>
   );
 };

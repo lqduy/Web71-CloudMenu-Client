@@ -7,7 +7,8 @@ const initialState = {
   isAuthenticated: false,
   currentUser: {},
   isLoading: false,
-  reload: null
+  reload: null,
+  openEditProfile: false
 };
 
 const userSlice = createSlice({
@@ -22,6 +23,9 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
       state.currentUser = {};
       window.location.href = PATH.ABOUT_ME;
+    },
+    setOpenEditProfile: state => {
+      state.openEditProfile = !state.openEditProfile;
     }
   },
   extraReducers: builder =>
@@ -49,6 +53,6 @@ const userSlice = createSlice({
       })
 });
 
-export const { reloadUser, logout } = userSlice.actions;
+export const { reloadUser, logout, setOpenEditProfile } = userSlice.actions;
 
 export default userSlice.reducer;
