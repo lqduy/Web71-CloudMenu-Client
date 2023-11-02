@@ -60,19 +60,16 @@ const Banner = ({ pageData }) => {
   }, [pageData]);
 
   return (
-    <div className='md:mt-20 ssm:mt-14 bg-white'>
+    <div className='md:mt-20 bg-white'>
       <div>
-        <img
-          src={backgroundBanner}
-          className='object-cover w-full lg:h-80 md:h-64 sm:h-52 ssm:h-36 '
-        />
+        <img src={backgroundBanner} className='object-cover w-full h-96 md:h-64 lg:h-80' />
       </div>
       <div className='ct-client-page-container relative'>
-        <div className='w-full absolute left-0 top-0 -translate-y-1/2 flex items-end'>
+        <div className='w-full px-4 md:mx-0 md:absolute left-0 top-0 -translate-y-[144px] md:-translate-y-1/2 xl:mx-0 flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-0'>
           <div className='bg-gray-300/60 rounded-full p-2'>
             {Array.isArray(avatar) && avatar.length > 0 ? (
               <img
-                className='w-72 aspect-square rounded-full object-cover shadow-2xl'
+                className='xl:w-72 aspect-square rounded-full object-cover shadow-2xl'
                 src={avatar[0]}
                 alt={name}
               />
@@ -84,14 +81,14 @@ const Banner = ({ pageData }) => {
               </div>
             )}
           </div>
-          <div className='flex-1 flex justify-between items-end'>
-            <div className='flex flex-col gap-4'>
-              <h1 className='flex items-center gap-2 m-0 pl-5 lg:text-3xl md:text-lg font-bold font-roboto'>
+          <div className='flex-1 flex flex-col md:flex-row justify-between items-center md:items-end'>
+            <div className='flex flex-col justify-center md:justify-start items-center gap-4'>
+              <h1 className='flex items-center gap-2 m-0 md:pl-5 lg:text-3xl md:text-lg font-bold font-roboto'>
                 {name}
                 <Tag className='text-base font-normal'>{businessType}</Tag>
               </h1>
               <a href={googleMapsUrl} target='blank' className='no-underline hover:underline'>
-                <p className='m-0 pl-5 lg:text-lg ssm:text-sm text-gray-500'>
+                <p className='m-0 md:pl-5 lg:text-lg ssm:text-sm text-gray-500'>
                   <EnvironmentOutlined className='mr-2' />
                   {address}, {ward}, <br /> {district}, {province}
                 </p>

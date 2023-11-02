@@ -34,15 +34,15 @@ const Header = ({ handleSubmitOrder }) => {
 
   return (
     <>
-      <header className='fixed top-0 left-0 w-full h-16 md:h-20 leading-1 bg-gradient-to-r from-orange-600 to-yellow-500 text-white shadow-xl z-10'>
-        <div className='ct-client-page-container flex justify-between items-center'>
+      <header className='flex items-center fixed top-0 left-0 w-full h-16 md:h-20 leading-1 bg-gradient-to-r from-orange-600 to-yellow-500 text-white shadow-xl z-10'>
+        <div className='ct-client-page-container w-full flex justify-between items-center'>
           <div className='flex items-center gap-10'>
             <img
-              className='2xl:w-16 ssm:w-10 cursor-pointer'
+              className='w-10 2xl:w-16 cursor-pointer'
               src={LogoDark}
               onClick={() => navigate('/')}
             />
-            <h1 className='text-2xl md:text-[2rem] font-dancing sm:block ssm:hidden'>
+            <h1 className='text-2xl md:text-[2rem] font-dancing hidden sm:block mb-0'>
               Chọn đi chờ chi !
             </h1>
           </div>

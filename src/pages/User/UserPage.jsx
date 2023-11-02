@@ -88,7 +88,7 @@ const User = () => {
       <div className='bg-[#eee] border-t-2'>
         <div className='ct-client-page-container py-4'>
           <Row gutter={16}>
-            <Col span={8}>
+            <Col span={8} className='hidden xl:block'>
               <div className='flex flex-col gap-4 sticky top-24'>
                 <div className='ct-section-wrapper p-4 h-fit'>
                   <h3 className='mb-4 text-lg font-bold'>ĐƠN GỌI MÓN</h3>
@@ -140,7 +140,7 @@ const User = () => {
                 </div>
               </div>
             </Col>
-            <Col span={16}>
+            <Col className='flex-grow'>
               <MealList data={menuData.content} />
             </Col>
           </Row>
