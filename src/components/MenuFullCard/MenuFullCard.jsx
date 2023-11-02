@@ -13,7 +13,7 @@ import { applyMenu } from '~/redux/page/pageActions';
 import { reloadPage } from '~/redux/page/pageSlice';
 import PageAPI from '~/services/pageAPI';
 
-const MenuFullCard = ({ data }) => {
+const MenuFullCard = ({ data, controls }) => {
   const { activePage } = useSelector(state => state.page);
   const isAppliedMenu = data._id === activePage.activeMenuId ?? false;
   const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const MenuFullCard = ({ data }) => {
       <Meta
         description={
           <div className='bg-white text-black'>
-            <MenuContent data={data?.content} />
+            <MenuContent data={data?.content} controls={controls} />
           </div>
         }
       />

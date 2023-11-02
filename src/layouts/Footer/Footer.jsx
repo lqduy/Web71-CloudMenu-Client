@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer
       style={{ backgroundColor: themeColor }}
-      className='h-11 flex justify-center items-center mt-4 text-white'
+      className='h-11 flex justify-center items-center pt-0 text-white'
     >
       <p className='m-0'>Copyright © 2023 by Thanh-Duy-Hieu Team</p>
     </footer>

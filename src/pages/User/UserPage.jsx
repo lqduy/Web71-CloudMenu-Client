@@ -2,7 +2,7 @@ import Banner from './Layout/Banner';
 import Header from './Layout/Header';
 import MealList from './Meals/MealList';
 import TabBar from './Layout/TabBar';
-import { Col, Row, Divider, Button, message, Input } from 'antd';
+import { Col, Row, Divider, Button, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PageAPI from '~/services/pageAPI';
@@ -12,8 +12,8 @@ import Cart from './Cart/Cart';
 import OrderAPI from '~/services/orderApi';
 import { useSelector } from 'react-redux';
 import { ORDER_STATUS } from '~/utils/constants';
-import TextArea from 'antd/es/input/TextArea';
 import CartForm from './Cart/CartForm';
+import Footer from '~/layouts/Footer';
 
 const User = () => {
   const [pageData, setPageData] = useState({});
@@ -122,6 +122,7 @@ const User = () => {
           </Row>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -58,10 +58,10 @@ const OrderCard = ({ data, handleReload }) => {
             return (
               <div key={dish._id} className='flex justify-between items-center'>
                 <div className='flex items-center gap-2'>
-                  <div className='h-20'>
-                    <img src={dish.images[0]} className='h-full' />
+                  <div className='w-[120px] h-20 relative overflow-hidden'>
+                    <img src={dish.images[0]} className='absolute h-full w-full object-cover' />
                   </div>
-                  <div>
+                  <div className='flex-grow'>
                     <h4 className='mb-0'>{dish.name}</h4>
                     <p className='mb-0'>
                       {dish.price.toLocaleString()} đ/

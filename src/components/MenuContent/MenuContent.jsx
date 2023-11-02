@@ -1,7 +1,7 @@
 import MenuItem from '~/components/MenuItem';
 import Dish from '~/utils/data/dish';
 
-const MenuContent = ({ data }) => {
+const MenuContent = ({ data, controls }) => {
   return (
     <div className='flex flex-col gap-8 py-2 border-gray-300 rounded-lg'>
       {(data ?? []).map(group => {
@@ -19,7 +19,7 @@ const MenuContent = ({ data }) => {
                     <h3>{typeData.title}</h3>
                     <div className='flex flex-col gap-2'>
                       {type.dishList.map(dish => (
-                        <MenuItem key={dish.id} data={dish} isPreviewer />
+                        <MenuItem key={dish.id} data={dish} isPreviewer controls={controls} />
                       ))}
                     </div>
                   </div>

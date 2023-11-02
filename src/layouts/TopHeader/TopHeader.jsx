@@ -11,6 +11,7 @@ import Container from '~/components/Container';
 import ThemeColors from './SubMenus/ThemeColors';
 import User from './SubMenus/User';
 import { useCallback } from 'react';
+import Logo from '~/assets/image/Kios/CloudMenu_Row.png';
 
 const TopHeader = () => {
   const { currentUser } = useSelector(state => state.user);
@@ -55,7 +56,9 @@ const TopHeader = () => {
   return (
     <Container>
       <div className='flex justify-between items-center h-[50px]'>
-        <Link to={'/'}>CLOUD MENU</Link>
+        <Link to={'/'}>
+          <img src={Logo} alt='Cloud Menu' className='h-10'/>
+        </Link>
         <Space wrap>
           <Popover placement='bottomRight' content={<ThemeColors />}>
             <Button type='text' icon={<BgColorsOutlined />}>

@@ -37,11 +37,11 @@ const MenuDetails = () => {
       <Row gutter={16} className='mt-8'>
         <Col span={19}>
           <div className='w-[744px] min-h-[calc(100vh-50px-44px)] mx-auto'>
-            <MenuFullCard data={menuData} />
+            <MenuFullCard data={menuData} controls={false} />
           </div>
         </Col>
         <Col span={5} className='flex flex-col gap-4'>
-          <SectionWrapper></SectionWrapper>
+          {/* <SectionWrapper></SectionWrapper> */}
           <SectionWrapper title={'Mở thực đơn khác'}>
             <div className='flex flex-col'>
               {menuList.map(menu => (

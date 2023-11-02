@@ -9,7 +9,9 @@ const PageLayout = ({ children }) => {
       <TopHeader />
       <BottomHeader />
       <Container>{children}</Container>
-      <Footer />
+      <div className='mt-4'>
+        <Footer />
+      </div>
     </>
   );
 };

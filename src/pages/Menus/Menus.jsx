@@ -24,7 +24,7 @@ const Menus = () => {
 
   useEffect(() => {
     dispatch(setCurrentView(VIEW_NAME.MENU));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const Menus = () => {
           <Row gutter={16} className='justify-between mt-4 min-h-screen'>
             <Col span={8} className='flex flex-col gap-4'>
               <div className='ct-section-wrapper'>
-                {activeMenuData && <MenuFullCard data={activeMenuData} />}
+                {activeMenuData && <MenuFullCard data={activeMenuData} controls={false} />}
                 {!activeMenuData && (
                   <div className='flex flex-col gap-6 items-center justify-center h-[calc(100vh-50px-44px-16px-16px)] p-4'>
                     <Empty description='Chưa có thực đơn được áp dụng' />

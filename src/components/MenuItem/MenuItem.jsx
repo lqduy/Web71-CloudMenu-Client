@@ -6,7 +6,7 @@ import DishDefaultImage from '~/assets/layouts/dish-default.png';
 import Dish from '~/utils/data/dish';
 import { addMenuItem, unselectOne } from '~/redux/menu/menuSlice';
 
-const MenuItem = ({ data, isPreviewer }) => {
+const MenuItem = ({ data, isPreviewer, controls = true }) => {
   const { itemList } = useSelector(state => state.menu);
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ const MenuItem = ({ data, isPreviewer }) => {
         <p className='mb-0'>
           {formattedPrice}/{formattedUnit}
         </p>
-        {!isPreviewer && (
+        {!isPreviewer && controls && (
           <Button
             icon={<PlusOutlined style={{ fontSize: '12px' }} />}
             size='small'
@@ -57,7 +57,7 @@ const MenuItem = ({ data, isPreviewer }) => {
             onClick={() => handleAddMenuItem(data)}
           />
         )}
-        {isPreviewer && (
+        {isPreviewer && controls && (
           <div className='flex gap-1'>
             <Button
               icon={<MinusOutlined style={{ fontSize: '12px' }} />}
