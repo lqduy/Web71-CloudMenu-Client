@@ -3,17 +3,26 @@ import { Button, Divider } from 'antd';
 
 const TabBar = () => {
   return (
-    <div className='ct-client-page-container mt-4 md:mt-[calc(288px/2+32px)]'>
+    <div className='ct-client-page-container lg:mt-[calc(288px/2+32px)]'>
       <Divider className='bg-gray-200 my-1' />
       <div className='flex justify-between items-center mb-1'>
         <div className='flex'>
-          <Button type='text' className='hidden md:block h-14 px-6 font-bold text-base text-gray-500'>
+          <Button
+            type='text'
+            className='hidden md:block h-14 px-6 font-bold text-base text-gray-500'
+          >
             Giới thiệu
           </Button>
-          <Button type='text' className='hidden md:block h-14 px-6 font-bold text-base text-gray-500'>
+          <Button
+            type='text'
+            className='hidden md:block h-14 px-6 font-bold text-base text-gray-500'
+          >
             Bài viết
           </Button>
-          <Button type='text' className='hidden md:block h-14 px-6 font-bold text-base text-gray-500'>
+          <Button
+            type='text'
+            className='hidden md:block h-14 px-6 font-bold text-base text-gray-500'
+          >
             Đánh giá
           </Button>
           <Button type='text' className='h-14 px-6 font-bold text-base text-gray-500'>

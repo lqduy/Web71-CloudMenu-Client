@@ -13,6 +13,7 @@ import OrderAPI from '~/services/orderApi';
 import { useSelector } from 'react-redux';
 import { ORDER_STATUS } from '~/utils/constants';
 import TextArea from 'antd/es/input/TextArea';
+import CartForm from './Cart/CartForm';
 
 const User = () => {
   const [pageData, setPageData] = useState({});
@@ -80,9 +81,15 @@ const User = () => {
     }
   };
 
+  const cartFormProps = {
+    pageData,
+    orderInfo,
+    setOrderInfo
+  };
+
   return (
     <div className='bg-white'>
-      <Header handleSubmitOrder={handleSubmitOrder} />
+      <Header handleSubmitOrder={handleSubmitOrder} cartFormProps={cartFormProps} />
       <Banner pageData={pageData} />
       <TabBar />
       <div className='bg-[#eee] border-t-2'>
@@ -95,44 +102,13 @@ const User = () => {
                   <Divider className='mb-2 mt-4' />
                   <Cart />
                 </div>
+                {/* Cart Form  */}
                 <div className='ct-section-wrapper p-4'>
-                  {pageData.tables && pageData.tables > 0 && (
-                    <>
-                      <h3 className='mb-4 text-lg font-bold'>Bàn</h3>
-                      <div className='flex flex-wrap gap-2'>
-                        {Array.from({ length: pageData.tables }).map((_, index) => (
-                          <Button
-                            key={index}
-                            type='primary'
-                            ghost={index + 1 !== orderInfo.tableIndex}
-                            className='flex justify-center items-center w-[calc(12.25%-8px*7/8)] rounded-sm'
-                            onClick={() => setOrderInfo(pre => ({ ...pre, tableIndex: index + 1 }))}
-                          >
-                            {index + 1}
-                          </Button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                  <h3 className='my-4 text-lg font-bold'>Tên</h3>
-                  <Input
-                    placeholder='VD: Gia đình Anh A'
-                    className='py-2'
-                    onChange={e => setOrderInfo(pre => ({ ...pre, clientName: e.target.value }))}
-                  />
-                  <h3 className='my-4 text-lg font-bold'>Ghi chú</h3>
-                  <TextArea
-                    maxLength={100}
-                    style={{ height: 120, resize: 'none' }}
-                    placeholder='VD: Nấu nhạt vị'
-                    onChange={e => setOrderInfo(pre => ({ ...pre, note: e.target.value }))}
-                  />
-                </div>
-                <div className='ct-section-wrapper'>
+                  <CartForm {...cartFormProps} />
                   <Button
                     type='primary'
                     size='large'
-                    className='w-full'
+                    className='w-full mt-4'
                     onClick={handleSubmitOrder}
                   >
                     Đặt đơn

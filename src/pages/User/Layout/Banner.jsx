@@ -62,14 +62,14 @@ const Banner = ({ pageData }) => {
   return (
     <div className='md:mt-20 bg-white'>
       <div>
-        <img src={backgroundBanner} className='object-cover w-full h-96 md:h-64 lg:h-80' />
+        <img src={backgroundBanner} className='object-cover w-full h-96 md:h-72 lg:h-80' />
       </div>
-      <div className='ct-client-page-container relative'>
-        <div className='w-full px-4 md:mx-0 md:absolute left-0 top-0 -translate-y-[144px] md:-translate-y-1/2 xl:mx-0 flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-0'>
+      <div className='ct-client-page-container relative h-[calc(570px-144px+16px)] lg:h-auto'>
+        <div className='w-full md:px-4 xl:px-0 md:mx-0 md:absolute left-0 top-0 -translate-y-[144px] lg:-translate-y-1/2 xl:mx-0 flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-0'>
           <div className='bg-gray-300/60 rounded-full p-2'>
             {Array.isArray(avatar) && avatar.length > 0 ? (
               <img
-                className='xl:w-72 aspect-square rounded-full object-cover shadow-2xl'
+                className='w-72 aspect-square rounded-full object-cover shadow-2xl'
                 src={avatar[0]}
                 alt={name}
               />
@@ -81,20 +81,20 @@ const Banner = ({ pageData }) => {
               </div>
             )}
           </div>
-          <div className='flex-1 flex flex-col md:flex-row justify-between items-center md:items-end'>
-            <div className='flex flex-col justify-center md:justify-start items-center gap-4'>
-              <h1 className='flex items-center gap-2 m-0 md:pl-5 lg:text-3xl md:text-lg font-bold font-roboto'>
-                {name}
+          <div className='flex-1 flex flex-col lg:flex-row justify-between items-center lg:items-end gap-12 lg:gap-0'>
+            <div className='flex flex-col items-start gap-4'>
+              <h1 className='w-full flex flex-col-reverse lg:flex-row items-center gap-2 m-0 md:pl-5 lg:text-3xl font-bold font-roboto'>
+                <span>{name}</span>
                 <Tag className='text-base font-normal'>{businessType}</Tag>
               </h1>
               <a href={googleMapsUrl} target='blank' className='no-underline hover:underline'>
-                <p className='m-0 md:pl-5 lg:text-lg ssm:text-sm text-gray-500'>
+                <p className='m-0 md:pl-5 text-gray-500'>
                   <EnvironmentOutlined className='mr-2' />
-                  {address}, {ward}, <br /> {district}, {province}
+                  {address}, {ward}, <br />{district}, {province}
                 </p>
               </a>
             </div>
-            <div className='flex flex-col items-end'>
+            <div className='flex flex-col items-center lg:items-end'>
               <p className='font-bold'>{likes} lượt thích</p>
               <div className='flex gap-2'>
                 <Button icon={<SendOutlined />} type='primary' size='large'>

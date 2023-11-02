@@ -2,13 +2,14 @@ import LogoDark from '~/assets/image/Kios/Kios_dark.png';
 import { AiFillShopping } from 'react-icons/ai';
 import { BsSun, BsMoonStars } from 'react-icons/bs';
 import useThemeSwitcher from '~/hooks/useThemeSwitcher';
-import { Modal } from 'antd';
+import { Divider, Modal } from 'antd';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Cart from '../Cart/Cart';
 import { useNavigate } from 'react-router-dom';
+import CartForm from '../Cart/CartForm';
 
-const Header = ({ handleSubmitOrder }) => {
+const Header = ({ handleSubmitOrder, cartFormProps }) => {
   const [activeTheme, setTheme] = useThemeSwitcher();
   const { quantity } = useSelector(state => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,6 @@ const Header = ({ handleSubmitOrder }) => {
       localStorage.removeItem(item);
     });
     setIsModalOpen(false);
-    window.location.reload();
   };
 
   const handleCancel = () => {
@@ -73,9 +73,22 @@ const Header = ({ handleSubmitOrder }) => {
           </div>
         </div>
       </header>
-      <Modal title='ĐƠN ĐẶT MÓN' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title='ĐƠN ĐẶT MÓN'
+        okText='Đặt món'
+        cancelText='Đóng'
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <div>
           <Cart />
+          {
+            <div className='lg:hidden'>
+              <Divider />
+              <CartForm {...cartFormProps} />
+            </div>
+          }
         </div>
       </Modal>
     </>
