@@ -19,6 +19,7 @@ Chúng tôi phát triển phần Front-end ứng dụng này dựa trên các th
 
 - [x] Đăng ký
 - [x] Đăng nhập/Đăng xuất
+- [x] Xác thực form nhập liệu
 - [x] Chọn/đổi màu sắc chủ đề giao diện
 - [x] Thêm/đổi avatar, update profile user
 - [x] Tạo, thêm/đổi avatar, update thông tin Trang kinh doanh (nhà hàng, quán ăn)
