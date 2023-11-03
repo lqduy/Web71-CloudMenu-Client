@@ -91,14 +91,17 @@ const User = () => {
       footer={null}
     >
       <div className='flex flex-col items-center gap-4'>
-        <QRCode value={`http://web71-cloud-menu-client.onrender.com/${activePage._id}`} icon={activePage.avatar[0]} />
+        <QRCode
+          value={`http://web71-cloud-menu-client.onrender.com/${activePage._id}`}
+          icon={activePage.avatar[0]}
+        />
         <div className='flex flex-col items-center'>
           <p className='mb-0 mt-2'>{activePage.businessType}</p>
           <h4 className='m-0 text-xl'>{activePage.name}</h4>
         </div>
         <div className='flex items-center gap-2'>
           <LinkOutlined />
-          <p className='mb-0'>{`localhost:5173/${activePage._id}`}</p>
+          <p className='mb-0'>{`web71-cloud-menu-client.onrender.com/${activePage._id}`}</p>
         </div>
       </div>
     </Modal>
