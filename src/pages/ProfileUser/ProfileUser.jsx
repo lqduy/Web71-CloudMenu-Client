@@ -228,7 +228,6 @@ const ProfileUser = () => {
               <Form.Item
                 key='age'
                 label='Ngày sinh:'
-                name='age'
                 rules={[{ required: true, message: 'Hãy chọn ngày sinh của bạn!' }]}
                 className='flex-1'
               >
