@@ -51,8 +51,7 @@ const addMenuItemToMenuContent = (state, itemData) => {
 
 const unselectItemInMenu = (state, itemData) => {
   // Remove in itemList State
-  const itemIndexInItemList = state.itemList.indexOf(itemData);
-  state.itemList.splice(itemIndexInItemList, 1);
+  state.itemList = state.itemList.filter(dish => dish._id !== itemData._id);
 
   // Remove in menuContent State
   const group = state.menuContent.find(group => group.value === itemData.group);

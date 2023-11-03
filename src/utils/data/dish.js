@@ -8,11 +8,11 @@ const origin = [
 ];
 
 const group = [
-  { value: 'chinh', title: 'Món chính' },
   { value: 'khaivi', title: 'Khai vị, điểm tâm' },
+  { value: 'chinh', title: 'Món chính' },
   { value: 'anvat', title: 'Tráng miệng, ăn vặt' },
-  { value: 'nuoc', title: 'Kem, nước uống' },
   { value: 'chay', title: 'Món chay' },
+  { value: 'nuoc', title: 'Kem, nước uống' },
   { value: 'other', title: 'Khác' }
 ];
 
