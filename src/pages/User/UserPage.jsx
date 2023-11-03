@@ -36,7 +36,7 @@ const User = () => {
   const fetchPageData = async () => {
     try {
       const res = await PageAPI.getOne(pageId);
-      if (!res.data._id) {
+      if (res.data._id !== pageId) {
         navigate(PATH.ABOUT_ME);
       }
       setPageData(res.data);
