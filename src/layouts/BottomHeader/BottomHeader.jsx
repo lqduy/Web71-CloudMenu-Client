@@ -44,7 +44,7 @@ const BottomHeader = () => {
 
   const { _id: pageId } = activePage ?? {};
   const FOCUS_STYLE = 'bg-black/[0.1]';
-
+  const bottomNavigationClasses = 'h-11 text-white';
   return (
     <div style={{ backgroundColor: themeColor }}>
       <Container>
@@ -53,7 +53,7 @@ const BottomHeader = () => {
             <Button
               type='text'
               icon={<HomeOutlined />}
-              className={classNames('h-11 text-white', {
+              className={classNames(bottomNavigationClasses, {
                 [FOCUS_STYLE]: currentView === VIEW_NAME.HOME
               })}
               onClick={() => navigate('/')}
@@ -64,7 +64,7 @@ const BottomHeader = () => {
               <Button
                 type='text'
                 icon={<HeartOutlined />}
-                className={classNames('h-11 text-white', {
+                className={classNames(bottomNavigationClasses, {
                   [FOCUS_STYLE]: currentView === VIEW_NAME.LIKE
                 })}
                 onClick={() => navigate(`/u/${currentUser._id}/like`)}
@@ -77,7 +77,7 @@ const BottomHeader = () => {
                 <Button
                   type='text'
                   icon={<BarsOutlined />}
-                  className={classNames('h-11 text-white', {
+                  className={classNames(bottomNavigationClasses, {
                     [FOCUS_STYLE]: currentView === VIEW_NAME.DISH
                   })}
                   onClick={() => navigate(`/p/${pageId}/dish`)}
@@ -87,7 +87,7 @@ const BottomHeader = () => {
                 <Button
                   type='text'
                   icon={<BookOutlined />}
-                  className={classNames('h-11 text-white', {
+                  className={classNames(bottomNavigationClasses, {
                     [FOCUS_STYLE]: currentView === VIEW_NAME.MENU
                   })}
                   onClick={() => navigate(`/p/${pageId}/menu`)}
@@ -97,7 +97,7 @@ const BottomHeader = () => {
                 <Button
                   type='text'
                   icon={<FileDoneOutlined />}
-                  className={classNames('h-11 text-white', {
+                  className={classNames(bottomNavigationClasses, {
                     [FOCUS_STYLE]: currentView === VIEW_NAME.ORDER
                   })}
                   onClick={() => navigate(`/p/${pageId}/order`)}
@@ -107,7 +107,7 @@ const BottomHeader = () => {
                 <Button
                   type='text'
                   icon={<LineChartOutlined />}
-                  className={classNames('h-11 text-white', {
+                  className={classNames(bottomNavigationClasses, {
                     [FOCUS_STYLE]: currentView === VIEW_NAME.SALES
                   })}
                 >
