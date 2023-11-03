@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { fetchAllMenus } from './menuActions';
+import Dish from '~/utils/data/dish';
 
 const initialState = {
   menuList: [],
@@ -25,7 +26,13 @@ const addMenuItemToMenuContent = (state, itemData) => {
         }
       ]
     };
-    state.menuContent.push(newGroup);
+    let content = [...state.menuContent, newGroup];
+    content = content.sort((a, b) => {
+      const aIndex = Dish.group.findIndex(gr => gr.value === a.value);
+      const bIndex = Dish.group.findIndex(gr => gr.value === b.value);
+      return aIndex - bIndex;
+    });
+    state.menuContent = content;
   } else {
     const subGroup = group.subGroup.find(type => type.value === itemData.type);
     if (!subGroup) {
