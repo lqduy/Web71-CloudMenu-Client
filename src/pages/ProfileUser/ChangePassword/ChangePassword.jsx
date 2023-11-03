@@ -13,7 +13,6 @@ const ChangePassword = () => {
     try {
       setErr(null);
       const response = await UserAPI.changePassword(currentUser._id, value);
-      console.log(response);
 
       if (response.status === 200) {
         message.success('Đổi mật khẩu thành công!');
@@ -23,7 +22,6 @@ const ChangePassword = () => {
     } catch (error) {
       message.error('Đổi mật khẩu không thành công, vui lòng thử lại');
     }
-    console.log(err);
   };
   return (
     <div className=' flex justify-center'>

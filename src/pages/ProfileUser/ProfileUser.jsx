@@ -1,5 +1,6 @@
-import { LockOutlined, UserOutlined, MailOutlined, MobileOutlined } from '@ant-design/icons';
-import { Button, DatePicker, Form, Input, InputNumber, Modal, Select, Space, message } from 'antd';
+/* eslint-disable indent */
+import { UserOutlined, MailOutlined, MobileOutlined } from '@ant-design/icons';
+import { Button, DatePicker, Form, Input, InputNumber, Modal, Select, message } from 'antd';
 import { reloadUser, setOpenEditProfile } from '~/redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import UserAPI from '~/services/userAPI';
@@ -35,12 +36,10 @@ const ProfileUser = () => {
   const [value, setValue] = useState(initialValues);
   const [cloudinaryUrl, setCloudinaryUrl] = useState([]);
   const [show, setShow] = useState(true);
-  const [buttonType, setButtonType] = useState('text');
 
   const dateFormat = 'DD-MM-YYYY';
 
   const onChange = (date, dateString) => {
-    console.log(dateString);
     setValue(prevValue => ({
       ...prevValue,
       age: dateString
@@ -115,6 +114,7 @@ const ProfileUser = () => {
       dispatch(setOpenEditProfile());
       message.success('Cập nhật thông tin thành công.');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(err);
     }
   };
@@ -166,30 +166,30 @@ const ProfileUser = () => {
           form={form}
           name='currentUser'
           initialValues={initialValues}
-          className={`bg-white flex  items-center justify-center gap-16 mt-8 mx-auto w-11/12 py-10 font-bold`}
+          className='bg-white flex items-center justify-between gap-16 mt-8 mx-auto py-8 font-bold'
           onFinish={onClickUpdate}
         >
           <div className='flex flex-col items-center'>
             <Form.Item name='avatar' valuePropName='fileList'>
               <UploadAvatar setUrl={link => setCloudinaryUrl({ ...cloudinaryUrl, avatar: link })} />
             </Form.Item>
-            <div className=' w-60'>
+            <div className='w-60'>
               <h2 className='text-gray-800 font-bold text-xl mb-1'>
-                {`Xin chào ${currentUser.firstName} ${currentUser.lastName}  !`}
+                {`Xin chào ${currentUser.firstName} ${currentUser.lastName}!`}
               </h2>
               <p className='text-sm font-normal text-gray-600 mb-4'>
                 Bạn có thể cập nhật và thay đổi thông tin cá nhân tại đây.
               </p>
             </div>
           </div>
-          <div className=' w-1/2'>
-            <div className='grid grid-flow-col gap-8'>
+          <div className='flex-grow'>
+            <div className='grid grid-flow-col gap-4'>
               <Form.Item
                 key='lastname'
                 label='Tên :'
                 name='lastName'
                 rules={[{ required: true, message: 'Hãy nhập họ và tên đệm!' }]}
-                className='w-36'
+                className='w-full'
               >
                 <Input
                   prefix={<UserOutlined className='mr-2' />}
@@ -211,13 +211,13 @@ const ProfileUser = () => {
                 />
               </Form.Item>
             </div>
-            <div className='grid  grid-flow-col gap-8'>
+            <div className='flex gap-4'>
               <Form.Item
                 key='gender'
                 label='Giới tính:'
                 name='gender'
                 rules={[{ required: true, message: 'Hãy nhập ngày sinh của bạn!' }]}
-                className=' w-36'
+                className='flex-1'
               >
                 <Select onChange={handleGenderChange} placeholder='Lựa chọn giới tính'>
                   <Select.Option value='Nam'>Nam</Select.Option>
@@ -225,6 +225,24 @@ const ProfileUser = () => {
                   <Select.Option value='Khác'>Khác</Select.Option>
                 </Select>
               </Form.Item>
+              <Form.Item
+                key='age'
+                label='Ngày sinh:'
+                name='age'
+                rules={[{ required: true, message: 'Hãy chọn ngày sinh của bạn!' }]}
+                className='flex-1'
+              >
+                <DatePicker
+                  name='age'
+                  defaultValue={!currentUser.age ? '' : dayjs(currentUser.age, dateFormat)}
+                  format={dateFormat}
+                  onChange={onChange}
+                  placeholder='Nhập ngày sinh...'
+                  style={{ width: '100%' }}
+                />
+              </Form.Item>
+            </div>
+            <div className='flex gap-4'>
               <Form.Item
                 key='email'
                 label='Email:'
@@ -234,7 +252,7 @@ const ProfileUser = () => {
                   { type: 'email', message: 'Nhập chính xác địa chỉ email' }
                 ]}
                 validateDebounce={600}
-                // className=' w-80'
+                className='flex-1'
               >
                 <Input
                   prefix={<MailOutlined className='mr-2' />}
@@ -242,29 +260,10 @@ const ProfileUser = () => {
                   onChange={e => setValue({ ...value, email: e.target.value })}
                 />
               </Form.Item>
-            </div>
-            <div className='grid  grid-flow-col gap-8'>
-              <Form.Item
-                key='age'
-                label='Ngày sinh:'
-                name='age'
-                rules={[{ required: true, message: 'Hãy chọn ngày sinh của bạn!' }]}
-                className='w-36'
-              >
-                <Space direction='vertical'>
-                  <DatePicker
-                    name='age'
-                    defaultValue={!currentUser.age ? '' : dayjs(currentUser.age, dateFormat)}
-                    format={dateFormat}
-                    onChange={onChange}
-                    placeholder='Nhập ngày sinh...'
-                  />
-                </Space>
-              </Form.Item>
 
               <Form.Item
                 key='phone'
-                className='col-span-5 '
+                className='flex-1'
                 label='Số điện thoại:'
                 name='phoneNumber'
                 rules={[{ required: true, message: 'Hãy nhập số điện thoại của bạn!' }]}
