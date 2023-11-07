@@ -1,5 +1,5 @@
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { Button, Divider, Form, Input } from 'antd';
+import { Button, Divider, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import AuthenAPI from '~/services/authenAPI';
@@ -16,16 +16,17 @@ const Login = () => {
   const handleLogin = async formValue => {
     try {
       const response = await AuthenAPI.login(formValue);
-      const accessToken = response.data.accessToken;
+      const accessToken = response?.data?.accessToken;
 
       if (accessToken) {
         localStorage.setItem(TOKEN_TYPES.ACCESS_TOKEN, accessToken);
         await dispatch(fetchCurrentUser());
         navigate('/');
       }
-    } catch (err) {
+    } catch (error) {
+      message.error(error.message);
       // eslint-disable-next-line no-console
-      console.log(err);
+      console.log(error);
     }
   };
 

@@ -28,6 +28,7 @@ api.interceptors.response.use(
       localStorage.removeItem(TOKEN_TYPES.ACCESS_TOKEN);
       window.location.href = PATH.LOGIN;
     }
+    return Promise.reject(error.response.data);
   }
 );
 

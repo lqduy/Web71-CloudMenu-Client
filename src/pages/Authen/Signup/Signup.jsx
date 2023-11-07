@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined, MailOutlined, MobileOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, InputNumber } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber, message } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthenAPI from '~/services/authenAPI';
 import { PATH } from '~/routes';
@@ -14,6 +14,7 @@ const Signup = () => {
       await AuthenAPI.signup(signupValue);
       navigate('/login');
     } catch (err) {
+      message.error(err.message);
       // eslint-disable-next-line no-console
       console.log(err);
     }
