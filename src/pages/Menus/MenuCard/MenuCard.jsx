@@ -1,9 +1,9 @@
 import {
   CheckCircleOutlined,
   CheckOutlined,
+  DeleteOutlined,
   DollarOutlined,
   EditOutlined,
-  EllipsisOutlined,
   FileTextOutlined
 } from '@ant-design/icons';
 import { Avatar, Button, Card, Popconfirm, message } from 'antd';
@@ -12,19 +12,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { applyMenu } from '~/redux/page/pageActions';
 import { reloadPage } from '~/redux/page/pageSlice';
+import MenusAPI from '~/services/menuAPI';
 
 const MenuCard = ({ data, index, applyButtonRef }) => {
   const { activePage } = useSelector(state => state.page);
   const dispatch = useDispatch();
+  const MESSAGE_KEY = 'apply-or-delete-menu';
 
   const handleApplyMenu = async () => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang áp dụng thực đơn...' });
     const payload = {
       id: activePage._id,
       data: { menuId: data._id }
     };
     await dispatch(applyMenu(payload));
     dispatch(reloadPage());
+    message.destroy(MESSAGE_KEY);
     message.success('Áp dụng thực đơn thành công');
+  };
+
+  const handleDeleteMenu = async () => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang xóa thực đơn...' });
+    try {
+      await MenusAPI.deleteOne(data._id);
+      dispatch(reloadPage());
+      message.destroy(MESSAGE_KEY);
+      message.success('Đã xóa thực đơn');
+    } catch (err) {
+      message.destroy(MESSAGE_KEY);
+      message.error(err.message);
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
   };
 
   return (
@@ -46,7 +65,17 @@ const MenuCard = ({ data, index, applyButtonRef }) => {
           <CheckOutlined ref={applyButtonRef} />
         </Popconfirm>,
         <EditOutlined key='edit' />,
-        <EllipsisOutlined key='ellipsis' />
+        <Popconfirm
+          key='delete'
+          title='Xóa thực đơn'
+          description='Bạn chắc chắn muốn xóa thực đơn này?'
+          cancelText='Đóng'
+          okText='Xóa'
+          okButtonProps={{ danger: true }}
+          onConfirm={handleDeleteMenu}
+        >
+          <DeleteOutlined />
+        </Popconfirm>
       ]}
     >
       <Meta

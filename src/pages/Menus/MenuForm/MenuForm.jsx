@@ -14,12 +14,14 @@ const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
   const { currentUser } = useSelector(state => state.user);
   const { activePage } = useSelector(state => state.page);
   const { menuContent, itemList } = useSelector(state => state.menu);
-  const [applyMenuId, setApplyMenuId] = useState(false);
+  const [applyMenuId, setApplyMenuId] = useState(null);
   const [isApplyMenu, setIsApplyMenu] = useState(false);
   const [form] = useForm();
   const dispatch = useDispatch();
+  const MESSAGE_KEY = 'POST-menu-save-(apply)';
 
   const handleSaveMenu = async value => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang lưu thực đơn...' });
     const priceAverage = itemList.reduce((sum, item) => sum + item.price, 0) / itemList.length;
     const menuContentData = {
       name: value.name,
@@ -33,11 +35,11 @@ const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
       const response = await MenusAPI.create(menuContentData);
       setApplyMenuId(response.data.createdMenuId);
 
-      message.success('Đã lưu thực đơn');
       handleCancel();
-      form.resetFields();
       handleReload();
+      form.resetFields();
       dispatch(unselectAll());
+      message.success({ key: MESSAGE_KEY, content: 'Đã lưu thực đơn' });
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err);
@@ -45,21 +47,24 @@ const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
   };
 
   useEffect(() => {
-    if (!applyMenuId || !isApplyMenu) return;
     const handleApplyMenu = async () => {
+      if (!applyMenuId || !isApplyMenu) return;
       const payload = {
         id: activePage._id,
         data: { menuId: applyMenuId }
       };
       await dispatch(applyMenu(payload));
       dispatch(reloadPage());
-      message.success('Áp dụng thực đơn thành công');
+      setApplyMenuId(null);
+      setIsApplyMenu(false);
+      message.destroy(MESSAGE_KEY);
+      message.success({ key: MESSAGE_KEY, content: 'Áp dụng thực đơn thành công' });
     };
     handleApplyMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applyMenuId, isApplyMenu]);
 
-  const handleSaveAndApplyMenu = async () => {
+  const handleSaveAndApplyMenu = () => {
     form.submit();
     setIsApplyMenu(true);
   };

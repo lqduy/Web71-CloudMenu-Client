@@ -12,6 +12,10 @@ const MenusAPI = {
   create: data => {
     const url = '/menus';
     return api.post(url, data);
+  },
+  deleteOne: id => {
+    const url = `/menus/${id}`;
+    return api.delete(url);
   }
 };
 
