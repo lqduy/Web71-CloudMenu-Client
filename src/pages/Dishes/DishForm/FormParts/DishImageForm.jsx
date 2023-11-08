@@ -32,7 +32,8 @@ const DishImageForm = ({ fileList, handleChange, setCloudinaryUrlList }) => {
     if (info.file.status === 'removed') return;
     setUploading(true);
     const formData = new FormData();
-    formData.append('image', info.file);
+    const imageFile = info.fileList[info.fileList.length - 1].originFileObj;
+    formData.append('image', imageFile);
     try {
       const res = await MediaAPI.uploadImage(formData);
       if (res.data.url) {
@@ -93,8 +94,8 @@ const DishImageForm = ({ fileList, handleChange, setCloudinaryUrlList }) => {
         onRemove={handleRemoveImage}
         beforeUpload={file => {
           return new Promise((resolve, reject) => {
-            const isLt2M = file.size / 1024 / 1024 < 2;
-            if (isLt2M) {
+            const isLt5M = file.size / 1024 / 1024 < 5;
+            if (isLt5M) {
               reject('File size exceeded');
             } else {
               resolve('Success');

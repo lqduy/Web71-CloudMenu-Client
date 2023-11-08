@@ -13,6 +13,7 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
   const [imageList, setImageList] = useState([]);
   const [cloudinaryUrlList, setCloudinaryUrlList] = useState([]);
   const [form] = Form.useForm();
+  const MESSAGE_KEY = 'post-dish-form-loading';
 
   useEffect(() => {
     const fieldData = () => {
@@ -22,6 +23,7 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
 
       const images = editingDish.images.map(image => ({ url: image }));
       setImageList(images);
+      setCloudinaryUrlList(editingDish.images);
 
       form.setFieldsValue({
         name: editingDish.name,
@@ -63,27 +65,43 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
       images: cloudinaryUrlList
     };
     if (!editingDish) {
-      try {
-        await DishesAPI.create(dishData);
-        message.success('Tạo món thành công');
-        handleResetForm();
-        closeModal();
-        toReload();
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log(err);
-      }
+      handleCreateDish(dishData);
     } else {
-      try {
-        await DishesAPI.update(editingDish._id, dishData);
-        message.success('Cập nhật thành công');
-        handleResetForm();
-        closeModal();
-        toReload();
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log(err);
-      }
+      handleUpdateDish(editingDish._id, dishData);
+    }
+  };
+
+  const handleCreateDish = async dishData => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang tạo món...' });
+    try {
+      await DishesAPI.create(dishData);
+      message.destroy(MESSAGE_KEY);
+      message.success('Tạo món thành công');
+      handleResetForm();
+      closeModal();
+      toReload();
+    } catch (err) {
+      message.destroy(MESSAGE_KEY);
+      message.error('Có lỗi xảy ra, vui lòng thử lại');
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
+
+  const handleUpdateDish = async (id, dishData) => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang cập nhật món...' });
+    try {
+      await DishesAPI.update(id, dishData);
+      message.destroy(MESSAGE_KEY);
+      message.success('Cập nhật món thành công');
+      handleResetForm();
+      closeModal();
+      toReload();
+    } catch (err) {
+      message.destroy(MESSAGE_KEY);
+      message.error('Có lỗi xảy ra, vui lòng thử lại');
+      // eslint-disable-next-line no-console
+      console.log(err);
     }
   };
 

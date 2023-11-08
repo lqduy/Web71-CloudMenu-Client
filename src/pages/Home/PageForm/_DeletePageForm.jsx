@@ -10,14 +10,21 @@ const DeletePageForm = ({ handleCancel }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const MESSAGE_KEY = 'delete-page-loading';
+
   const handleDeletePage = async value => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang xóa trang' });
     try {
-      await PageAPI.delete(activePage._id, value);
+      const response = await PageAPI.delete(activePage._id, value);
       navigate('/');
-      dispatch(reloadUser());
       handleCancel();
-      message.success('Xóa trang thành công');
+      dispatch(reloadUser());
+      message.destroy(MESSAGE_KEY);
+      message.success(response.data.message);
     } catch (err) {
+      message.destroy(MESSAGE_KEY);
+      message.error(err.message);
+      form.resetFields();
       // eslint-disable-next-line no-console
       console.log(err);
     }

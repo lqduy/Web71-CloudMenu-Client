@@ -11,15 +11,20 @@ const api = axios.create({
 });
 
 // Attach accessToken to request headers
-api.interceptors.request.use(config => {
-  const accessToken = localStorage.getItem(TOKEN_TYPES.ACCESS_TOKEN);
+api.interceptors.request.use(
+  config => {
+    const accessToken = localStorage.getItem(TOKEN_TYPES.ACCESS_TOKEN);
 
-  if (accessToken) {
-    config.headers['x-access-token'] = accessToken;
+    if (accessToken) {
+      config.headers['x-access-token'] = accessToken;
+    }
+
+    return config;
+  },
+  error => {
+    return Promise.reject(error.response.data);
   }
-
-  return config;
-});
+);
 
 api.interceptors.response.use(
   response => response,

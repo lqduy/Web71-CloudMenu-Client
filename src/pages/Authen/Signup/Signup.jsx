@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { LockOutlined, UserOutlined, MailOutlined, MobileOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, InputNumber, message } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
@@ -6,41 +5,27 @@ import AuthenAPI from '~/services/authenAPI';
 import { PATH } from '~/routes';
 
 const Signup = () => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [isLoading, setIsLoading] = useState(false);
-  const [errowMessage, setErrowMessage] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isLoading && !errowMessage) return;
-    messageApi.open({
-      key: 'signup',
-      type: isLoading ? 'loading' : 'error',
-      content: isLoading ? 'Đang tạo tài khoản...' : errowMessage
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, errowMessage]);
+  const MESSAGE_KEY = 'signup-loading';
 
   const handleSignup = async formValue => {
-    setIsLoading(true);
-    setErrowMessage(null);
+    message.loading({ key: MESSAGE_KEY, content: 'Đang tạo tài khoản...' });
     const { isAgreed, ...signupValue } = formValue;
     if (!isAgreed) return;
     try {
       await AuthenAPI.signup(signupValue);
+      message.destroy(MESSAGE_KEY);
       navigate('/login');
     } catch (err) {
-      setErrowMessage(err.message);
+      message.destroy(MESSAGE_KEY);
+      message.error(err.message);
       // eslint-disable-next-line no-console
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <>
-      {contextHolder}
       <div className='flex flex-col gap-4'>
         <Form name='normal_login' className='flex flex-col gap-2' onFinish={handleSignup}>
           <h1 className='text-gray-800 font-bold text-3xl mb-1'>Đăng ký</h1>

@@ -34,9 +34,10 @@ const PageForm = () => {
   const { currentUser } = useSelector(state => state.user);
   const { activePage, openPageCreateForm, isEditingPage } = useSelector(state => state.page);
   const dispatch = useDispatch();
+  const MESSAGE_KEY = 'post-page-form-loading';
 
   useEffect(() => {
-    const fieldData = () => {
+    const fieldData = async () => {
       if (!isEditingPage) return;
       form.setFieldsValue({
         name: activePage.name,
@@ -52,6 +53,8 @@ const PageForm = () => {
         phoneNumber: activePage.phoneNumber,
         email: activePage.email
       });
+      fetchDistrictData(activePage.province);
+      fetchWardData(activePage.district);
     };
     fieldData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,6 +69,7 @@ const PageForm = () => {
     setProvinceData(provinces.data.results);
   };
 
+  // Fetch province api
   const fetchDistrictData = async provinceName => {
     const selectedProvince = provinceData.find(province => provinceName === province.province_name);
     const provinceId = selectedProvince.province_id;
@@ -73,6 +77,7 @@ const PageForm = () => {
     setDistrictData(districts.data.results);
   };
 
+  // Fetch district api
   const fetchWardData = async districtName => {
     const selectedDistrict = districtData.find(district => districtName === district.district_name);
     const districtId = selectedDistrict.district_id;
@@ -89,6 +94,7 @@ const PageForm = () => {
   };
 
   const handleCreatePage = async value => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang tạo trang...' });
     try {
       const newPageData = {
         ...value,
@@ -98,21 +104,28 @@ const PageForm = () => {
       await PageAPI.create(newPageData);
       dispatch(reloadUser());
       handleCancel();
-      message.success('Tạo trang kinh doanh thành công');
+      message.destroy(MESSAGE_KEY);
+      message.success('Tạo trang thành công');
     } catch (err) {
+      message.destroy(MESSAGE_KEY);
+      message.error('Có lỗi xảy ra, vui lòng thử lại');
       // eslint-disable-next-line no-console
       console.log(err);
     }
   };
 
   const handleUpdatePage = async value => {
+    message.loading({ key: MESSAGE_KEY, content: 'Đang tạo trang...' });
     try {
       const newPageData = { ...activePage, ...value };
       await PageAPI.update(activePage._id, newPageData);
       dispatch(reloadUser());
       handleCancel();
+      message.destroy(MESSAGE_KEY);
       message.success('Cập nhật trang thành công');
     } catch (err) {
+      message.destroy(MESSAGE_KEY);
+      message.error('Có lỗi xảy ra, vui lòng thử lại');
       // eslint-disable-next-line no-console
       console.log(err);
     }

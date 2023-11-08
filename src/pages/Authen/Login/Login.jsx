@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,25 +10,12 @@ import FacebookLogo from '~/assets/layouts/facebook-logo.webp';
 import GoogleLogo from '~/assets/layouts/google-logo.webp';
 
 const Login = () => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [isLoading, setIsLoading] = useState(false);
-  const [errowMessage, setErrowMessage] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!isLoading && !errowMessage) return;
-    messageApi.open({
-      key: 'login',
-      type: isLoading ? 'loading' : 'error',
-      content: isLoading ? 'Đang đăng nhập...' : errowMessage
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, errowMessage]);
+  const MESSAGE_KEY = 'login-loading';
 
   const handleLogin = async formValue => {
-    setIsLoading(true);
-    setErrowMessage(null);
+    message.loading({ key: MESSAGE_KEY, content: 'Đang đăng nhập...' });
     try {
       const response = await AuthenAPI.login(formValue);
       const accessToken = response.data.accessToken;
@@ -37,20 +23,19 @@ const Login = () => {
       if (accessToken) {
         localStorage.setItem(TOKEN_TYPES.ACCESS_TOKEN, accessToken);
         await dispatch(fetchCurrentUser());
+        message.destroy(MESSAGE_KEY);
         navigate('/');
       }
     } catch (error) {
-      setErrowMessage(error.message);
+      message.destroy(MESSAGE_KEY);
+      message.error(error.message);
       // eslint-disable-next-line no-console
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <>
-      {contextHolder}
       <div className='flex flex-col gap-4'>
         <Form name='normal_login' className='flex flex-col gap-2' onFinish={handleLogin}>
           <h1 className='text-gray-800 font-bold text-3xl mb-1'>Đăng nhập</h1>
