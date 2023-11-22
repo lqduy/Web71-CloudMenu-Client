@@ -1,4 +1,5 @@
 import { Button, Form, Input, message, Popconfirm } from 'antd';
+import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { reloadUser } from '~/redux/user/userSlice';
@@ -9,8 +10,7 @@ const DeletePageForm = ({ handleCancel }) => {
   const { activePage } = useSelector(state => state.page);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const MESSAGE_KEY = 'delete-page-loading';
+  const MESSAGE_KEY = useId();
 
   const handleDeletePage = async value => {
     message.loading({ key: MESSAGE_KEY, content: 'Đang xóa trang' });

@@ -8,11 +8,12 @@ import { TOKEN_TYPES } from '~/utils/constants';
 import { PATH } from '~/routes';
 import FacebookLogo from '~/assets/layouts/facebook-logo.webp';
 import GoogleLogo from '~/assets/layouts/google-logo.webp';
+import { useId } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const MESSAGE_KEY = 'login-loading';
+  const MESSAGE_KEY = useId();
 
   const handleLogin = async formValue => {
     message.loading({ key: MESSAGE_KEY, content: 'Đang đăng nhập...' });

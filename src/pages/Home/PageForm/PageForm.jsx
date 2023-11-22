@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Button, Modal, Form, Input, InputNumber, Select, message } from 'antd';
 import AddressAPI from '~/services/addressAPI';
@@ -34,7 +34,7 @@ const PageForm = () => {
   const { currentUser } = useSelector(state => state.user);
   const { activePage, openPageCreateForm, isEditingPage } = useSelector(state => state.page);
   const dispatch = useDispatch();
-  const MESSAGE_KEY = 'post-page-form-loading';
+  const MESSAGE_KEY = useId();
 
   useEffect(() => {
     const fieldData = async () => {
@@ -53,6 +53,7 @@ const PageForm = () => {
         phoneNumber: activePage.phoneNumber,
         email: activePage.email
       });
+      setCloudinaryUrl(activePage.avatar);
       fetchDistrictData(activePage.province);
       fetchWardData(activePage.district);
     };

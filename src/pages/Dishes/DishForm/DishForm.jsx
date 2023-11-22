@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import { Tabs, Button, Modal, Form, message } from 'antd';
 import { useSelector } from 'react-redux';
 import DishOverviewForm from './FormParts/DishOverviewForm';
@@ -13,7 +13,7 @@ const DishForm = ({ isModalOpen, closeModal, editingDish, resetEditing, toReload
   const [imageList, setImageList] = useState([]);
   const [cloudinaryUrlList, setCloudinaryUrlList] = useState([]);
   const [form] = Form.useForm();
-  const MESSAGE_KEY = 'post-dish-form-loading';
+  const MESSAGE_KEY = useId();
 
   useEffect(() => {
     const fieldData = () => {

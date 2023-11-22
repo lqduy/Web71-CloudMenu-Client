@@ -3,10 +3,11 @@ import { Button, Checkbox, Form, Input, InputNumber, message } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthenAPI from '~/services/authenAPI';
 import { PATH } from '~/routes';
+import { useId } from 'react';
 
 const Signup = () => {
   const navigate = useNavigate();
-  const MESSAGE_KEY = 'signup-loading';
+  const MESSAGE_KEY = useId();
 
   const handleSignup = async formValue => {
     message.loading({ key: MESSAGE_KEY, content: 'Đang tạo tài khoản...' });

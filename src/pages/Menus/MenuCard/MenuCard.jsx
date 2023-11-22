@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Button, Card, Popconfirm, message } from 'antd';
 import Meta from 'antd/es/card/Meta';
+import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { applyMenu } from '~/redux/page/pageActions';
@@ -17,7 +18,7 @@ import MenusAPI from '~/services/menuAPI';
 const MenuCard = ({ data, index, applyButtonRef }) => {
   const { activePage } = useSelector(state => state.page);
   const dispatch = useDispatch();
-  const MESSAGE_KEY = 'apply-or-delete-menu';
+  const MESSAGE_KEY = useId();
 
   const handleApplyMenu = async () => {
     message.loading({ key: MESSAGE_KEY, content: 'Đang áp dụng thực đơn...' });

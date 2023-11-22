@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
 import { Button, Modal, Tabs, message } from 'antd';
 import { CheckOutlined, SaveOutlined } from '@ant-design/icons';
@@ -18,7 +18,7 @@ const MenuForm = ({ isModalOpen, handleCancel, handleReload }) => {
   const [isApplyMenu, setIsApplyMenu] = useState(false);
   const [form] = useForm();
   const dispatch = useDispatch();
-  const MESSAGE_KEY = 'POST-menu-save-(apply)';
+  const MESSAGE_KEY = useId();
 
   const handleSaveMenu = async value => {
     message.loading({ key: MESSAGE_KEY, content: 'Đang lưu thực đơn...' });
